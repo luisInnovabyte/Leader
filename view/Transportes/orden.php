@@ -1904,7 +1904,7 @@
                                                 <p>Mercancia: <span style="font-weight: normal"><?php echo $jsonDatos['MERCANCIA']; ?></span></p>
                                             </div>
                                             <div class="col-6">
-                                                <p>Ref. carga: <span style="font-weight: normal"><?php echo $jsonDatos['CARGADOR_REF_CARGA']; ?></span></p>
+                                                <p>Ref. carga: <span style="font-weight: normal"><?php echo $viaje['LUGAR_REF_CARGA']; ?></span></p>
                                             </div>
                                             <div class="col-6">
                                                 <p>Bultos: <span style="font-weight: normal"><?php echo $jsonDatos['BULTOS']; ?></span></p>
@@ -1917,8 +1917,7 @@
                                                 <p>Kilos: <span style="font-weight: normal"><?php echo $jsonDatos['PESO_MERCANCIA']; ?></span></p>
                                             </div>
                                             <div class="col-6">
-                                                <p>Observaciones: <span style="font-weight: normal"><?php //echo $jsonDatos['PESO_MERCANCIA']; 
-                                                                                                    ?></span></p>
+                                                <p>Observaciones: <span style="font-weight: normal"><?php echo $viaje['LUGAR_OBSERVACIONES_CARGA']; ?></span></p>
                                             </div>
                                             <div class="col-6">
                                                 <p>Firma Cliente: <img src="<?php echo $viaje["FirmaViajeReceptor"]; ?>" style="max-height: 50px" alt=""></p>
@@ -1976,7 +1975,7 @@
                                                 <p>Mercancia: <span style="font-weight: normal"><?php echo $jsonDatos['MERCANCIA']; ?></span></p>
                                             </div>
                                             <div class="col-6">
-                                                <p>Ref. carga: <span style="font-weight: normal"><?php echo $jsonDatos['CARGADOR_REF_CARGA']; ?></span></p>
+                                                <p>Ref. carga: <span style="font-weight: normal"><?php echo $viaje['LUGAR_REF_DESCARGA']; ?></span></p>
                                             </div>
                                             <div class="col-6">
                                                 <p>Bultos: <span style="font-weight: normal"><?php echo $jsonDatos['BULTOS']; ?></span></p>
@@ -1989,8 +1988,7 @@
                                                 <p>Kilos: <span style="font-weight: normal"><?php echo $jsonDatos['PESO_MERCANCIA']; ?></span></p>
                                             </div>
                                             <div class="col-6">
-                                                <p>Observaciones: <span style="font-weight: normal"><?php //echo $jsonDatos['PESO_MERCANCIA']; 
-                                                                                                    ?></span></p>
+                                                <p>Observaciones: <span style="font-weight: normal"><?php echo $viaje['LUGAR_OBSERVACIONES_DESCARGA']; ?></span></p>
                                             </div>
                                             <div class="col-6">
                                                 <p>Firma Cliente: <img src="<?php echo $viaje["FirmaViajeReceptor"]; ?>" style="max-height: 50px" alt=""></p>
@@ -2253,9 +2251,6 @@
 
                             <?php
                                 }
-
-
-
                                 $contador++;
                             }
                             echo "</div>";
@@ -2263,11 +2258,7 @@
 
                             <div class="col-12 mg-10">
                                 <p>LA PLATAFORMA SE DEJA EN: <span style="font-weight: normal"><?php echo $jsonDatos['LUGAR_FIN_NOMBRE']; ?></span></p>
-                            </div>
-                        </div>
-
-
-
+                <p>Precio acordado: <span style="font-weight: normal"><?php echo (isset($jsonDatos['LUGARES_DESCARGA'][0]['LUGAR_IMPORTE']) && !empty($jsonDatos['LUGARES_DESCARGA'][0]['LUGAR_IMPORTE'])) ? $jsonDatos['LUGARES_DESCARGA'][0]['LUGAR_IMPORTE'] . ' €' : ''; ?></span></p>
                         <footer <?php if ($tipoDocumento != "E") { ?> style="height:4cm" <?php } ?>>
                             <?php
                             if ($tipoDocumento == "E") { ?>

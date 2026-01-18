@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulación Orden Contenedor - 34447400</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            display: flex;
+            border: 2px solid #333;
+            margin-bottom: 0;
+        }
+        
+        .header-left {
+            flex: 5;
+            padding: 15px;
+            border-right: 1px solid #333;
+        }
+        
+        .header-left h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .header-left h3 {
+            text-align: center;
+            text-decoration: underline;
+            font-size: 18px;
+        }
+        
+        .header-middle {
+            flex: 4;
+            padding: 10px;
+            border-right: 1px solid #333;
+            font-size: 11px;
+        }
+        
+        .header-right {
+            flex: 3;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .qr-placeholder {
+            width: 100px;
+            height: 100px;
+            border: 2px solid #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+        
+        .info-section {
+            border: 2px solid #333;
+            border-top: none;
+            padding: 10px;
+        }
+        
+        .info-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .info-field {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .info-field label {
+            font-weight: bold;
+        }
+        
+        .info-field input {
+            border: 1px solid #999;
+            padding: 3px 5px;
+            background: #f9f9f9;
+        }
+        
+        .two-column {
+            display: flex;
+            border: 2px solid #333;
+            border-top: none;
+        }
+        
+        .column-left {
+            flex: 1;
+            padding: 10px;
+            border-right: 1px solid #333;
+        }
+        
+        .column-right {
+            flex: 1;
+            padding: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            font-weight: bold;
+            text-align: left;
+            padding: 5px;
+            border-bottom: 1px solid #999;
+        }
+        
+        td {
+            padding: 5px;
+            vertical-align: top;
+        }
+        
+        .tx-bold {
+            font-weight: bold;
+        }
+        
+        .tx-center {
+            text-align: center;
+        }
+        
+        .border-bottom {
+            border-bottom: 1px solid #999;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .form-control {
+            border: 1px solid #999;
+            padding: 3px 5px;
+            background: #f9f9f9;
+            display: inline-block;
+            min-width: 80px;
+        }
+        
+        .section-title {
+            background: #e0e0e0;
+            padding: 5px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        /* Números marcados en rojo */
+        .numero-rojo {
+            color: red;
+            font-weight: bold;
+            font-size: 14px;
+            position: relative;
+            display: inline-block;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 2px 6px;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        
+        .highlight-field {
+            position: relative;
+        }
+        
+        .highlight-field::after {
+            content: attr(data-numero);
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: red;
+            font-weight: bold;
+            font-size: 14px;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-left">
+                <h2>ORDEN DE TRANSPORTE</h2>
+                <h3>OFICINA</h3>
+            </div>
+            <div class="header-middle">
+                <strong>LEADER TRANSPORT S.L</strong><br>
+                C\ Dr. J.J.Domine, 18 1 Izq.<br>
+                Tel: 96 316 41 60 Fax: 963674717<br>
+                46011-VALENCIA (VALENCIA)<br>
+                B-46828158
+            </div>
+            <div class="header-right">
+                <div class="qr-placeholder">QR CODE</div>
+            </div>
+        </div>
+        
+        <!-- INFORMACIÓN GENERAL -->
+        <div class="info-section">
+            <div class="info-row">
+                <div class="info-field">
+                    <label>F. Carga:</label>
+                    <input type="text" value="02-09-2025" readonly>
+                </div>
+                <div class="info-field">
+                    <label>Hora:</label>
+                    <input type="text" value="06:15:00" readonly>
+                </div>
+                <div class="info-field highlight-field" data-numero="①">
+                    <label>Ref. Consig:</label>
+                    <input type="text" value="7202560656" readonly>
+                </div>
+            </div>
+            <div class="info-row">
+                <div class="info-field">
+                    <label>Recogida estimada:</label>
+                    <input type="text" value="01-09-2025" readonly>
+                </div>
+                <div class="info-field">
+                    <label>Entrega estimad:</label>
+                    <input type="text" value="02-09-2025" readonly>
+                </div>
+                <div class="info-field">
+                    <label>OT Agencia:</label>
+                    <input type="text" value="344474" readonly>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AGENTE Y TRANSPORTISTA -->
+        <div class="two-column">
+            <div class="column-left">
+                <div class="border-bottom">
+                    <label class="tx-bold">Agente:</label>
+                    <input type="text" value="OREY SHIPPING S.L.U" readonly style="width: 85%;">
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <div style="flex: 1;">
+                        <label class="tx-bold">Contenedores:</label>
+                        <input type="text" value="CAIU3855697" readonly style="width: 100%;">
+                    </div>
+                    <div style="flex: 1;" class="highlight-field" data-numero="②">
+                        <label class="tx-bold">Tipo:</label>
+                        <input type="text" value="20'BX 22G1" readonly style="width: 100%;">
+                    </div>
+                    <div style="flex: 1;" class="highlight-field" data-numero="③">
+                        <label class="tx-bold">Hlog Precintos:</label>
+                        <input type="text" value=" L7928643" readonly style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+            <div class="column-right">
+                <table>
+                    <tr>
+                        <th>Transportista</th>
+                        <th>Conductor</th>
+                        <th>Cabeza</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            VICENTE RODIRGO<br>
+                            Avda LOS NARANJOS, Nº 35, planta 1 PU<br>
+                            46190 RIBARROJA DEL TURIA VALENCIA<br>
+                            B01834241
+                        </td>
+                        <td>
+                            VICENTE RODRIGO TRAN<br>
+                            B01834241
+                        </td>
+                        <td>
+                            Pdte asignar<br>
+                            Plataforma: Pdte asignar
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- RETIRAR DE / ENTREGAR EN -->
+        <div class="two-column">
+            <div class="column-left">
+                <table>
+                    <tr>
+                        <th style="border-right: 1px solid #999;">Retirar De:</th>
+                        <th>Entregar En:</th>
+                    </tr>
+                    <tr>
+                        <td style="border-right: 1px solid #999;">
+                            CSP NOATUM<br>
+                            MUELLE PRINCIPE FELIPE<br>
+                            46024 VALENCIA PUERTO VALENCIA
+                        </td>
+                        <td>
+                            CSP NOATUM<br>
+                            MUELLE PRINCIPE FELIPE<br>
+                            46024 VALENCIA PUERTO VALENCIA
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="column-right">
+                <div class="border-bottom">
+                    <table>
+                        <tr>
+                            <th>Mercancía:</th>
+                            <th>Bultos:</th>
+                            <th>Peso:</th>
+                        </tr>
+                        <tr>
+                            <td class="highlight-field" data-numero="④">AGUA DE AZAHAR</td>
+                            <td class="highlight-field" data-numero="⑤">0</td>
+                            <td class="highlight-field" data-numero="⑥">10000kg</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <div class="info-field">
+                        <label class="tx-bold">Temp. Max:</label>
+                        <input type="text" value="0" readonly style="width: 40px;">
+                    </div>
+                    <div class="info-field">
+                        <label class="tx-bold">Temp. Mín:</label>
+                        <input type="text" value="0" readonly style="width: 40px;">
+                    </div>
+                    <div class="info-field">
+                        <label class="tx-bold">Conectar:</label>
+                        <input type="text" value="" readonly style="width: 40px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- EXTRAS Y ONU -->
+        <div class="two-column">
+            <div class="column-left">
+                <table>
+                    <tr>
+                        <th class="tx-center">Ext. Der</th>
+                        <th class="tx-center">Ext. Izq</th>
+                        <th class="tx-center">Ext. Front</th>
+                        <th class="tx-center">Ext. Tras</th>
+                        <th class="tx-center">Ext. Altura</th>
+                    </tr>
+                    <tr>
+                        <td class="tx-center">0</td>
+                        <td class="tx-center">0</td>
+                        <td class="tx-center">0</td>
+                        <td class="tx-center">0</td>
+                        <td class="tx-center">0</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="column-right">
+                <table>
+                    <tr>
+                        <th class="tx-center">ONU</th>
+                        <th class="tx-center">Versión</th>
+                        <th class="tx-center">IMDG</th>
+                        <th class="tx-center">Clase</th>
+                        <th class="tx-center">Notif Apv</th>
+                    </tr>
+                    <tr>
+                        <td class="tx-center"></td>
+                        <td class="tx-center"></td>
+                        <td class="tx-center"></td>
+                        <td class="tx-center"></td>
+                        <td class="tx-center"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- LÍNEA Y PUERTOS -->
+        <div class="two-column">
+            <div class="column-left">
+                <table>
+                    <tr>
+                        <td>
+                            <label class="tx-bold">Línea:</label><br>
+                            <input type="text" value="CMA-CGM" readonly style="width: 90%;">
+                        </td>
+                        <td>
+                            <label class="tx-bold">Nº Escala:</label><br>
+                            <input type="text" value="1202504764" readonly style="width: 90%;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="tx-bold">Buque:</label><br>
+                            <input type="text" value="ATLANTICA PIONEER" readonly style="width: 90%;">
+                        </td>
+                        <td>
+                            <label class="tx-bold">Viaje:</label><br>
+                            <input type="text" value="0BQN5S1MA" readonly style="width: 90%;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label class="tx-bold">Dist. Llamada:</label><br>
+                            <input type="text" value="V7A7016" readonly style="width: 90%;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="column-right">
+                <table>
+                    <tr>
+                        <td>
+                            <label class="tx-bold">Origen:</label><br>
+                            <input type="text" value="VALENCIA" readonly style="width: 90%;">
+                        </td>
+                        <td>
+                            <label class="tx-bold">Destino:</label><br>
+                            <input type="text" value="Port Tangier Mediterranee" readonly style="width: 90%;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label class="tx-bold">Pto. Des/carga:</label><br>
+                            <input type="text" value="Port Tangier Mediterranee" readonly style="width: 90%;">
+                        </td>
+                        <td class="highlight-field" data-numero="⑧">
+                            <label class="tx-bold">Tipo Orden:</label><br>
+                            <input type="text" value="EXPORT" readonly style="width: 90%;">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- REF CARGA Y CARGADOR -->
+        <div class="info-section">
+            <div style="display: flex; gap: 20px;">
+                <div style="flex: 2;" class="highlight-field" data-numero="⑦">
+                    <label class="tx-bold">Ref Carga:</label>
+                    <input type="text" value="A9816041 - LHV3779465" readonly style="width: 80%;">
+                </div>
+                <div style="flex: 1;">
+                    <label class="tx-bold">Cargador:</label>
+                    <input type="text" value="OREY SHIPPING S.L" readonly style="width: 80%;">
+                </div>
+            </div>
+        </div>
+        
+        <!-- OBSERVACIONES -->
+        <div class="info-section" style="border-top: 1px solid #333;">
+            <label class="tx-bold">Observaciones:</label>
+            <div style="padding: 10px; background: #f9f9f9; border: 1px solid #999; margin-top: 5px; font-size: 10px;">
+                +++ RECOGER PRECINTO EN GESTRANS Y ENVIAR FOTO A LEADER ++<br><br>
+                *** CONTENEDOR EN PERFECTO ESTADO; SIN OLORES, ABOLLADURAS NI AGUEROS EN PAREDES, TECHO Y SUELO O TE DEVOLVERÁN VACIO SIN CARGAR ***<br><br>
+                GRADE: General Cargo. SR. TRANSPORTISTA, VERIFIQUE TIPO DE CONTENEDOR Y ESTADO SEGUN ORDEN DE SU CLIENTE. DECLINAREMOS CUALQUIER RESPONSABILIDAD EN CASO DE ACEPTACION DE EQUIPO INAPROPIADO
+            </div>
+        </div>
+        
+        <!-- LEYENDA DE NÚMEROS -->
+        <div style="margin-top: 20px; padding: 15px; background: #fffacd; border: 2px solid #ff0000; border-radius: 5px;">
+            <h3 style="color: #ff0000; margin-bottom: 10px;">📌 Campos marcados en rojo (numerados del 1 al 8):</h3>
+            <ul style="line-height: 1.8;">
+                <li><strong>① Ref. Consig:</strong> 7202560656 (CARGADOR_REF_CARGA)</li>
+                <li><strong>② Tipo:</strong> 20'BX 22G1 (TIPO_CONT_DESC + TIPO_CONT)</li>
+                <li><strong>③ Hlog Precintos:</strong> L7928643 (PRECINTO)</li>
+                <li><strong>④ Mercancía (valor):</strong> AGUA DE AZAHAR (LUGAR_MERCANCIA_CARGA)</li>
+                <li><strong>⑤ Bultos (valor):</strong> 0 (LUGAR_BULTOS_CARGA)</li>
+                <li><strong>⑥ Peso (valor):</strong> 10000kg (LUGAR_KILOS_CARGA)</li>
+                <li><strong>⑦ Ref Carga:</strong> A9816041 - LHV3779465 (LUGAR_REF_CARGA)</li>
+                <li><strong>⑧ Tipo Orden:</strong> EXPORT (PUERTO_TIPO_ORDEN_IMPORTACION = false)</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

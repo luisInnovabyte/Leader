@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulación Orden Terrestre POST - 34494200</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .header-top {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .header-left {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .header-left img {
+            max-width: 200px;
+        }
+        
+        .header-right {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .header-right h3 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .header-right h4 {
+            font-size: 20px;
+        }
+        
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            margin-top: 10px;
+        }
+        
+        .transportista-info {
+            display: flex;
+            gap: 20px;
+            padding: 15px 0;
+            border-bottom: 2px solid #333;
+            margin-bottom: 20px;
+        }
+        
+        .transportista-col {
+            flex: 1;
+            line-height: 1.8;
+        }
+        
+        .transportista-col p {
+            margin: 5px 0;
+        }
+        
+        .tx-bold {
+            font-weight: bold;
+        }
+        
+        .bloque-lugar {
+            border: 2px solid #333;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .bloque-titulo {
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 15px;
+            padding: 5px;
+            background: #e0e0e0;
+        }
+        
+        .bloque-contenido {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .campo {
+            width: calc(50% - 10px);
+            display: flex;
+            gap: 5px;
+            line-height: 1.8;
+        }
+        
+        .campo-full {
+            width: 100%;
+            display: flex;
+            gap: 5px;
+            line-height: 1.8;
+        }
+        
+        .campo label {
+            font-weight: bold;
+        }
+        
+        .campo span {
+            font-weight: normal;
+        }
+        
+        .highlight-field {
+            position: relative;
+        }
+        
+        .highlight-field::after {
+            content: attr(data-numero);
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: red;
+            font-weight: bold;
+            font-size: 14px;
+            background: rgba(255, 0, 0, 0.1);
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+        
+        .firma-section {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #999;
+        }
+        
+        .firma-box {
+            flex: 1;
+        }
+        
+        .firma-box label {
+            font-weight: bold;
+        }
+        
+        .firma-placeholder {
+            width: 100%;
+            height: 50px;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            margin: 5px 0;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            padding: 15px;
+            border: 2px solid #333;
+            background: #f9f9f9;
+        }
+        
+        .leyenda {
+            margin-top: 20px;
+            padding: 15px;
+            background: #d4edda;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+        }
+        
+        .leyenda h3 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+        
+        .leyenda ul {
+            line-height: 1.8;
+        }
+        
+        .tx-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-top">
+                <div class="header-left">
+                    <div style="border: 2px solid #666; padding: 20px; display: inline-block;">
+                        LOGO Leader Transport
+                    </div>
+                </div>
+                <div class="header-right">
+                    <h3 class="tx-bold">ORDEN DE CARGA</h3>
+                    <h4 class="tx-bold">Nº 344942</h4>
+                </div>
+            </div>
+            <div class="header-info">
+                <div>
+                    C\ Dr. J.J.Domine, 18 1 Izq., 46011, VALENCIA, VALENCIA<br>
+                    TEL: 96 316 41 60<br>
+                    EMAIL: transporte@leader-transport.com<br>
+                    NIF: B-46828158
+                </div>
+                <div style="text-align: right;">
+                    Página 1 de 1
+                </div>
+            </div>
+        </div>
+        
+        <!-- INFORMACIÓN DEL TRANSPORTISTA -->
+        <div class="transportista-info">
+            <div class="transportista-col">
+                <p><span class="tx-bold">Transportista:</span> AMBROSIO MTNEZ</p>
+                <p><span class="tx-bold">Dirección:</span> C/ MAESTRA CARMEN BENAGES, Nº 1 P 1, PTA 5</p>
+                <p><span class="tx-bold">Conductor:</span> AMBROSIO MTNEZ PÉREZ</p>
+                <p><span class="tx-bold">Matrícula:</span> 6780MPK</p>
+                <p><span class="tx-bold">Precio acordado:</span></p>
+            </div>
+            <div class="transportista-col">
+                <p><span class="tx-bold">Identificación Transportista:</span> 44393558Q</p>
+                <p><span class="tx-bold">Población:</span> BENETUSSER</p>
+                <p><span class="tx-bold">Identificación Conductor:</span> 44393558Q</p>
+                <p><span class="tx-bold">Plataforma:</span> .</p>
+                <p><span class="tx-bold">Tipo Plataforma:</span> CISTERNA</p>
+            </div>
+        </div>
+        
+        <!-- LUGARES DE CARGA -->
+        <div class="bloque-lugar">
+            <div class="bloque-titulo">LUGARES DE CARGA 📥</div>
+            <div class="bloque-contenido">
+                <div class="campo">
+                    <label>Empresa:</label>
+                    <span>VINAGRES IBERIA</span>
+                </div>
+                <div class="campo">
+                    <label>Población:</label>
+                    <span>TOMELLOSO</span>
+                </div>
+                <div class="campo-full">
+                    <label>Dirección:</label>
+                    <span>CANIMO DE ALCÁZAR PROLONGACIÓN, C/ ZURBARÁN S/N</span>
+                </div>
+                <div class="campo">
+                    <label>Teléfono:</label>
+                    <span></span>
+                </div>
+                <div class="campo">
+                    <label>CP:</label>
+                    <span>13700</span>
+                </div>
+                <div class="campo">
+                    <label>Fecha:</label>
+                    <span></span>
+                </div>
+                <div class="campo">
+                    <label>Hora:</label>
+                    <span></span>
+                </div>
+                <div class="campo">
+                    <label>Mercancia:</label>
+                    <span>null</span>
+                </div>
+                <div class="campo highlight-field" data-numero="①">
+                    <label>Ref. carga:</label>
+                    <span>XA366KT</span>
+                </div>
+                <div class="campo">
+                    <label>Bultos:</label>
+                    <span>0</span>
+                </div>
+                <div class="campo">
+                    <label>Metros:</label>
+                    <span></span>
+                </div>
+                <div class="campo">
+                    <label>Kilos:</label>
+                    <span>null</span>
+                </div>
+                <div class="campo highlight-field" data-numero="③">
+                    <label>Observaciones:</label>
+                    <span></span>
+                </div>
+                
+                <div class="firma-section" style="width: 100%; display: flex; gap: 20px;">
+                    <div class="firma-box">
+                        <label>Firma Cliente:</label>
+                        <div class="firma-placeholder">[FIRMA CLIENTE]</div>
+                        <label>Identificación Cliente:</label>
+                        <div></div>
+                    </div>
+                    <div class="firma-box">
+                        <label>Firma Transportista:</label>
+                        <div class="firma-placeholder">[FIRMA TRANSPORTISTA]</div>
+                        <label>Identificación Transportista:</label>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- LUGARES DE DESCARGA -->
+        <div class="bloque-lugar">
+            <div class="bloque-titulo">LUGARES DE DESCARGA 📤</div>
+            <div class="bloque-contenido">
+                <div class="campo">
+                    <label>Empresa:</label>
+                    <span>SAGUNTO</span>
+                </div>
+                <div class="campo">
+                    <label>Población:</label>
+                    <span>PUERTO DE SAGUNTO</span>
+                </div>
+                <div class="campo-full">
+                    <label>Dirección:</label>
+                    <span>MUELLE CENTRO S/N</span>
+                </div>
+                <div class="campo">
+                    <label>Teléfono:</label>
+                    <span>962699002</span>
+                </div>
+                <div class="campo">
+                    <label>CP:</label>
+                    <span>46520</span>
+                </div>
+                <div class="campo">
+                    <label>Fecha:</label>
+                    <span></span>
+                </div>
+                <div class="campo">
+                    <label>Hora:</label>
+                    <span></span>
+                </div>
+                <div class="campo">
+                    <label>Mercancia:</label>
+                    <span>null</span>
+                </div>
+                <div class="campo highlight-field" data-numero="②">
+                    <label>Ref. carga:</label>
+                    <span>XA366KT</span>
+                </div>
+                <div class="campo">
+                    <label>Bultos:</label>
+                    <span>0</span>
+                </div>
+                <div class="campo">
+                    <label>Metros:</label>
+                    <span></span>
+                </div>
+                <div class="campo">
+                    <label>Kilos:</label>
+                    <span>null</span>
+                </div>
+                <div class="campo highlight-field" data-numero="④">
+                    <label>Observaciones:</label>
+                    <span></span>
+                </div>
+                
+                <div class="firma-section" style="width: 100%; display: flex; gap: 20px;">
+                    <div class="firma-box">
+                        <label>Firma Cliente:</label>
+                        <div class="firma-placeholder">[FIRMA CLIENTE]</div>
+                        <label>Identificación Cliente:</label>
+                        <div></div>
+                    </div>
+                    <div class="firma-box">
+                        <label>Firma Transportista:</label>
+                        <div class="firma-placeholder">[FIRMA TRANSPORTISTA]</div>
+                        <label>Identificación Transportista:</label>
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FOOTER -->
+        <div class="footer tx-center" style="font-size: 9px;">
+            <div style="display: flex; justify-content: space-around;">
+                <div style="flex: 1; text-align: center;">
+                    <strong>FIRMA Y SELLO CLIENTE</strong>
+                    <div style="height: 60px;"></div>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    <strong>FIRMA Y SELLO TRANSPORTISTA</strong>
+                    <div style="height: 60px;"></div>
+                </div>
+            </div>
+            <div style="margin-top: 10px;">
+                LEADER TRANSPORT S.L C\ Dr. J.J.Domine, 18 1 Izq.,46011,VALENCIA,VALENCIA<br>
+                Tel.: 96 316 41 60 Email: transporte@leader-transport.com<br>
+                <small>Registro Mercantil de Valencia Tomo 2986 General 302 de la Secc. General del Libro de Sociedades Folio 58. Hoja nº V-4381. N.I.F.: B46828158</small>
+            </div>
+        </div>
+        
+        <!-- LEYENDA DE NÚMEROS -->
+        <div class="leyenda">
+            <h3>✅ Campos corregidos según cambios aplicados (JSON: 34494200.json):</h3>
+            <ul>
+                <li><strong>① Ref. carga (CARGA):</strong> XA366KT - Campo: <code>$viaje['LUGAR_REF_CARGA']</code></li>
+                <li><strong>② Ref. carga (DESCARGA):</strong> XA366KT - Campo: <code>$viaje['LUGAR_REF_DESCARGA']</code></li>
+                <li><strong>③ Observaciones (CARGA):</strong> (vacío en JSON) - Campo: <code>$viaje['LUGAR_OBSERVACIONES_CARGA']</code></li>
+                <li><strong>④ Observaciones (DESCARGA):</strong> (vacío en JSON) - Campo: <code>$viaje['LUGAR_OBSERVACIONES_DESCARGA']</code></li>
+            </ul>
+            <br>
+            <h3>📝 Campos de firma confirmados:</h3>
+            <ul>
+                <li><strong>Firma Cliente (en cada lugar):</strong> <code>$viaje["FirmaViajeReceptor"]</code></li>
+                <li><strong>Identificación Cliente:</strong> <code>$viaje["nombreViajeReceptor"] . ", " . $viaje["dniViajeReceptor"]</code></li>
+                <li><strong>Firma Transportista (en cada lugar):</strong> <code>$viaje["FirmaViajeConductor"]</code></li>
+                <li><strong>Identificación Transportista:</strong> <code>$viaje["nombreViajeConductor"] . ", " . $viaje["dniViajeConductor"]</code></li>
+                <li><strong>Firmas finales (footer):</strong> Solo aparecen cuando tipoDocumento = "E"</li>
+            </ul>
+            <br>
+            <h3>🔧 Cambios realizados en orden.php (tipo T):</h3>
+            <ul>
+                <li>✅ Cambiado <code>$jsonDatos['CARGADOR_REF_CARGA']</code> a <code>$viaje['LUGAR_REF_CARGA']</code> en LUGARES DE CARGA</li>
+                <li>✅ Cambiado <code>$jsonDatos['CARGADOR_REF_CARGA']</code> a <code>$viaje['LUGAR_REF_DESCARGA']</code> en LUGARES DE DESCARGA</li>
+                <li>✅ Activado campo Observaciones en CARGA con <code>$viaje['LUGAR_OBSERVACIONES_CARGA']</code></li>
+                <li>✅ Activado campo Observaciones en DESCARGA con <code>$viaje['LUGAR_OBSERVACIONES_DESCARGA']</code></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

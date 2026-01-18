@@ -1430,21 +1430,27 @@
                                 </div>
 
                                 <hr>
+                            <div class="col-12">
+                                <label class="form-control-personalizado-label tx-bold" for="precioAcordadoJson">Precio acordado:</label>
+                                <label id="precioAcordadoJson" class="form-control-personalizado tx-break text-reset"><?php echo (isset($jsonDatos['LUGARES_DESCARGA'][0]['LUGAR_IMPORTE']) && !empty($jsonDatos['LUGARES_DESCARGA'][0]['LUGAR_IMPORTE'])) ? $jsonDatos['LUGARES_DESCARGA'][0]['LUGAR_IMPORTE'] . ' €' : ''; ?></label>
                             </div>
+
+                            <hr>
                         </div>
+                    </div>
 
-                        <!-- CARGAR VIAJES -->
-                        <?php foreach ($datosViajes as $viaje) { ?>
+                    <!-- CARGAR VIAJES -->
+                    <?php foreach ($datosViajes as $viaje) { ?>
 
-                            <?php
+                        <?php
 
-                            if ($viaje['tipoViaje'] == 'CARGA') {
-                                $colorBorde = 'border-info';
-                            } else if ($viaje['tipoViaje'] == 'DESCARGA') {
-                                $colorBorde = 'border-danger';
-                            }
+                        if ($viaje['tipoViaje'] == 'CARGA') {
+                            $colorBorde = 'border-info';
+                        } else if ($viaje['tipoViaje'] == 'DESCARGA') {
+                            $colorBorde = 'border-danger';
+                        }
 
-                            ?>
+                        ?>
 
                             <div class="infoCard bg-light-grey card border-bottom border-0 border-4 shadow-sm <?php echo $colorBorde; ?>">
                                 <div class="card-body text-center">
@@ -1512,6 +1518,7 @@
                         <?php } ?>
 
                     </div>
+                    <!--============= FIN MODO TRANSPORTE MULTIMODAL =================-->
 
                 <?php } else { ?>
 

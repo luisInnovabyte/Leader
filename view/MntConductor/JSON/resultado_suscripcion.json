@@ -1,0 +1,15 @@
+[
+    {
+        "idSuscripcion": 3,
+        "idSoftware": "27649200911ce841e48aad6e786f8f9a",
+        "nombreDominio": "leader.innovabyte.es",
+        "gesdoc_m": 0,
+        "cms_m": 0,
+        "inscripciones_m": 0,
+        "facturacion_m": 0,
+        "helpdesk_m": 0,
+        "transporte_m": 1,
+        "avisos_m": 0,
+        "educacion_m": 0
+    }
+]

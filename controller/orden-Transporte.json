@@ -1,0 +1,1 @@
+"SELECT * FROM `orden-Transporte` ORDER BY `TTE_COD` DESC"

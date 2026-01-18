@@ -1,0 +1,1 @@
+     <button type="button" id="ayuda" class="btn btn-info d-none" data-bs-toggle="modal" data-bs-target="#modalAyuda">Ayuda</button>

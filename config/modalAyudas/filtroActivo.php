@@ -1,0 +1,2 @@
+   <!-- ********************************************************** -->
+   <h4><span class="filtro-activo parpadeo label d-none"><i class="fa-solid fa-triangle-exclamation"></i> FILTRO ACTIVO</span></h4>

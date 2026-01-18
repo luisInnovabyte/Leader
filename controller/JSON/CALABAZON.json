@@ -1,0 +1,1 @@
+"SELECT * FROM tm_usuario WHERE trim(correoUsu) = trim('software@efeuno.es')"

@@ -1,0 +1,1 @@
+"SELECT * FROM tm_usuario WHERE correoUsu = 'software@efeuno.es' AND senaUsu = MD5('leader2022@')"

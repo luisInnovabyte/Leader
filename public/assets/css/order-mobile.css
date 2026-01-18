@@ -1,0 +1,65 @@
+    /* Estilos específicos para pantallas pequeñas (móviles) */
+@media (max-width: 767px) {
+  .page-content {
+    padding: 10px;
+  }
+
+  .breadcrumb-title {
+    font-size: 18px;
+  }
+
+  .card-body {
+    padding: 10px;
+  }
+
+  .btn-outline-success {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  /* Cambiar el orden de los elementos */
+  .order-mobile-first {
+    order: -1;
+  }
+
+  .order-mobile-last {
+    order: 1;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Estilos específicos para pantallas grandes (ordenadores) */
+@media (min-width: 768px) {
+  .page-content {
+    padding: 30px;
+  }
+
+  .breadcrumb-title {
+    font-size: 24px;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .btn-outline-success {
+    width: auto;
+  }
+
+  .table-responsive {
+    overflow: visible;
+  }
+
+  /* Restaurar el orden original */
+  .order-mobile-first, .order-mobile-last {
+    order: 0;
+  }
+}

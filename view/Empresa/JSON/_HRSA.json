@@ -1,0 +1,1 @@
+"SELECT * FROM `tm_suscripcion` WHERE `idSoftware` = '27649200911ce841e48aad6e786f8f9a'"

@@ -1,0 +1,37 @@
+{
+  "General": {
+      "tituloSitio": "Software Efeuno Dev"
+     
+  },
+  "database": {
+    "host": "192.168.50.13",
+    "port": 3306,
+    "dbname": "newproject",
+    "username": "newproject",
+    "password": "Newproject2022@"
+  },
+  "ftpConfig": {
+    "ipFTP": "84.127.234.85",
+    "userFTP": "ftpEfeuno",
+    "passFTP": "fTp2o24efeUn0",
+    "portFTP": 21
+  },
+  "MntPrescriptores_Edu": {
+
+    "divContacto": 1,
+    "divUbicacion": 1,
+    "divObservacion": 1,
+    "divEstudiante": 1,
+    "divMatriculacion": 1,
+
+    "camposAlternativosContacto": 1,
+    "camposAlternativosUbicacion":1,
+    "campoGrupo": 1,
+    "campoBildungsurlaub": 1,
+    "campoAuPair": 1,
+
+    "botonFactura": 1
+
+  }
+ 
+}

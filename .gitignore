@@ -1,0 +1,6 @@
+*.log
+view/Ordenes/uploads/*.json
+view/Ordenes/responsesEfeuno/*.json
+view/Ordenes/_uploadsOld/*.*
+view/Ordenes/envios/*.json
+*.tmp

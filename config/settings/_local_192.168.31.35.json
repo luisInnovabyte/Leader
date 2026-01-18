@@ -1,0 +1,18 @@
+{
+  "General": {
+    "tituloSitio": "Software Efeuno Dev"
+  },
+  "database": {
+    "host": "localhost",
+    "port": 3306,
+    "dbname": "newproject",
+    "username": "root",
+    "password": "27979699"
+  },
+  "ftpConfig": {
+    "ipFTP": "84.127.234.85",
+    "userFTP": "ftpEfeuno",
+    "passFTP": "fTp2o24efeUn0",
+    "portFTP": 21
+  }
+}

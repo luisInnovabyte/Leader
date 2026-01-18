@@ -1,0 +1,357 @@
+
+    :root,
+    [data-bs-theme=light] {
+
+        --bs-cyan-rgb: 13, 202, 240;
+        --bs-light-grey-rgb: 245, 245, 245;
+        --bs-dark-grey-rgb: 202, 202, 202;
+        --bs-black-blue-rgb: 0, 0, 255;
+        --bs-light-real-rgb: 248, 249, 250;
+        --bs-black-real-rgb: 33, 37, 41;
+        --bs-orange: 255, 155, 0;
+        --bs-light-cyan-rgb: 153, 255, 255;
+        --bs-light-red-rgb: 255, 153, 153;
+        --bs-light-yellow-rgb: 255, 255, 102;
+        --bs-light-green-rgb: 153, 255, 204;
+        --bs-green-rgb: 102, 255, 204;
+        --bs-pink-rgb: 255, 153, 255;
+        --bs-purple-rgb: 153, 153, 255;
+        --bs-light-purple-rgb: 204, 204, 255;
+    }
+
+    [data-bs-theme=dark] {
+
+        --bs-cyan-rgb: 13, 202, 240;
+        --bs-light-grey-rgb: 48, 51, 57;
+        --bs-dark-grey-rgb: 242, 242, 242;
+        --bs-black-blue-rgb: 0, 0, 255;
+        --bs-light-real-rgb: 39, 44, 49;
+        --bs-black-real-rgb: 248, 249, 250;
+        --bs-orange: 255, 155, 0;
+        --bs-light-cyan-rgb: 153, 255, 255;
+        --bs-light-red-rgb: 255, 153, 153;
+        --bs-light-yellow-rgb: 255, 255, 102;
+        --bs-light-green-rgb: 153, 255, 204;
+        --bs-green-rgb: 102, 255, 204;
+        --bs-pink-rgb: 255, 153, 255;
+        --bs-purple-rgb: 153, 153, 255;
+        --bs-light-purple-rgb: 204, 204, 255;
+    }
+
+   
+    .bg-purple {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-purple-rgb), var(--bs-bg-opacity)) !important;
+    }
+    .bg-purple-light {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-light-purple-rgb), var(--bs-bg-opacity)) !important;
+    }
+    .bg-cyan {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-cyan-rgb), var(--bs-bg-opacity)) !important;
+    }
+    .bg-pink {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-pink-rgb), var(--bs-bg-opacity)) !important;
+    }
+    .bg-cyan-light {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-light-cyan-rgb), var(--bs-bg-opacity)) !important;
+    }
+    .bg-green-light {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-light-green-rgb), var(--bs-bg-opacity)) !important;
+    }
+    .bg-green {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-green-rgb), var(--bs-bg-opacity)) !important;
+    }
+    .bg-yellow-light {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-light-yellow-rgb), var(--bs-bg-opacity)) !important;
+    }
+    .bg-red-light {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-light-red-rgb), var(--bs-bg-opacity)) !important;
+    }
+    .bg-orange {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-orange), var(--bs-bg-opacity))!important
+    }
+
+    .bg-real-black {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-black-real-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .bg-light-grey {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-light-grey-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .text-cyan {
+        --bs-text-opacity: 1;
+        color: rgba(var(--bs-cyan-rgb), var(--bs-text-opacity)) !important
+    }
+
+    .text-black-blue {
+        --bs-text-opacity: 1;
+        color: rgba(var(--bs-black-blue-rgb), var(--bs-text-opacity)) !important
+    }
+
+    .dt-button-collection,
+    .dtsb-searchBuilder {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
+        border: 0px
+    }
+
+    .dtsb-searchBuilder {
+        padding: 10px;
+    }
+
+    input:focus {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-light-real-rgb), var(--bs-bg-opacity)) !important;
+
+        /* Color de fondo cuando se hace focus */
+        color: rgba(var(--bs-black-real-rgb), var(--bs-bg-opacity)) !important;
+        /* Color del borde cuando se hace focus */
+    }
+
+    input {
+        --bs-bg-opacity: 1;
+        /*         background-color: rgba(var(--bs-light-real-rgb), var(--bs-bg-opacity)) !important;
+ */
+        /* Color de fondo cuando se hace focus */
+        color: rgba(var(--bs-black-real-rgb), var(--bs-bg-opacity)) !important;
+        /* Color del borde cuando se hace focus */
+    }
+
+    .flatpickr-monthDropdown-months {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-light-real-rgb), var(--bs-bg-opacity)) !important;
+
+    }
+
+    .flatpickr-day:hover,
+    .modal-body {
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-light-real-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .flatpickr-day.prevMonthDay,
+    .flatpickr-day.nextMonthDay {
+        --bs-bg-opacity: 0.35;
+
+        color: rgba(var(--bs-black-real-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--highlighted {
+
+        --bs-bg-opacity: 1;
+        background-color: rgba(var(--bs-light-real-rgb), var(--bs-bg-opacity)) !important;
+        color: rgba(var(--bs-black-real-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .select2-selection__rendered {
+        color: rgba(var(--bs-black-real-rgb), var(--bs-bg-opacity)) !important;
+
+    }
+
+    @media (min-width: 992px) {
+
+        .select2-container--bootstrap-5 #select2-profesionTrabajador-results,
+        .select2-container--bootstrap-5 #select2-profesionTrabajadorE-results {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .select2-container--bootstrap-5 #select2-profesionTrabajador-results .select2-results__option,
+        .select2-container--bootstrap-5 #select2-profesionTrabajadorE-results .select2-results__option {
+            width: 50%;
+            /* Dividir en dos columnas */
+            box-sizing: border-box;
+            padding: 5px;
+        }
+
+    }
+
+    .pagination>* {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Contenedor del selector */
+    .dataTables_length {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Texto "Mostrar" */
+    .dataTables_length label {
+        margin: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    /* El select y su contenedor */
+    .dataTables_length select {
+        width: 100px;
+        display: inline-block;
+        margin: 0 5px;
+        padding: 2px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+    }
+
+    /* Estilo adicional para el select cuando está en foco */
+    .dataTables_length select:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+
+    /* Estilo adicional para el select cuando está en hover */
+    .dataTables_length select:hover {
+        border-color: #007bff;
+    }
+
+    /* El texto "registros" */
+    .dataTables_length label::after {
+        margin-left: 5px;
+    }
+
+    .responsive-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        /* Espacio entre elementos */
+    }
+
+    .responsive-buttons .button,
+    .responsive-buttons .label {
+        /* Asegúrate de que los botones y etiquetas ocupen espacio adecuadamente */
+        flex: 1 1 auto;
+        min-width: 100px;
+        /* Ajusta este valor según sea necesario */
+        text-align: center;
+        /* Centra el contenido dentro de cada botón/etiqueta */
+    }
+
+    .dataTable thead th {
+        --bs-bg-opacity: 1;
+        border: 0px;
+        border-bottom: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+        border-top: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .dataTable thead th:first-child {
+        --bs-bg-opacity: 1;
+        border-left: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .dataTable thead th:last-child {
+        --bs-bg-opacity: 1;
+        border-right: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .dataTable tfoot th {
+        --bs-bg-opacity: 1;
+        border: 0px;
+        border-top: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+        border-bottom: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+    }
+    
+    .dataTable tbody td:last-child{
+        --bs-bg-opacity: 1;
+        border: 0px;
+        border-left: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+        border-right: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+    }
+    .dataTable tbody td{
+        --bs-bg-opacity: 1;
+        border: 0px;
+        border-left: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+    }
+    
+    .dataTable tfoot th:first-child {
+        --bs-bg-opacity: 1;
+        border-left: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .dataTable tfoot th:not(.hidden):last-child {
+        --bs-bg-opacity: 1;
+        border-right: 1px solid rgba(var(--bs-dark-grey-rgb), var(--bs-bg-opacity)) !important;
+    }
+
+    .autoArea {
+	 field-sizing: content !important;
+	 min-block-size: 3.5rlh;
+	 min-inline-size: 20ch;
+    }
+
+    /* SUMMERNOTE PLACEHOLDER BUG*/  
+  
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #f8f9fa; /* Ajusta este color si lo deseas */
+        font-size: 14px;
+        color: #333;
+        padding: 10px 0;
+    }
+    
+    .footer-content {
+        display: flex;
+        justify-content: space-between; /* Divide el espacio entre los elementos */
+        align-items: center; /* Alinea verticalmente el contenido */
+        width: 100%;
+        padding: 0 20px;
+    }
+    
+    .footer-left {
+        flex: 1; /* Sección izquierda vacía para equilibrar */
+    }
+    
+    .footer-center {
+        flex: 2; /* Sección central para los derechos reservados */
+        text-align: center; /* Mantiene el texto centrado */
+    }
+    
+    .footer-right {
+        flex: 1; /* Sección derecha para la versión */
+        text-align: right; /* Alinea la versión a la derecha */
+    }
+    
+      /* Estilo del contenedor de sugerencias */
+      .suggestions-list {
+        position: absolute;
+        width: 400px;
+        border: 1px solid #ccc;
+        background-color: white;
+        max-height: 200px;
+        overflow-y: auto;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+        /* Asegura que las sugerencias se muestran sobre otros elementos */
+        display: none;
+        /* Ocultamos inicialmente */
+    }
+
+    /* Estilo de cada sugerencia */
+    .suggestions-list p {
+        padding: 10px;
+        margin: 0;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+        font-size: 14px;
+    }
+
+    .suggestions-list p:hover {
+        background-color: #f0f0f0;
+    }

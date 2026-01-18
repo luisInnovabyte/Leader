@@ -1,0 +1,16 @@
+{
+    "database": {
+      "host": "localhost",
+      "port": 3306,
+      "username": "root",
+      "password": "supersecreto"
+    },
+    "api": {
+      "key": "abc123456789",
+      "secret": "xyz987654321"
+    },
+    "app": {
+      "debug": true
+    }
+  }
+  

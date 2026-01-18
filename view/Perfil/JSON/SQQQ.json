@@ -1,0 +1,1 @@
+"SELECT * FROM `view_usuario&conductor` WHERE `tokenUsu` = '1fcce077af6034560902b2b5ae4a34'"

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMR - Carta de Porte Internacional</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+        
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .cmr-content {
+            padding: 10mm;
+        }
+        
+        .cmr-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9px;
+        }
+        
+        .cmr-table td {
+            border: 1px solid #000;
+            padding: 3px;
+            vertical-align: top;
+        }
+        
+        .cmr-num {
+            font-weight: bold;
+            font-size: 11px;
+            width: 20px;
+            display: inline-block;
+        }
+        
+        .cmr-label {
+            color: #006400;
+            font-size: 7px;
+            line-height: 1.2;
+        }
+        
+        .cmr-data {
+            font-size: 10px;
+            padding-top: 2px;
+            color: #000;
+        }
+        
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .header-left {
+            font-size: 8px;
+        }
+        
+        .header-right {
+            text-align: right;
+        }
+        
+        .order-number {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .center-content {
+            text-align: center;
+        }
+        
+        .cmr-title {
+            font-weight: bold;
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+        
+        .convention-text {
+            font-size: 7px;
+            padding: 2px;
+            text-align: left;
+        }
+        
+        .inner-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 7px;
+        }
+        
+        .inner-table td {
+            border: 1px solid #000;
+            padding: 2px;
+        }
+        
+        .no-border {
+            border: none !important;
+        }
+        
+        .checkbox {
+            font-size: 8px;
+            margin-top: 5px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .page-container {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="cmr-content">
+            <!-- Header -->
+            <div class="header-section">
+                <div class="header-left">
+                    <strong>Ejemplar para el porteador - Exemplaire pour le transporteur<br>Copy for the carrier</strong>
+                </div>
+                <div class="header-right">
+                    <span class="order-number">339232/1</span>
+                </div>
+            </div>
+
+            <table class="cmr-table">
+                <!-- Row 1: Sender & CMR Title -->
+                <tr>
+                    <td style="width: 45%;">
+                        <span class="cmr-num">1</span>
+                        <div class="cmr-label">Remitente (nombre, dirección, país)<br>Expéditeur (nom, adresse, pays)<br>Sender (name, address, country)</div>
+                        <div class="cmr-data">
+                            DHL FREIGHT PORTUGAL<br>
+                            RUA PONTE DOS CAVALOS, 425<br>
+                            2870-674 - ALTO ESTANQUEIRO- MONTIJO<br>
+                            PORTUGAL
+                        </div>
+                    </td>
+                    <td rowspan="2" style="width: 55%;">
+                        <div class="center-content">
+                            <div class="cmr-title">
+                                CARTA DE PORTE INTERNACIONAL<br>
+                                LETTRE DE VOITURE INTERNATIONALE<br>
+                                INTERNATIONAL CONSIGNMENT NOTE
+                            </div>
+                            <table style="width: 100%; font-size: 7px;">
+                                <tr>
+                                    <td class="no-border convention-text">Este Transporte queda sometido, no obstante toda cláusula contraria, al Convenio sobre el Contrato de Transporte Internacional de Mercancías por Carretera (CMR).</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-border convention-text">Ce transport est soumis, nonobstant toute clause contraire, à la Convention relative au contrat de transport international de marchandises par route (CMR).</td>
+                                </tr>
+                                <tr>
+                                    <td class="no-border convention-text">This carriage is subject, notwithstanding any clause to the contrary, to the Convention on the Contract for the International Carriage of Goods by Road (CMR).</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 2: Consignee -->
+                <tr>
+                    <td>
+                        <span class="cmr-num">2</span>
+                        <div class="cmr-label">Consignatario (nombre, dirección, país)<br>Destinataire (nom, adresse, pays)<br>Consignee (name, address, country)</div>
+                        <div class="cmr-data">
+                            AMAZON FULLFILMENT CENTER ZAZ1<br>
+                            P.I PLATAFORMA LOG ZRZ; PARCELAS ALI-28<br>
+                            50197 - ZARAGOZA (ZARAGOZA)<br>
+                            ESPAÑA
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 3: Delivery place & Carrier info -->
+                <tr>
+                    <td>
+                        <span class="cmr-num">3</span>
+                        <div class="cmr-label">Lugar de entrega de la mercancía (lugar, país)<br>Lieu prévu pour la livraison de la marchandise (lieu, pays)<br>Place of delivery of the goods (place, country)</div>
+                        <div class="cmr-data">
+                            203392320101 - AMAZON FULLFILMENT CENTER ZAZ1<br>
+                            P.I PLATAFORMA LOG ZRZ; PARCELAS ALI-28<br>
+                            50197 - ZARAGOZA (ZARAGOZA)<br>
+                            ESPAÑA
+                        </div>
+                    </td>
+                    <td rowspan="3">
+                        <span class="cmr-num">16</span>
+                        <div class="cmr-label">Porteador (nombre, dirección, país)<br>Transporteur (nom, adresse, pays)<br>Carrier (name, address, country)</div>
+                        <div class="cmr-data">
+                            LEADER T. S.L.<br>
+                            JJ DOMINE 18 IZQ<br>
+                            46011 - VALENCIA (VALENCIA)<br>
+                            ESPAÑA<br>
+                            NIF: B46828158
+                        </div>
+                        <hr style="margin: 5px 0;">
+                        <span class="cmr-num">17</span>
+                        <div class="cmr-label">Porteadores sucesivos (nombre, dirección, país)<br>Transporteurs successifs (nom, adresse, pays)<br>Successive carriers (name, address, country)</div>
+                        <div class="cmr-data">
+                            5375LJG - R4556BCT
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 4: Place of loading -->
+                <tr>
+                    <td>
+                        <span class="cmr-num">4</span>
+                        <div class="cmr-label">Lugar y fecha de carga de la mercancía (lugar, país, fecha)<br>Lieu et date de la prise en charge de la marchandise (lieu, pays, date)<br>Place and date of taking over the goods (place, country, date)</div>
+                        <div class="cmr-data">
+                            103392320101 - SURPRISE EXTEND, LDA<br>
+                            RUA DO SOL NASCENTE N 7 J<br>
+                            2660-00 - FRIELAS (PORTUGAL)<br>
+                            PORTUGAL<br>
+                            Fecha: 19/09/2024
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 5: Documents attached -->
+                <tr>
+                    <td>
+                        <span class="cmr-num">5</span>
+                        <div class="cmr-label">Documentos anexos<br>Documents annexés<br>Documents attached</div>
+                        <div class="cmr-data">
+                            Ref. Carga: LISTRP000030670
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 6: Goods description table -->
+                <tr>
+                    <td colspan="2" style="padding: 0;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="width: 10%; border-right: 1px solid #000; border-bottom: none;">
+                                    <span class="cmr-num">6</span>
+                                    <div class="cmr-label">Marcas y números<br>Marques et numéros<br>Marks and Nos.</div>
+                                </td>
+                                <td style="width: 12%; border-right: 1px solid #000; border-bottom: none;">
+                                    <span class="cmr-num">7</span>
+                                    <div class="cmr-label">Número de bultos<br>Nombre de colis<br>Number of packages</div>
+                                    <div class="cmr-data">6</div>
+                                </td>
+                                <td style="width: 12%; border-right: 1px solid #000; border-bottom: none;">
+                                    <span class="cmr-num">8</span>
+                                    <div class="cmr-label">Clase de embalaje<br>Mode d'emballage<br>Method of packing</div>
+                                    <div class="cmr-data">PALÉ</div>
+                                </td>
+                                <td style="width: 26%; border-right: 1px solid #000; border-bottom: none;">
+                                    <span class="cmr-num">9</span>
+                                    <div class="cmr-label">Naturaleza de la mercancía<br>Nature de la marchandise<br>Nature of the goods</div>
+                                    <div class="cmr-data">CHÁ + CAFÉ + VINAGRE</div>
+                                </td>
+                                <td style="width: 10%; border-right: 1px solid #000; border-bottom: none;">
+                                    <span class="cmr-num">10</span>
+                                    <div class="cmr-label">Nº estadístico<br>No. statistique<br>Statistical No.</div>
+                                </td>
+                                <td style="width: 15%; border-right: 1px solid #000; border-bottom: none;">
+                                    <span class="cmr-num">11</span>
+                                    <div class="cmr-label">Peso bruto, kg<br>Poids brut, kg<br>Gross weight, kg</div>
+                                    <div class="cmr-data">2500</div>
+                                </td>
+                                <td style="width: 15%; border-bottom: none;">
+                                    <span class="cmr-num">12</span>
+                                    <div class="cmr-label">Volumen m³<br>Cubage m³<br>Volume m³</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Row 7: Instructions & Agreements -->
+                <tr>
+                    <td style="height: 80px;">
+                        <span class="cmr-num">13</span>
+                        <div class="cmr-label">Instrucciones del remitente<br>Instructions de l'expéditeur<br>Sender's instructions</div>
+                    </td>
+                    <td rowspan="4" style="vertical-align: top;">
+                        <span class="cmr-num">19</span>
+                        <div class="cmr-label">Estipulaciones particulares<br>Conventions particulières<br>Special agreements</div>
+                        <table class="inner-table" style="margin-top: 5px;">
+                            <tr>
+                                <td style="padding: 2px;"><span class="cmr-num">20</span> A pagar por / To be paid by</td>
+                                <td style="padding: 2px;">Remitente<br>Sender</td>
+                                <td style="padding: 2px;">Moneda<br>Currency</td>
+                                <td style="padding: 2px;">Consignatario<br>Consignee</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">Precio del transporte / Carriage charges</td>
+                                <td></td>
+                                <td>EUR</td>
+                                <td>300.00</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">Suplementos / Supplements</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">Gastos accesorios / Other charges</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 2px;">Total</td>
+                                <td></td>
+                                <td>EUR</td>
+                                <td>300.00</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Row 8: Payment instructions -->
+                <tr>
+                    <td style="height: 50px;">
+                        <span class="cmr-num">14</span>
+                        <div class="cmr-label">Forma de pago<br>Prescriptions d'affranchissement<br>Instructions as to payment for carriage</div>
+                        <div class="checkbox">
+                            <label>☐ Porte pagado / Franco / Carriage paid</label><br>
+                            <label>☑ Porte debido / Non franco / Carriage forward</label>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 9: Cash on delivery -->
+                <tr>
+                    <td style="height: 40px;">
+                        <span class="cmr-num">15</span>
+                        <div class="cmr-label">Reembolso<br>Remboursement<br>Cash on delivery</div>
+                    </td>
+                </tr>
+
+                <!-- Row 10: Place and date -->
+                <tr>
+                    <td>
+                        <span class="cmr-num">21</span>
+                        <div class="cmr-label">Formalizado en _________________ a ______________<br>Établi à _________________ le ______________<br>Established in _________________ on ______________</div>
+                    </td>
+                </tr>
+
+                <!-- Row 11: Signatures -->
+                <tr>
+                    <td style="height: 80px;">
+                        <span class="cmr-num">22</span>
+                        <div class="cmr-label">Firma y sello del remitente<br>Signature et timbre de l'expéditeur<br>Signature and stamp of the sender</div>
+                    </td>
+                    <td style="height: 80px;">
+                        <span class="cmr-num">23</span>
+                        <div class="cmr-label">Firma y sello del transportista<br>Signature et timbre du transporteur<br>Signature and stamp of the carrier</div>
+                        <div style="text-align: center; margin-top: 10px;">
+                            <strong>LEADER TRANSPORT S.L</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <!-- Row 12: Carrier observations & Consignee signature -->
+                <tr>
+                    <td colspan="2" style="padding: 0;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="width: 66%; border-right: 1px solid #000; height: 60px;">
+                                    <span class="cmr-num">18</span>
+                                    <div class="cmr-label">Reservas y observaciones del porteador<br>Réserves et observations du transporteur<br>Carrier's reservations and observations</div>
+                                    <div class="cmr-data" style="margin-top: 5px;">
+                                        Conductor: TEODOR-SORIN BORTAN (X9360212V)<br>
+                                        Plataforma: TAULINER
+                                    </div>
+                                </td>
+                                <td style="width: 34%; height: 60px;">
+                                    <span class="cmr-num">24</span>
+                                    <div class="cmr-label">Recibo de la mercancía<br>Marchandises reçues<br>Goods received<br><br>
+                                    Lugar _________________ a ______________<br>
+                                    Signature et timbre du destinataire<br>
+                                    Signature and stamp of the consignee</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <div style="margin-top: 10px; font-size: 8px; color: #666;">
+                <strong>Información adicional:</strong><br>
+                Agencia: LEADER TRANSPORT S.L - C\ Dr. J.J.Domine, 18 1 Izq. - 46011 VALENCIA<br>
+                Tel: 96 316 41 60 - Email: transporte@leader-transport.com<br>
+                Punto inicio: AZAMBUJA | Punto fin: [Por determinar]<br>
+                Tipo de transporte: MULTIMODAL
+            </div>
+        </div>
+    </div>
+</body>
+</html>

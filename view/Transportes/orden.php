@@ -679,410 +679,258 @@
                 <?php
                 if ($tipoDocumento == "CMR") {
                 ?>
-                    <div class="form-layout form-layout-2 tx-danger">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row">
-                                    <div class="col-6 row">
-                                        <h6 class="tx-12 col-10">Ejemplar para el remitente- Exemplaire de l'expéditeur<br>Copy for sender</h6>
-                                        <h2 class="col-2  tx-right boli-texto"><?php echo $idOrden; ?></h2>
-                                    </div>
-                                    <div class="col-6 tx-right">
-                                        <h2 class="tx-bold">2081</h2>
-                                    </div>
-                                </div>
-                                <div class="bd" style="width: 100%">
-                                    <table class="tableCMR" style="border-collapse: collapse;">
-                                        <tr class="bd">
-                                            <td class="bd">
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">1</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Remitente (nombre, CIF, domicilio, país)<br>Expédur(nom, adresse, pays)<br>Sender(name, address,country)</h6>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td class="bd">
-                                                <table>
-                                                    <tr>
-                                                        <td><label class="tx-bold tx-10 lh-1 ">CARTA DE PORTE INTERNACIONAL<br>LETTRE DE VOITURE INTERNATIONALE<br>INTERNATIONAL CONSIGNMENT NOTE</label></td>
-                                                        <td><label class="tx-9 lh-1 ">Este Transporte queda sometido, no obstante<br>toda cláusula contraria, al Convenio sobre el<br>Contrato de Transporte Internacional de<br>Mercancías por Carretera (CMR).</label></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><label class="tx-9 lh-1 ">Ce Transport est soumis, nonobstant toute<br>clause contraire, à la Convention relative au<br>contrat de transport international de<br>marchandises par route (CMR).</label></td>
-                                                        <td><label class="tx-9 lh-1 ">This carriage is subject, notwithstanding any<br>clause to the contrary, to the Convention<br>on the Contract for the international Carriage<br>of good by road (CMR).</label></td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr class="bd">
-                                            <td class="bd">
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">2</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Consignatorio (nombre, CIF, domicilio, país)<br>Destinataire(nom, adresse, pays)<br>Consignee(name, address,country)</h6><br><br>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td class="bd" rowspan="2">
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">16</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Porteador (nombre, domicilio, país)<br>Transporteur (nom, adresse, pays)<br>Carrier (name, address, country)</h6>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">17</label></td>
-                                                        <td class="row">
-                                                            <div class="col-12">
-                                                                <h6 class="tx-9">Portadores sucesivos (nombre, domicilio, país)<br>Transporteurs successifs (nom, adresse, pays)<br>Successive carriers (name, address, country)</h6>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <p class="lh-1 tx-20 boli-texto"><?php echo $jsonDatos['CMR'][0]['PLATAFORMA']; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $jsonDatos['CMR'][0]['TRACTORA']; ?><br></p>
-                                                            </div>
-                                                        </td>
+                    <style>
+                        .cmr-table { width: 100%; border-collapse: collapse; font-size: 9px; }
+                        .cmr-table td { border: 1px solid #000; padding: 3px; vertical-align: top; }
+                        .cmr-num { font-weight: bold; font-size: 11px; width: 20px; }
+                        .cmr-label { color: #006400; font-size: 7px; line-height: 1.2; }
+                        .cmr-data { font-size: 10px; padding-top: 2px; }
+                    </style>
 
-                                                    </tr>
-                                                </table>
-
-                                            </td>
-                                        </tr>
-                                        <tr class="bd">
-
-                                            <td class="bd">
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">3</label></td>
-                                                        <td class="row">
-                                                            <div class="col-12">
-                                                                <h6 class="tx-9">Lugar de entrega de la mercancía(lugar, país)<br>Lieu prévu pour la livraison de la marchandise(lieu, pays)<br>Place of delivery of the goods(place, country)</h6>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <p class="lh-1 tx-20 boli-texto"><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_NOMBRE']; ?><br><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_DIRECCION']; ?> <?php echo $jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_CP']; ?> <?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_POBLACION']; ?> <?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_PROVINCIA']; ?> <?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_PAIS']; ?><br></p>
-                                                            </div>
-
-                                                        </td>
-
-                                                    </tr>
-                                                    <tr>
-
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr class="bd">
-                                            <td class="bd">
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">4</label></td>
-                                                        <td class="row">
-                                                            <div class="col-12">
-                                                                <h6 class="tx-9">Lugar y fechad e carga de la mercancía(lugar, país, fecha)<br>Lieu et date de la prise en charge de la marchandise(lieu, pays, date)<br>Place and date of taking over the goods(place, country, date)</h6>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <p class="lh-1 tx-20 boli-texto"><?php echo $jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_NOMBRE']; ?><br><?php echo $jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_DIRECCION']; ?> <?php echo $jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_CP']; ?> <?php echo $jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_POBLACION']; ?> <?php echo $jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_PROVINCIA']; ?> <?php echo $jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_PAIS']; ?><br></p>
-                                                            </div>
-                                                        </td>
-
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td class="bd" rowspan="2">
-
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">18</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Reservas y observaciones del portador<br>Réserves et observations du transportuer<br>Carrier's reservations and observations</h6>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr class="bd">
-                                            <td class="bd">
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">5</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Documentos anexos<br>Documents annexés<br> Documents attached</h6><br><br>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-
-                                        </tr>
-
-                                    </table>
-                                    <table class="tableCMR" style="border-collapse: collapse;">
-                                        <tr>
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">6</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Marcas y números<br>Marques et numéros<br>Marks and Nos</h6>
-                                                        </td>
-                                                        <td class="td-num"><label class="tx-bold tx-20">7</label></td>
-                                                        <td class="row">
-                                                            <div class="col-12">
-                                                                <h6 class="tx-9">Números de bultos<br>Nombre des colis<br>Number of packages</h6>
-                                                            </div>
-                                                            <div class="col-12">
-                                                                <p class="lh-1 tx-20 boli-texto"><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_BULTOS_DESCARGA']; ?><br></p>
-                                                            </div>
-                                                        </td>
-                                                        <td class="td-num"><label class="tx-bold tx-20">8</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Clase de embalaje<br>Mode d'emballage<br>Method of packing</h6>
-                                                        </td>
-                                                        <td class="td-num "><label class="tx-bold tx-20">9</label></td>
-                                                        <td class="row">
-                                                            <div class="col-12">
-                                                                <h6 class="tx-9">Naturaleza de la mercancía<br>Nature de la marchandise<br>Nature of the goods</h6>
-                                                                <p class="lh-1  boli-texto"><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_MERCANCIA_DESCARGA']; ?></p>
-
-                                                            </div>
-
-                                                        </td>
-
-                                                    </tr>
-
-
-                                                    <tr class="pd-0-force mg-0-force bd">
-                                                        <td class="td-num"><label class="tx-bold tx-20"></label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Classe<br>Class</h6>
-                                                        </td>
-                                                        <td class="td-num"><label class="tx-bold tx-20"></label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Chiffre<br>Number</h6>
-                                                        </td>
-                                                        <td class="td-num"><label class="tx-bold tx-20"></label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Lettre<br>Letter</h6>
-                                                        </td>
-                                                        <td class="td-num"><label class="tx-bold tx-20"></label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">(ADR)*</h6>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td class="bd" rowspan="10">
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">10</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Nº estadistico<br>No. statistique<br>Statistical number</h6>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td class="bd" rowspan="10">
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">11</label></td>
-                                                        <td class="row">
-                                                            <div class="col-12">
-                                                                <h6 class="tx-9">Peso bruto, Kg.<br>Poids brut, Kg.<br>Gross weight in Kg.</h6>
-                                                                <h3 class="lh-1  boli-texto"><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_KILOS_DESCARGA']; ?></h3>
-                                                            </div>
-                                                        </td>
-
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                            <td class="bd" rowspan="10">
-                                                <table>
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">12</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Volumen m.³<br>Cubage m.³<br>Volume in m.³</h6>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                    <table class="tableCMR" style="border-collapse: collapse; width: 100%;">
-                                        <tr class="bd">
-                                            <td class="bd" style="width: 50%;">
-                                                <table style="width: 100%;">
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">13</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Instrucciones del remitente<br>Instructions de l'expéditeur<br>Sender's instructions</h6>
-                                                        </td>
-                                                    </tr>
-
-                                                </table>
-                                            </td>
-                                            <td class="bd" rowspan="3" style="width: 50%; vertical-align: top;">
-                                                <table style="width: 100%;">
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">19</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Estipulaciones particulares/Conventions particulières/Special agreements</h6>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <h6 class="tx-9">
-
-                                                                <table style="width: 100%;">
-
-                                                                    <tr>
-                                                                        <td style="width: 50%;">
-                                                                            <table style="width: 100%;">
-                                                                                <tr class="bd">
-                                                                                    <td class="td-num"><label class="tx-bold tx-20">20 <h6 class="tx-9">A pagar por:<br>To be paid by:</h6></label></td>
-                                                                                    <td class="bd" colspan="2">
-                                                                                        <h6 class="tx-9">Remitente<br>Senders</h6>
-                                                                                    </td>
-                                                                                    <td class="bd" colspan="2">
-                                                                                        <h6 class="tx-9">Moneda<br>Currency</h6>
-                                                                                    </td>
-                                                                                    <td class="bd" colspan="2">
-                                                                                        <h6 class="tx-9">Consignatario<br>Consignee</h6>
-                                                                                    </td>
-                                                                                </tr>
-                                                                                <tr class="bd">
-                                                                                    <td>
-                                                                                        <h6 style="font-size: 8px">Precio del transporte:<br>Carriage charges:<br>Descuentos:<br>Deductions:</h6>
-                                                                                    </td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                </tr>
-                                                                                <tr class="bd">
-                                                                                    <td>
-                                                                                        <h6 style="font-size: 8px">Líquido/Balance<br>Suplementos:<br>Supplem, charges<br>Gastos accesorios<br>Other charges</h6>
-                                                                                    </td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                </tr>
-                                                                                <tr class="bd">
-                                                                                    <td>
-                                                                                        <h6 style="font-size: 8px">Total:</h6>
-                                                                                    </td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                    <td class="bd"></td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-
-                                                                </table>
-
-
-                                                            </h6>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="striped-background">
-                                                        <td class="td-num lineaLimpio"><label class="tx-bold tx-20">15</label></td>
-                                                        <td class="mg-0 pd-0">
-                                                            <h6 class="tx-9 lineaLimpio mg-0 pd-0 wd-80p">Reembolso / Remboursement / Cash on delivery</h6>
-                                                            <div class="lineaLimpio wd-80p" style="height:25%">&nbsp;</div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr class="bd">
-                                            <td class="bd">
-                                                <table style="width: 100%;">
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">14</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Forma de pago<br>Prescriptions d'affranchissement<br>Instructions as to payment fort carriage</h6>
-                                                            <div class="d-flex">
-                                                                <div class="cuadradito"></div>
-                                                                <label class="tx-9">Porte pagado / Franco / Carriage paid</label>
-                                                            </div>
-                                                            <div class="d-flex">
-                                                                <div class="cuadradito"></div>
-                                                                <label class="tx-9">Porte debido / Non franco / Carriage forward</label>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                        <tr class="bd">
-                                            <td class="bd">
-                                                <table style="width: 100%;">
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">21</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Formalizado en&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a<br>Etabli à&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;le&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;20<br>Established in&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on</h6>
-
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-
-                                    <table class="tableCMR" style="border-collapse: collapse; width: 100%;">
-
-                                        <tr class="bd">
-                                            <td class="bd">
-                                                <table style="width: 100%;">
-                                                    <tr>
-                                                        <td class="td-num"><label class="tx-bold tx-20">22</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9 mg-b-20" style="width:300px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6><br><br><br><br>
-                                                            <h6 class="tx-9">Firma y sello del remitente<br>Signatura et timbre de l'expéditeur<br>Signatura and stamp of the sender</h6>
-
-                                                        </td>
-                                                        <td class="td-num"><label class="tx-bold tx-20">23</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9" style="width:300px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h6><br>
-                                                            <img src="../../public/assets/images/efeuno/logotipoWhite.png" alt="" width="200px" height="75px" class="logo-red-filter"><br>
-                                                            <h6 class="tx-9">Firma y sello del transportista<br>Signatura et timbre du transporteur<br>Signatura and stamp of the carrier</h6>
-
-
-                                                        </td>
-                                                        <td class="td-num"><label class="tx-bold tx-20">24</label></td>
-                                                        <td>
-                                                            <h6 class="tx-9">Recibo de la mercacía / Marchandises reçues / Goodos received.</h6><br>
-                                                            <h6 class="tx-9">Lugar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a<br>Lieu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;le&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;20<br>Place&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;on</h6><br>
-                                                            <br>
-                                                            <h6 class="tx-9">Firma y sello del consignatario<br>Signatura et timbre du destinataire<br>Signatura and stamp of the consignee</h6>
-
-
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-
-                                    </table>
-
-                                </div>
+                    <div style="padding: 10mm; page-break-after: always;">
+                        <!-- Header -->
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <div style="font-size: 8px;">
+                                <strong>Ejemplar para el porteador - Exemplaire pour le transporteur<br>Copy for the carrier</strong>
+                            </div>
+                            <div style="text-align: right;">
+                                <strong style="font-size: 14px;"><?php echo $idOrden; ?></strong>
                             </div>
                         </div>
+
+                        <table class="cmr-table">
+                            <!-- Row 1: Sender & CMR Title -->
+                            <tr>
+                                <td style="width: 45%;">
+                                    <span class="cmr-num">1</span>
+                                    <div class="cmr-label">Remitente (nombre, dirección, país)<br>Expéditeur (nom, adresse, pays)<br>Sender (name, address, country)</div>
+                                </td>
+                                <td rowspan="2" style="width: 55%; text-align: center;">
+                                    <div style="font-weight: bold; font-size: 10px; margin-bottom: 5px;">
+                                        CARTA DE PORTE INTERNACIONAL<br>
+                                        LETTRE DE VOITURE INTERNATIONALE<br>
+                                        INTERNATIONAL CONSIGNMENT NOTE
+                                    </div>
+                                    <table style="width: 100%; font-size: 7px;">
+                                        <tr>
+                                            <td style="border: none; padding: 2px;">Este Transporte queda sometido, no obstante toda cláusula contraria, al Convenio sobre el Contrato de Transporte Internacional de Mercancías por Carretera (CMR).</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: none; padding: 2px;">Ce transport est soumis, nonobstant toute clause contraire, à la Convention relative au contrat de transport international de marchandises par route (CMR).</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: none; padding: 2px;">This carriage is subject, notwithstanding any clause to the contrary, to the Convention on the Contract for the International Carriage of Goods by Road (CMR).</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Row 2: Consignee -->
+                            <tr>
+                                <td>
+                                    <span class="cmr-num">2</span>
+                                    <div class="cmr-label">Consignatario (nombre, dirección, país)<br>Destinataire (nom, adresse, pays)<br>Consignee (name, address, country)</div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 3: Delivery place & Carrier info -->
+                            <tr>
+                                <td>
+                                    <span class="cmr-num">3</span>
+                                    <div class="cmr-label">Lugar de entrega de la mercancía (lugar, país)<br>Lieu prévu pour la livraison de la marchandise (lieu, pays)<br>Place of delivery of the goods (place, country)</div>
+                                    <div class="cmr-data">
+                                        <?php 
+                                        $lugar_desc = $jsonDatos['CMR'][0]['LUGAR_DESCARGA'];
+                                        echo $lugar_desc['LUGAR_COD'] . ' - ' . $lugar_desc['LUGAR_NOMBRE'] . '<br>';
+                                        echo $lugar_desc['LUGAR_DIRECCION'] . '<br>';
+                                        echo $lugar_desc['LUGAR_CP'] . ' - ' . $lugar_desc['LUGAR_POBLACION'] . ' (' . $lugar_desc['LUGAR_PROVINCIA'] . ')<br>';
+                                        echo $lugar_desc['LUGAR_PAIS'];
+                                        ?>
+                                    </div>
+                                </td>
+                                <td rowspan="3">
+                                    <span class="cmr-num">16</span>
+                                    <div class="cmr-label">Porteador (nombre, dirección, país)<br>Transporteur (nom, adresse, pays)<br>Carrier (name, address, country)</div>
+                                    <hr style="margin: 5px 0;">
+                                    <span class="cmr-num">17</span>
+                                    <div class="cmr-label">Porteadores sucesivos (nombre, dirección, país)<br>Transporteurs successifs (nom, adresse, pays)<br>Successive carriers (name, address, country)</div>
+                                    <div class="cmr-data">
+                                        <?php echo $jsonDatos['CMR'][0]['TRACTORA'] . ' - ' . $jsonDatos['CMR'][0]['PLATAFORMA']; ?>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 4: Place of loading -->
+                            <tr>
+                                <td>
+                                    <span class="cmr-num">4</span>
+                                    <div class="cmr-label">Lugar y fecha de carga de la mercancía (lugar, país, fecha)<br>Lieu et date de la prise en charge de la marchandise (lieu, pays, date)<br>Place and date of taking over the goods (place, country, date)</div>
+                                    <div class="cmr-data">
+                                        <?php 
+                                        $lugar_carga = $jsonDatos['CMR'][0]['LUGAR_CARGA'];
+                                        echo $lugar_carga['LUGAR_COD'] . ' - ' . $lugar_carga['LUGAR_NOMBRE'] . '<br>';
+                                        echo $lugar_carga['LUGAR_DIRECCION'] . '<br>';
+                                        echo $lugar_carga['LUGAR_CP'] . ' - ' . $lugar_carga['LUGAR_POBLACION'] . ' (' . $lugar_carga['LUGAR_PROVINCIA'] . ')<br>';
+                                        echo $lugar_carga['LUGAR_PAIS'];
+                                        ?>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 5: Documents attached -->
+                            <tr>
+                                <td>
+                                    <span class="cmr-num">5</span>
+                                    <div class="cmr-label">Documentos anexos<br>Documents annexés<br>Documents attached</div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 6: Goods description table -->
+                            <tr>
+                                <td colspan="2" style="padding: 0;">
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="width: 10%; border-right: 1px solid #000; border-bottom: none;">
+                                                <span class="cmr-num">6</span>
+                                                <div class="cmr-label">Marcas y números<br>Marques et numéros<br>Marks and Nos.</div>
+                                            </td>
+                                            <td style="width: 12%; border-right: 1px solid #000; border-bottom: none;">
+                                                <span class="cmr-num">7</span>
+                                                <div class="cmr-label">Número de bultos<br>Nombre de colis<br>Number of packages</div>
+                                                <div class="cmr-data"><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_BULTOS_DESCARGA']; ?></div>
+                                            </td>
+                                            <td style="width: 12%; border-right: 1px solid #000; border-bottom: none;">
+                                                <span class="cmr-num">8</span>
+                                                <div class="cmr-label">Clase de embalaje<br>Mode d'emballage<br>Method of packing</div>
+                                            </td>
+                                            <td style="width: 26%; border-right: 1px solid #000; border-bottom: none;">
+                                                <span class="cmr-num">9</span>
+                                                <div class="cmr-label">Naturaleza de la mercancía<br>Nature de la marchandise<br>Nature of the goods</div>
+                                                <div class="cmr-data"><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_MERCANCIA_DESCARGA']; ?></div>
+                                            </td>
+                                            <td style="width: 10%; border-right: 1px solid #000; border-bottom: none;">
+                                                <span class="cmr-num">10</span>
+                                                <div class="cmr-label">Nº estadístico<br>No. statistique<br>Statistical No.</div>
+                                            </td>
+                                            <td style="width: 15%; border-right: 1px solid #000; border-bottom: none;">
+                                                <span class="cmr-num">11</span>
+                                                <div class="cmr-label">Peso bruto, kg<br>Poids brut, kg<br>Gross weight, kg</div>
+                                                <div class="cmr-data"><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_KILOS_DESCARGA']; ?></div>
+                                            </td>
+                                            <td style="width: 15%; border-bottom: none;">
+                                                <span class="cmr-num">12</span>
+                                                <div class="cmr-label">Volumen m³<br>Cubage m³<br>Volume m³</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Row 7: Instructions & Agreements -->
+                            <tr>
+                                <td style="height: 80px;">
+                                    <span class="cmr-num">13</span>
+                                    <div class="cmr-label">Instrucciones del remitente<br>Instructions de l'expéditeur<br>Sender's instructions</div>
+                                </td>
+                                <td rowspan="4" style="vertical-align: top;">
+                                    <span class="cmr-num">19</span>
+                                    <div class="cmr-label">Estipulaciones particulares<br>Conventions particulières<br>Special agreements</div>
+                                    <table style="width: 100%; margin-top: 5px; border-collapse: collapse; font-size: 7px;">
+                                        <tr>
+                                            <td style="border: 1px solid #000; padding: 2px;"><span class="cmr-num">20</span> A pagar por / To be paid by</td>
+                                            <td style="border: 1px solid #000; padding: 2px;">Remitente<br>Sender</td>
+                                            <td style="border: 1px solid #000; padding: 2px;">Moneda<br>Currency</td>
+                                            <td style="border: 1px solid #000; padding: 2px;">Consignatario<br>Consignee</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid #000; padding: 2px;">Precio del transporte / Carriage charges</td>
+                                            <td style="border: 1px solid #000;"></td>
+                                            <td style="border: 1px solid #000;"></td>
+                                            <td style="border: 1px solid #000;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid #000; padding: 2px;">Suplementos / Supplements</td>
+                                            <td style="border: 1px solid #000;"></td>
+                                            <td style="border: 1px solid #000;"></td>
+                                            <td style="border: 1px solid #000;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid #000; padding: 2px;">Gastos accesorios / Other charges</td>
+                                            <td style="border: 1px solid #000;"></td>
+                                            <td style="border: 1px solid #000;"></td>
+                                            <td style="border: 1px solid #000;"></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border: 1px solid #000; padding: 2px;">Total</td>
+                                            <td style="border: 1px solid #000;"></td>
+                                            <td style="border: 1px solid #000;"></td>
+                                            <td style="border: 1px solid #000;"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- Row 8: Payment instructions -->
+                            <tr>
+                                <td style="height: 50px;">
+                                    <span class="cmr-num">14</span>
+                                    <div class="cmr-label">Forma de pago<br>Prescriptions d'affranchissement<br>Instructions as to payment for carriage</div>
+                                    <div style="margin-top: 5px;">
+                                        <label style="font-size: 8px;">☐ Porte pagado / Franco / Carriage paid</label><br>
+                                        <label style="font-size: 8px;">☐ Porte debido / Non franco / Carriage forward</label>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 9: Cash on delivery -->
+                            <tr>
+                                <td style="height: 40px;">
+                                    <span class="cmr-num">15</span>
+                                    <div class="cmr-label">Reembolso<br>Remboursement<br>Cash on delivery</div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 10: Place and date -->
+                            <tr>
+                                <td>
+                                    <span class="cmr-num">21</span>
+                                    <div class="cmr-label">Formalizado en _________________ a ______________<br>Établi à _________________ le ______________<br>Established in _________________ on ______________</div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 11: Signatures -->
+                            <tr>
+                                <td style="height: 80px;">
+                                    <span class="cmr-num">22</span>
+                                    <div class="cmr-label">Firma y sello del remitente<br>Signature et timbre de l'expéditeur<br>Signature and stamp of the sender</div>
+                                </td>
+                                <td style="height: 80px;">
+                                    <span class="cmr-num">23</span>
+                                    <div class="cmr-label">Firma y sello del transportista<br>Signature et timbre du transporteur<br>Signature and stamp of the carrier</div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 12: Carrier observations & Consignee signature -->
+                            <tr>
+                                <td colspan="2" style="padding: 0;">
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <tr>
+                                            <td style="width: 66%; border-right: 1px solid #000; height: 60px;">
+                                                <span class="cmr-num">18</span>
+                                                <div class="cmr-label">Reservas y observaciones del porteador<br>Réserves et observations du transporteur<br>Carrier's reservations and observations</div>
+                                            </td>
+                                            <td style="width: 34%; height: 60px;">
+                                                <span class="cmr-num">24</span>
+                                                <div class="cmr-label">Recibo de la mercancía<br>Marchandises reçues<br>Goods received<br><br>
+                                                Lugar _________________ a ______________<br>
+                                                Signature et timbre du destinataire<br>
+                                                Signature and stamp of the consignee</div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
 
                 <?php
@@ -1128,7 +976,7 @@
                                 </div>
                                 <div class="col-12 ">
                                     <div class="form-group col-12">
-                                        <table class="">
+                                        <table class="" style="padding-left: 15px;">
                                             <tbody>
                                                 <tr>
                                                     <th class="tx-bold">
@@ -1189,7 +1037,7 @@
                                         <div class="row">
 
 
-                                            <div class="col-6 borde-gris-derecho row">
+                                            <div class="col-6 borde-gris-derecho row" style="padding-left: 25px;">
                                                 <div class="col-12 d-flex align-items-start borde-gris-abajo" style="height: 40%">
                                                     <label class="form-control-label mg-l-5 tx-bold mr-2 mg-t-7">Agente:</label>
                                                     <input class="form-control" type="text" readonly name="agente" title="<?php echo $jsonDatos['CONSIGNATARIO']; ?>" value="<?php echo $jsonDatos['CONSIGNATARIO']; ?>">
@@ -1282,9 +1130,9 @@
                                                     <div class="col-12 ">
                                                         <table class="borde-gris-abajo">
                                                             <tr>
-                                                                <th class="tx-bold">Mercancía: </th>
-                                                                <th class="tx-bold">Bultos: </th>
-                                                                <th class="tx-bold">Peso:</th>
+                                                                <th class="tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Mercancía: </th>
+                                                                <th class="tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Bultos: </th>
+                                                                <th class="tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Peso:</th>
                                                             </tr>
                                                             <tr>
                                                                 <td class="">
@@ -1303,18 +1151,18 @@
                                                 </div>
                                                 <div class="row mg-5">
 
-                                                    <div class="col-4 form-inline">
-                                                        <label class="form-control-label tx-bold mr-2">Temp. Max: </label>
+                                                    <div class="col-12 col-sm-4 form-inline">
+                                                        <label class="form-control-label tx-bold mr-2" style="word-break: break-word; overflow-wrap: break-word;">Temp. Max: </label>
                                                         <input class="form-control wd-30-force" type="text" readonly name="" value="<?php echo $jsonDatos['TEMP_MAXIMA']; ?>">
                                                     </div>
 
-                                                    <div class="col-4  form-inline">
-                                                        <label class=" form-control-label tx-bold mr-2">Temp. Mín: </label>
+                                                    <div class="col-12 col-sm-4  form-inline">
+                                                        <label class=" form-control-label tx-bold mr-2" style="word-break: break-word; overflow-wrap: break-word;">Temp. Mín: </label>
                                                         <input class=" form-control wd-30-force" type="text" readonly name="" value="<?php echo $jsonDatos['TEMP_MINIMA']; ?>">
                                                     </div>
 
-                                                    <div class="col-4  form-inline">
-                                                        <label class=" form-control-label tx-bold mr-2">Conectar: </label>
+                                                    <div class="col-12 col-sm-4  form-inline">
+                                                        <label class=" form-control-label tx-bold mr-2" style="word-break: break-word; overflow-wrap: break-word;">Conectar: </label>
                                                         <input class=" form-control wd-30-force" type="text" readonly name="" value="<?php echo $jsonDatos['TEMP_CONECTAR']; ?>">
                                                     </div>
 
@@ -1373,7 +1221,7 @@
                                                 </table>
                                             </div>
 
-                                            <div class="col-6 row  ">
+                                            <div class="col-6 row  " style="padding-left: 25px;">
                                                 <table class="mg-5">
                                                     <tr>
                                                         <th class="tx-bold tx-center">ONU</th>
@@ -1428,13 +1276,13 @@
                                                         <tr>
                                                             <th class="tx-bold">
                                                                 <div class="form-inline">
-                                                                    <label class="mg-r-8 mg-b-8 tx-bold">Línea:</label>
+                                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Línea:</label>
                                                                     <textarea class="form-control wd-70-force d-flex align-items-flex-end" readonly name="linea" rows="2" style="resize:none;"><?php echo $jsonDatos['NOMBRELINEA_DEST']; ?></textarea>
                                                                 </div>
                                                             </th>
                                                             <th class="tx-bold">
                                                                 <div class="form-inline">
-                                                                    <label class="mg-r-8 mg-b-8 tx-bold">Nº Escala:</label>
+                                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Nº Escala:</label>
                                                                     <input class="form-control wd-50-force" type="text" readonly name="numeroEscala" value="<?php echo $jsonDatos['ESCALA_DEST']; ?>">
                                                                 </div>
                                                             </th>
@@ -1442,13 +1290,13 @@
                                                         <tr>
                                                             <th class="tx-bold">
                                                                 <div class="form-inline">
-                                                                    <label class="mg-r-8 mg-b-8 tx-bold">Buque:</label>
+                                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Buque:</label>
                                                                     <input class="form-control" type="text" readonly name="buque" value="<?php echo $jsonDatos['BUQUE_DEST']; ?>">
                                                                 </div>
                                                             </th>
                                                             <th class="tx-bold">
                                                                 <div class="form-inline">
-                                                                    <label class="mg-r-8 mg-b-8 tx-bold">Viaje:</label>
+                                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Viaje:</label>
                                                                     <input class="form-control wd-50-force" type="text" readonly name="viaje" value="<?php echo $jsonDatos['VIAJE']; ?>">
                                                                 </div>
                                                             </th>
@@ -1456,7 +1304,7 @@
                                                         <tr>
                                                             <th class="tx-bold">
                                                                 <div class="form-inline">
-                                                                    <label class="mg-r-8 mg-b-8 tx-bold">Dist. Llamada:</label>
+                                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Dist. Llamada:</label>
                                                                     <input class="form-control" type="text" readonly name="distLlamada" value="<?php echo $jsonDatos['DISTINTIVO_LLAMADA']; ?>">
                                                                 </div>
                                                             </th>
@@ -1465,20 +1313,20 @@
                                                 </table>
                                             </div>
 
-                                            <div class="col-6 row mg-l-10">
+                                            <div class="col-6 row mg-l-10" style="padding-left: 25px;">
 
                                                 <table class="mg-l-10">
                                                     <tbody>
                                                         <tr>
                                                             <th class="tx-bold">
                                                                 <div class="form-inline">
-                                                                    <label class="mg-r-8 mg-b-8 tx-bold">Origen:</label>
+                                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Origen:</label>
                                                                     <input class="form-control" type="text" readonly name="origen" readonly value="<?php echo $jsonDatos['PUERTO_ORIGEN_NOMBRE']; ?>">
                                                                 </div>
                                                             </th>
                                                             <th class="tx-bold">
                                                                 <div class="form-inline">
-                                                                    <label class="mg-r-8 mg-b-8 tx-bold">Destino:</label>
+                                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Destino:</label>
                                                                     <input class="form-control" type="text" readonly name="numeroEscala" readonly value="<?php echo $jsonDatos['PUERTO_DESTINO_NOMBRE']; ?>">
                                                                 </div>
                                                             </th>
@@ -1486,7 +1334,7 @@
                                                         <tr>
                                                             <th class="tx-bold">
                                                                 <div class="form-inline">
-                                                                    <label class="mg-r-8 mg-b-8 tx-bold">Pto. Des/carga:</label>
+                                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Pto. Des/carga:</label>
                                                                     <input class="form-control" type="text" readonly name="Ptodescarga" readonly value="<?php echo $jsonDatos['PUERTO_DESCARGA_NOMBRE']; ?>">
                                                                 </div>
                                                             </th>
@@ -1519,7 +1367,7 @@
                                         <div class="row">
 
 
-                                            <div class="col-7 borde-gris-derecho d-flex justify-content-start  form-inline ">
+                                            <div class="col-7 borde-gris-derecho d-flex justify-content-start  form-inline " style="padding-left: 25px;">
 
 
                                                 <label class=" form-control-label tx-bold mr-2">Ref Carga: </label>
@@ -1550,15 +1398,15 @@
 
                                         <div class="row">
 
-                                            <div class="col-7 borde-gris-derecho d-flex justify-content-start form-inline d-flex align-items-start form-inline ">
+                                            <div class="col-7 borde-gris-derecho d-flex justify-content-start form-inline d-flex align-items-start form-inline " style="padding-left: 25px;">
 
-                                                <label class="form-control-label tx-bold mr-2 ">Pif/Aduana:</label>
+                                                <label class="form-control-label tx-bold mr-2 " style="word-break: break-word; overflow-wrap: break-word;">Pif/Aduana:</label>
                                                 <input class="form-control wd-85" type="text" readonly name="aduana" readonly value="<?php echo $jsonDatos['PIF_NOMBRE']; ?>">
 
                                             </div>
                                             <div class="col-4  form-inline ">
 
-                                                <label for=""><?php echo $jsonDatos['CARGADOR_NOMBRE'] . '<br>' . $jsonDatos['CARGADOR_CIF'] . ' ' . $jsonDatos['CARGADOR_DIRECCION'] . '<br> ' . $jsonDatos['CARGADOR_POBLACION'] . ' ' . $jsonDatos['CARGADOR_PROVINCIA']; ?></label>
+                                                <label for="" style="word-break: break-word; overflow-wrap: break-word; white-space: normal;"><?php echo $jsonDatos['CARGADOR_NOMBRE'] . '<br>' . $jsonDatos['CARGADOR_CIF'] . ' ' . $jsonDatos['CARGADOR_DIRECCION'] . '<br> ' . $jsonDatos['CARGADOR_POBLACION'] . ' ' . $jsonDatos['CARGADOR_PROVINCIA']; ?></label>
 
 
                                             </div>
@@ -1900,21 +1748,21 @@
                                             <div class="col-6">
                                                 <p>Hora: <span style="font-weight: normal"><?php echo $viaje['TTE_HORA_CARGA']; ?></span></p>
                                             </div>
-                                            <div class="col-6">
-                                                <p>Mercancia: <span style="font-weight: normal"><?php echo $jsonDatos['MERCANCIA']; ?></span></p>
+                                            <div class="col-12 col-sm-6">
+                                                <p style="word-break: break-word; overflow-wrap: break-word;">Mercancia: <span style="font-weight: normal"><?php echo $jsonDatos['MERCANCIA']; ?></span></p>
                                             </div>
-                                            <div class="col-6">
-                                                <p>Ref. carga: <span style="font-weight: normal"><?php echo $viaje['LUGAR_REF_CARGA']; ?></span></p>
+                                            <div class="col-12 col-sm-6">
+                                                <p style="word-break: break-word; overflow-wrap: break-word;">Ref. carga: <span style="font-weight: normal"><?php echo $viaje['LUGAR_REF_CARGA']; ?></span></p>
                                             </div>
-                                            <div class="col-6">
-                                                <p>Bultos: <span style="font-weight: normal"><?php echo $jsonDatos['BULTOS']; ?></span></p>
+                                            <div class="col-12 col-sm-6">
+                                                <p style="word-break: break-word; overflow-wrap: break-word;">Bultos: <span style="font-weight: normal"><?php echo $jsonDatos['BULTOS']; ?></span></p>
                                             </div>
-                                            <div class="col-6">
-                                                <p>Metros: <span style="font-weight: normal"><?php //echo $jsonDatos['BULTOS']; 
+                                            <div class="col-12 col-sm-6">
+                                                <p style="word-break: break-word; overflow-wrap: break-word;">Metros: <span style="font-weight: normal"><?php //echo $jsonDatos['BULTOS']; 
                                                                                                 ?></span></p>
                                             </div>
-                                            <div class="col-6">
-                                                <p>Kilos: <span style="font-weight: normal"><?php echo $jsonDatos['PESO_MERCANCIA']; ?></span></p>
+                                            <div class="col-12 col-sm-6">
+                                                <p style="word-break: break-word; overflow-wrap: break-word;">Kilos: <span style="font-weight: normal"><?php echo $jsonDatos['PESO_MERCANCIA']; ?></span></p>
                                             </div>
                                             <div class="col-6">
                                                 <p>Observaciones: <span style="font-weight: normal"><?php echo $viaje['LUGAR_OBSERVACIONES_CARGA']; ?></span></p>

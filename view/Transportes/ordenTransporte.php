@@ -967,31 +967,31 @@
                                     <div class="col-12  row  mg-b-20">
                                         <div class="col-12 mg-b-5 mg-l-5 tx-center borde-gris-abajo">
                                             <label class="form-control-personalizado-label tx-bold" for="mercancia">Mercancía:</label>
-                                            <label id="mercancia" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['MERCANCIA']; ?></label>
+                                            <label id="mercancia" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['MERCANCIA']; ?></label>
                                         </div>
-                                        <div class="col-6  mg-b-20">
+                                        <div class="col-12 col-sm-6  mg-b-20">
                                             <label class="form-control-personalizado-label tx-bold" for="bultos">Bultos:</label>
-                                            <label id="bultos" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['BULTOS']; ?></label>
+                                            <label id="bultos" class="form-control-personalizado tx-break text-reset" style="word-break: break-word;"><?php echo $jsonDatos['BULTOS']; ?></label>
                                         </div>
-                                        <div class="col-6  mg-b-20">
+                                        <div class="col-12 col-sm-6  mg-b-20">
                                             <label class="form-control-personalizado-label tx-bold" for="peso">Peso:</label>
-                                            <label id="peso" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['PESO_MERCANCIA']; ?></label>
+                                            <label id="peso" class="form-control-personalizado tx-break text-reset" style="word-break: break-word;"><?php echo $jsonDatos['PESO_MERCANCIA']; ?></label>
                                         </div>
                                     </div>
                                     <div class="col-12  row  mg-b-20  d-flex justify-content-center">
-                                        <div class="col-4 ">
+                                        <div class="col-12 col-sm-4">
                                             <label class="form-control-personalizado-label tx-bold" for="tempMax">Temp. Max:</label>
-                                            <label id="tempMax" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['TEMP_MAXIMA']; ?></label>
+                                            <label id="tempMax" class="form-control-personalizado tx-break text-reset" style="word-break: break-word;"><?php echo $jsonDatos['TEMP_MAXIMA']; ?></label>
 
                                         </div>
-                                        <div class="col-4 ">
+                                        <div class="col-12 col-sm-4">
                                             <label class="form-control-personalizado-label tx-bold" for="tempMin">Temp. Mín:</label>
-                                            <label id="tempMin" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['TEMP_MINIMA']; ?></label>
+                                            <label id="tempMin" class="form-control-personalizado tx-break text-reset" style="word-break: break-word;"><?php echo $jsonDatos['TEMP_MINIMA']; ?></label>
 
                                         </div>
-                                        <div class="col-4 ">
+                                        <div class="col-12 col-sm-4">
                                             <label class="form-control-personalizado-label tx-bold" for="conectar">Conectar:</label>
-                                            <label id="conectar" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['TEMP_CONECTAR']; ?></label>
+                                            <label id="conectar" class="form-control-personalizado tx-break text-reset" style="word-break: break-word;"><?php echo $jsonDatos['TEMP_CONECTAR']; ?></label>
                                         </div>
                                     </div>
                                 </div>
@@ -1071,23 +1071,23 @@
                                     <div class="col-12  row ">
                                         <div class="col-12 col-sm-6 mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="linea">Línea:</label>
-                                            <label id="linea" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['NOMBRELINEA_DEST']; ?></label>
+                                            <label id="linea" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['NOMBRELINEA_DEST']; ?></label>
                                         </div>
                                         <div class="col-12 col-sm-6  mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="escala">Nº Escala:</label>
-                                            <label id="escala" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['ESCALA_DEST']; ?></label>
+                                            <label id="escala" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['ESCALA_DEST']; ?></label>
                                         </div>
                                         <div class="col-12 col-sm-6  mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="buque">Buque:</label>
-                                            <label id="buque" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['BUQUE_DEST']; ?></label>
+                                            <label id="buque" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['BUQUE_DEST']; ?></label>
                                         </div>
                                         <div class="col-12 col-sm-6  mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="viaje">Viaje:</label>
-                                            <label id="viaje" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['VIAJE']; ?></label>
+                                            <label id="viaje" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['VIAJE']; ?></label>
                                         </div>
                                         <div class="col-12 col-sm-6  mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="viaje">Dist. Llamada:</label>
-                                            <label id="viaje" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['DISTINTIVO_LLAMADA']; ?></label>
+                                            <label id="viaje" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['DISTINTIVO_LLAMADA']; ?></label>
                                         </div>
                                     </div>
                                 </div>
@@ -1106,21 +1106,21 @@
                             <div class="form-group">
                                 <div class="row  d-flex justify-content-center">
                                     <div class="col-12  row ">
-                                        <div class="col-6 mg-b-5">
+                                        <div class="col-12 col-sm-6 mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="origen">Origen:</label>
-                                            <label id="origen" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['PUERTO_ORIGEN_NOMBRE']; ?></label>
+                                            <label id="origen" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['PUERTO_ORIGEN_NOMBRE']; ?></label>
                                         </div>
-                                        <div class="col-6 mg-b-5">
+                                        <div class="col-12 col-sm-6 mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="destino">Destino:</label>
-                                            <label id="destino" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['PUERTO_DESTINO_NOMBRE']; ?></label>
+                                            <label id="destino" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['PUERTO_DESTINO_NOMBRE']; ?></label>
                                         </div>
-                                        <div class="col-6 mg-b-5">
+                                        <div class="col-12 col-sm-6 mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="ptoDescarga">Pto. Des/Carga:</label>
-                                            <label id="ptoDescarga" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['PUERTO_DESCARGA_NOMBRE']; ?></label>
+                                            <label id="ptoDescarga" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['PUERTO_DESCARGA_NOMBRE']; ?></label>
                                         </div>
-                                        <div class="col-6 mg-b-5">
+                                        <div class="col-12 col-sm-6 mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="tipoOrden">Tipo Orden:</label>
-                                            <label id="tipoOrden" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['PUERTO_TIPO_ORDEN_IMPORTACION']; ?></label>
+                                            <label id="tipoOrden" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['PUERTO_TIPO_ORDEN_IMPORTACION']; ?></label>
                                         </div>
                                     </div>
                                 </div>
@@ -1144,11 +1144,11 @@
                                         </div>
                                         <div class="col-12 mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="pifAduana">Pif/Aduana:</label>
-                                            <label id="pifAduana" class="form-control-personalizado tx-break text-reset"><?php echo $jsonDatos['PIF_NOMBRE']; ?></label>
+                                            <label id="pifAduana" class="form-control-personalizado tx-break text-reset" style="word-break: break-word; overflow-wrap: break-word;"><?php echo $jsonDatos['PIF_NOMBRE']; ?></label>
                                         </div>
                                         <div class="col-12 mg-b-5">
                                             <label class="form-control-personalizado-label tx-bold" for="cargador">Cargador:</label>
-                                            <label id="cargador" class="form-control-personalizado tx-break tx-12 text-reset"><?php echo '<br>' . $jsonDatos['CARGADOR_NOMBRE'] . '<br>' . $jsonDatos['CARGADOR_CIF'] . ' ' . $jsonDatos['CARGADOR_DIRECCION'] . '<br> ' . $jsonDatos['CARGADOR_POBLACION'] . ' ' . $jsonDatos['CARGADOR_PROVINCIA']; ?></label>
+                                            <label id="cargador" class="form-control-personalizado tx-break tx-12 text-reset" style="word-break: break-word; overflow-wrap: break-word; white-space: normal;"><?php echo '<br>' . $jsonDatos['CARGADOR_NOMBRE'] . '<br>' . $jsonDatos['CARGADOR_CIF'] . ' ' . $jsonDatos['CARGADOR_DIRECCION'] . '<br> ' . $jsonDatos['CARGADOR_POBLACION'] . ' ' . $jsonDatos['CARGADOR_PROVINCIA']; ?></label>
                                         </div>
                                     </div>
                                 </div>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Campos - Contenedor Admítase</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <style>
+        body { background: #f5f5f5; padding: 20px; }
+        .info-banner {
+            background: #fff3cd;
+            border: 3px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .campo {
+            background: #e3f2fd;
+            color: #0d47a1;
+            padding: 3px 7px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #90caf9;
+            display: inline-block;
+        }
+        .printableArea {
+            background: white;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        @media print {
+            .info-banner { display: none; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body>
+    <div class="info-banner">
+        <h4 style="margin: 0 0 10px 0;">📋 MAPA DE CAMPOS - Tipo Contenedor (C) / Formato Admítase (A)</h4>
+        <p style="margin: 0;">Los campos en <span class="campo">azul</span> indican los nombres de las claves del JSON. Este documento replica el diseño exacto del formato impreso.</p>
+    </div>
+
+    <div class="printableArea">
+        <div class="form-layout form-layout-2">
+            <div class="row no-gutters bd d-flex" data-select2-id="31" style="margin-top: 20px;">
+                <div class="col-5">
+                    <div class="form-group border-right-none" style="border: none;">
+                        <h2 class="form-control-label tx-bold mg-10 tipo-letra print-27">ORDEN DE TRANSPORTE</h2>
+                        <br>
+                        <div class="tx-center">
+                            <h3 class="form-control-label tx-bold tx-center text-decoration-underline">
+                                ADMÍTASE
+                                <br><small class="campo">$headerText</small>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group border-left-none border-right-none" style="border: none;">
+                        <label class="form-control-label tx-bold"><span class="campo">AGENCIA_NOMBRE</span></label><br>
+                        <label class="form-control-label"><span class="campo">AGENCIA_DIRECCION</span></label><br>
+                        <label class="form-control-label">Tel: <span class="campo">AGENCIA_TELEFONO</span> Fax: 963674717</label><br>
+                        <label class="form-control-label"><span class="campo">AGENCIA_CP</span>-<span class="campo">AGENCIA_POBLACION</span> (<span class="campo">AGENCIA_PROVINCIA</span>)</label><br>
+                        <label class="form-control-label"><span class="campo">AGENCIA_CIF</span></label>
+                    </div>
+                </div>
+                
+                <div class="col-3 d-flex justify-content-end align-items-center">
+                    <div class="mg-r-70 wd-100">
+                        <div id="qrcode" class="wd-100 mg-5" style="width: 100px; height: 100px; border: 2px dashed #ccc; display: flex; align-items: center; justify-content: center; font-size: 10px; text-align: center;">QR CODE<br>(dinámico)</div>
+                    </div>
+                </div>
+                
+                <div class="col-12 ">
+                    <div class="form-group col-12">
+                        <table class="" style="padding-left: 15px;">
+                            <tbody>
+                                <tr>
+                                    <th class="tx-bold">
+                                        <div class="form-inline">
+                                            <label class="mg-r-8 mg-b-8 tx-bold">F. Carga: </label>
+                                            <input class="form-control" type="text" readonly value="TTE_FECHA_CARGA">
+                                        </div>
+                                    </th>
+                                    <th class="tx-bold">
+                                        <div class="form-inline">
+                                            <label class="mg-r-8 mg-b-8 tx-bold">Hora: </label>
+                                            <input class=" form-control" type="text" readonly value="TTE_HORA_CARGA">
+                                        </div>
+                                    </th>
+                                    <th class="tx-bold">
+                                        <div class="form-inline">
+                                            <label class="mg-r-8 mg-b-8 tx-bold">Ref. Consig: </label>
+                                            <input class=" form-control" type="text" readonly value="CARGADOR_REF_CARGA">
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th class="tx-bold">
+                                        <div class="form-inline">
+                                            <label class="mg-r-8 mg-b-8 tx-bold">Recogida estimada: </label>
+                                            <input class="form-control wd-47-force" type="text" readonly value="TTE_FECHA_ESTIMADA_RECOGIDA">
+                                        </div>
+                                    </th>
+                                    <th class="tx-bold">
+                                        <div class="form-inline">
+                                            <label class="mg-r-8 mg-b-8 tx-bold">Entrega estimad: </label>
+                                            <input class=" form-control wd-50-force" type="text" readonly value="TTE_FECHA_ESTIMADA_ENTREGA">
+                                        </div>
+                                    </th>
+                                    <th class="tx-bold">
+                                        <div class="form-inline">
+                                            <label class="mg-r-8 mg-b-8 tx-bold">OT Agencia: </label>
+                                            <input class=" form-control wd-50-force" type="text" readonly value="TTE_ORDEN">
+                                        </div>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- UN ROW -->
+                <div class="col-12 ">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6 borde-gris-derecho row" style="padding-left: 25px;">
+                                <div class="col-12 d-flex align-items-start borde-gris-abajo" style="height: 40%">
+                                    <label class="form-control-label mg-l-5 tx-bold mr-2 mg-t-7">Agente:</label>
+                                    <input class="form-control" type="text" readonly title="CONSIGNATARIO" value="CONSIGNATARIO">
+                                </div>
+                                <div class="col-12 row">
+                                    <div class="col-4">
+                                        <label class="form-control-label tx-bold">Contenedores:</label>
+                                        <input class="form-control" type="text" readonly value="$contenedorActivo">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-control-label tx-bold">Tipo:</label>
+                                        <input class="form-control" type="text" readonly value="TIPO_CONT_DESC + TIPO_CONT">
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="form-control-label tx-bold">Hlog Precintos:</label>
+                                        <input class="form-control" type="text" readonly value="PRECINTO">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6 ">
+                                <table class="">
+                                    <tr>
+                                        <th class="tx-bold">Transportista</th>
+                                        <th class="tx-bold">Conductor</th>
+                                        <th class="tx-bold">Cabeza</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="wd-400">
+                                            <span class="campo">TRANSPORTISTA_NOMBRE</span><br>
+                                            <span class="campo">TRANSPORTISTA_DIRECCION</span><br>
+                                            <span class="campo">TRANSPORTISTA_CP</span> <span class="campo">TRANSPORTISTA_POBLACION</span> <span class="campo">TRANSPORTISTA_PROVINCIA</span> <span class="campo">TRANSPORTISTA_NIF</span>
+                                        </td>
+                                        <td class="wd-300">
+                                            <span class="campo">CONDUCTOR_NOMBRE</span><br>
+                                            <span class="campo">CONDUCTOR_NIF</span>
+                                        </td>
+                                        <td>
+                                            <span class="campo">TRACTORA</span><br>
+                                            Plataforma: <span class="campo">PLATAFORMA</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN ROW -->
+
+                <!-- UN ROW -->
+                <div class="col-12 ">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6 borde-gris-derecho row  ">
+                                <table class="mg-5">
+                                    <tr>
+                                        <th class="tx-bold borde-gris-derecho">Retirar De:</th>
+                                        <th class="tx-bold">Entregar En:</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="wd-300 borde-gris-derecho">
+                                            <span class="campo">RECOGER_EN_NOMBRE</span><br>
+                                            <span class="campo">RECOGER_EN_DIRECCION</span><br>
+                                            <span class="campo">RECOGER_EN_CP</span> <span class="campo">RECOGER_EN_POBLACION</span> <span class="campo">RECOGER_EN_PROVINCIA</span>
+                                        </td>
+                                        <td class="wd-300">
+                                            <span class="campo">DEVOLVER_EN_NOMBRE</span><br>
+                                            <span class="campo">DEVOLVER_EN_DIRECCION</span><br>
+                                            <span class="campo">DEVOLVER_EN_CP</span> <span class="campo">DEVOLVER_EN_POBLACION</span> <span class="campo">DEVOLVER_EN_PROVINCIA</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-6 ">
+                                <div class="row mg-5">
+                                    <div class="col-12 ">
+                                        <table class="borde-gris-abajo">
+                                            <tr>
+                                                <th class="tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Mercancía: </th>
+                                                <th class="tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Bultos: </th>
+                                                <th class="tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Peso:</th>
+                                            </tr>
+                                            <tr>
+                                                <td class=""><span class="campo">LUGARES[0]['LUGAR_MERCANCIA_CARGA']</span></td>
+                                                <td class=""><span class="campo">LUGARES[0]['LUGAR_BULTOS_CARGA']</span></td>
+                                                <td class=""><span class="campo">LUGARES[0]['LUGAR_KILOS_CARGA']</span> kg</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row mg-5">
+                                    <div class="col-12 col-sm-4 form-inline">
+                                        <label class="form-control-label tx-bold mr-2" style="word-break: break-word; overflow-wrap: break-word;">Temp. Max: </label>
+                                        <input class="form-control wd-30-force" type="text" readonly value="TEMP_MAXIMA">
+                                    </div>
+                                    <div class="col-12 col-sm-4  form-inline">
+                                        <label class=" form-control-label tx-bold mr-2" style="word-break: break-word; overflow-wrap: break-word;">Temp. Mín: </label>
+                                        <input class=" form-control wd-30-force" type="text" readonly value="TEMP_MINIMA">
+                                    </div>
+                                    <div class="col-12 col-sm-4  form-inline">
+                                        <label class=" form-control-label tx-bold mr-2" style="word-break: break-word; overflow-wrap: break-word;">Conectar: </label>
+                                        <input class=" form-control wd-30-force" type="text" readonly value="TEMP_CONECTAR">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN ROW -->
+
+                <!-- UN ROW -->
+                <div class="col-12 ">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6 borde-gris-derecho row  ">
+                                <table class="mg-5">
+                                    <tr>
+                                        <th class="tx-bold tx-center">Ext. Der</th>
+                                        <th class="tx-bold tx-center">Ext. Izq</th>
+                                        <th class="tx-bold tx-center">Ext. Front</th>
+                                        <th class="tx-bold tx-center">Ext. Tras</th>
+                                        <th class="tx-bold tx-center">Ext. Altura</th>
+                                    </tr>
+                                    <tr>
+                                        <td class=" tx-center "><span class="campo">EXTRA_RIGHT</span></td>
+                                        <td class=" tx-center"><span class="campo">EXTRA_LEFT</span></td>
+                                        <td class=" tx-center"><span class="campo">EXTRA_FRONT</span></td>
+                                        <td class=" tx-center"><span class="campo">EXTRA_BACK</span></td>
+                                        <td class=" tx-center"><span class="campo">EXTRA_ALTO</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="col-6 row  " style="padding-left: 25px;">
+                                <table class="mg-5">
+                                    <tr>
+                                        <th class="tx-bold tx-center">ONU</th>
+                                        <th class="tx-bold  tx-center">Versión</th>
+                                        <th class="tx-bold  tx-center">IMDG</th>
+                                        <th class="tx-bold  tx-center">Clase</th>
+                                        <th class="tx-bold tx-center">Notif Apv</th>
+                                    </tr>
+                                    <tr>
+                                        <td class=" tx-center "><span class="campo">IMO_ONU</span></td>
+                                        <td class=" tx-center"><span class="campo">IMO_VERSION</span></td>
+                                        <td class=" tx-center"><span class="campo">IMO_PAGINA</span></td>
+                                        <td class=" tx-center"><span class="campo">IMO_CLASE</span></td>
+                                        <td class=" tx-center"><span class="campo">IMO_PORT_NOTIFICATION</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN ROW -->
+
+                <!-- UN ROW -->
+                <div class="col-12 ">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-6 borde-gris-derecho row ">
+                                <table class="mg-l-10">
+                                    <tbody>
+                                        <tr>
+                                            <th class="tx-bold">
+                                                <div class="form-inline">
+                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Línea:</label>
+                                                    <textarea class="form-control wd-70-force d-flex align-items-flex-end" readonly rows="2" style="resize:none;">NOMBRELINEA_DEST</textarea>
+                                                </div>
+                                            </th>
+                                            <th class="tx-bold">
+                                                <div class="form-inline">
+                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Nº Escala:</label>
+                                                    <input class="form-control wd-50-force" type="text" readonly value="ESCALA_DEST">
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="tx-bold">
+                                                <div class="form-inline">
+                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Buque:</label>
+                                                    <input class="form-control" type="text" readonly value="BUQUE_DEST">
+                                                </div>
+                                            </th>
+                                            <th class="tx-bold">
+                                                <div class="form-inline">
+                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Viaje:</label>
+                                                    <input class="form-control wd-50-force" type="text" readonly value="VIAJE">
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="tx-bold">
+                                                <div class="form-inline">
+                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Dist. Llamada:</label>
+                                                    <input class="form-control" type="text" readonly value="DISTINTIVO_LLAMADA">
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-6 row mg-l-10" style="padding-left: 25px;">
+                                <table class="mg-l-10">
+                                    <tbody>
+                                        <tr>
+                                            <th class="tx-bold">
+                                                <div class="form-inline">
+                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Origen:</label>
+                                                    <input class="form-control" type="text" readonly value="PUERTO_ORIGEN_NOMBRE">
+                                                </div>
+                                            </th>
+                                            <th class="tx-bold">
+                                                <div class="form-inline">
+                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Destino:</label>
+                                                    <input class="form-control" type="text" readonly value="PUERTO_DESTINO_NOMBRE">
+                                                </div>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="tx-bold">
+                                                <div class="form-inline">
+                                                    <label class="mg-r-8 mg-b-8 tx-bold" style="word-break: break-word; overflow-wrap: break-word;">Pto. Des/carga:</label>
+                                                    <input class="form-control" type="text" readonly value="PUERTO_DESCARGA_NOMBRE">
+                                                </div>
+                                            </th>
+                                            <th class="tx-bold">
+                                                <div class="form-inline">
+                                                    <label class="mg-r-8 mg-b-8 tx-bold">Tipo Orden:</label>
+                                                    <input class="form-control" type="text" readonly value="PUERTO_TIPO_ORDEN_IMPORTACION">
+                                                    <br><small>(bool: IMPORT/EXPORT)</small>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN ROW -->
+
+                <!-- UN ROW -->
+                <div class="col-12 ">
+                    <div class="form-group col-12">
+                        <div class="row">
+                            <div class="col-7 borde-gris-derecho d-flex justify-content-start  form-inline " style="padding-left: 25px;">
+                                <label class=" form-control-label tx-bold mr-2">Ref Carga: </label>
+                                <input class=" form-control" type="text" readonly value="LUGARES[0]['LUGAR_REF_CARGA']">
+                            </div>
+                            <div class="col-4  form-inline ">
+                                <label class=" form-control-label tx-bold mr-2">Cargador: </label>
+                                <input class=" form-control" type="text" readonly value="CARGADOR_NOMBRE">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN ROW -->
+
+                <!-- UN ROW -->
+                <div class="col-12 ">
+                    <div class="form-group col-12">
+                        <div class="row">
+                            <div class="col-7 borde-gris-derecho d-flex justify-content-start form-inline d-flex align-items-start form-inline " style="padding-left: 25px;">
+                                <label class="form-control-label tx-bold mr-2 " style="word-break: break-word; overflow-wrap: break-word;">Pif/Aduana:</label>
+                                <input class="form-control wd-85" type="text" readonly value="PIF_NOMBRE">
+                            </div>
+                            <div class="col-4  form-inline ">
+                                <label for="" style="word-break: break-word; overflow-wrap: break-word; white-space: normal;">
+                                    <span class="campo">CARGADOR_NOMBRE</span><br>
+                                    <span class="campo">CARGADOR_CIF</span> <span class="campo">CARGADOR_DIRECCION</span><br>
+                                    <span class="campo">CARGADOR_POBLACION</span> <span class="campo">CARGADOR_PROVINCIA</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOTA: TABLA NO SE MUESTRA EN ADMÍTASE -->
+                <div class="col-12" style="background: #f8d7da; padding: 15px; border: 2px solid #f5c6cb; margin: 15px 0;">
+                    <p style="color: #721c24; font-weight: bold; margin: 0;">⚠️ LA TABLA DE "LUGARES CARGA/DESCARGA" NO SE MUESTRA EN ADMÍTASE</p>
+                    <p style="color: #721c24; font-size: 12px; margin: 5px 0 0 0;">Condición: <code>if ($tipoDocumento != 'A' && $tipoDocumento != 'E')</code></p>
+                </div>
+
+                <!-- UN ROW -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group ">
+                            <div class="row"><br>
+                                <div class="col-12 form-inline d-flex align-items-start"><br></div>
+                            </div>
+                            <div class="row d-flex align-items-start" style="border: 2px dashed #ffc107; background: #fffbea; padding: 15px; margin: 0;">
+                                <p style="width: 100%; margin: 0 0 10px 0; font-weight: bold; color: #856404;">⚠️ FIRMAS (Condicionales - Solo si !empty($datosOrden['dniViajeReceptor'])):</p>
+                                
+                                <div class="col-3 row">
+                                    <div class="col-12 form-inline d-flex align-items-start">
+                                        <label class="form-control-label tx-bold mr-2 mg-b-0">FIRMA Y SELLO LEADER:</label>
+                                        <div style="width: 120px; height: 80px; border: 2px dashed #999; display: flex; align-items: center; justify-content: center; font-size: 10px; margin: 10px 0;">
+                                            <span class="campo">FirmaViajeConductor</span>
+                                        </div>
+                                        <p class="form-control" readonly style="font-size: 12px;">
+                                            <span class="campo">nombreViajeConductor</span>, <span class="campo">dniViajeConductor</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-3 row">
+                                    <div class="col-12 form-inline d-flex align-items-start">
+                                        <label class="form-control-label tx-bold mr-2 mg-b-0">FIRMA Y SELLO CLIENTE:</label>
+                                        <div style="width: 120px; height: 80px; border: 2px dashed #999; display: flex; align-items: center; justify-content: center; font-size: 10px; margin: 10px 0;">
+                                            <span class="campo">FirmaViajeReceptor</span>
+                                        </div>
+                                        <p class="form-control" readonly style="font-size: 12px;">
+                                            <span class="campo">nombreViajeReceptor</span>, <span class="campo">dniViajeReceptor</span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="row "><br>
+                                        <div class="col-12 form-inline d-flex align-items-start"><br>
+                                            <label class="form-control-label tx-bold mr-2 ">Observaciones:</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="row col-12">
+                                            <div class="col-12 form-inline d-flex align-items-start">
+                                                <label class="print-label" id="printLabel">
+                                                    BOOKING Nº: <span class="campo">PCS_BOOKING_NUMBER</span> - <span class="campo">OBSERVACIONES</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12  form-inline" style="background: #d1ecf1; padding: 15px; margin: 15px 0; border: 2px solid #bee5eb;">
+                                    <p style="margin: 0; font-weight: bold;">📌 INFORMACIÓN ESPECÍFICA FORMATO ADMÍTASE:</p>
+                                    <label class="form-control-label tx-bold mr-2 ">Loc. Admisión: <span class="campo">OA_PCS_LOCATOR</span></label><br>
+                                    <label class="form-control-label tx-bold mr-2 ">Ref. Sic: <span class="campo">OA_PCS</span></label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12  form-inline">
+                                    <label class="form-control-label tx-bold mr-2 ">Fecha Emisión: </label>
+                                    <input class="form-control" type="text" readonly value="transformarFecha (fecha actual)">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 mg-t-0 mg-b-0" style="line-height: 1; word-spacing: -1px;">
+                                    <small class="form-control-label tx-bold mr-2 tx-5 ">Los datos recogido en esta Orden de Tranposte son totalmente confidenciales y queda prohibido su uso no autorizado. En cumplimiento de la normativa de Protección de Datos Personales, informamos que estos datos tratados por LEADER TRANSPORT SL, para cumplir con los servicios solicitados y con las obligaciones tributarias derivadas. Podrá ejercer los derechos reconocidos en dicha normativa enviado solicitud a nuestra dirección arriba indicada o mediante correo-e a patricio@consigmar.com adjuntado copia de su documento de identidad. Puede solicitar más información, sobre cómo tratamos sus datos, dirigiéndose a la dirección de correo arriba mencionada.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../public/js/jquery.min.js"></script>
+    <script src="../public/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

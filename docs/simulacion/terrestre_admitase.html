@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Campos - Terrestre Admítase</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <style>
+        body { background: #f5f5f5; padding: 20px; }
+        .info-banner {
+            background: #fff3cd;
+            border: 3px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .campo {
+            background: #e3f2fd;
+            color: #0d47a1;
+            padding: 3px 7px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #90caf9;
+            display: inline-block;
+        }
+        .printableArea {
+            background: white;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .lineaInferior {
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .lineaInferiorDash {
+            border-bottom: 2px dashed #ccc;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .bloqueOrden {
+            margin-bottom: 20px;
+        }
+        @media print {
+            .info-banner { display: none; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body>
+    <div class="info-banner">
+        <h4 style="margin: 0 0 10px 0;">📋 MAPA DE CAMPOS - Tipo Terrestre (T) / Formato Admítase (A)</h4>
+        <p style="margin: 0;">Los campos en <span class="campo">azul</span> indican los nombres de las claves del JSON. Este documento replica el diseño exacto del formato impreso.</p>
+    </div>
+
+    <div class="printableArea">
+        <!-- HEADER -->
+        <header style="margin-top: 40px;">
+            <div class="row d-flex align-items-center">
+                <div class="col-6 text-center tx-20">
+                    <div style="border: 2px dashed #ccc; padding: 20px; text-align: center;">
+                        <strong>LOGO LEADER TRANSPORT</strong><br>
+                        <small>(../../public/assets/images/leadertransport.png)</small>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <h3 class="tx-bold tx-30">ORDEN DE CARGA</h3>
+                    <h4 class="tx-bold tx-26">Nº <span class="campo">TTE_ORDEN</span></h4>
+                </div>
+            </div>
+            
+            <div class="row mt-4 tx-16 lineaInferior">
+                <div class="col-5 text-left tx-10">
+                    <label>
+                        <span class="campo">AGENCIA_DIRECCION</span>, <span class="campo">AGENCIA_CP</span>, <span class="campo">AGENCIA_POBLACION</span>, <span class="campo">AGENCIA_PROVINCIA</span><br>
+                        TEL: <span class="campo">AGENCIA_TELEFONO</span><br>
+                        EMAIL: <span class="campo">AGENCIA_EMAIL</span><br>
+                        NIF: <span class="campo">AGENCIA_CIF</span>
+                    </label>
+                </div>
+                <div class="col-6 text-right">
+                    <span class="pagenum">(Nº página)</span>
+                </div>
+            </div>
+            
+            <div class="row mt-4 text-left tx-14" style="line-height: 8px">
+                <div class="col-6">
+                    <p><strong>Transportista:</strong> <span class="campo">TRANSPORTISTA_NOMBRE</span></p>
+                    <p><strong>Dirección:</strong> <span class="campo">TRANSPORTISTA_DIRECCION</span></p>
+                    <p><strong>Conductor:</strong> <span class="campo">CONDUCTOR_NOMBRE</span></p>
+                    <p><strong>Matrícula:</strong> <span class="campo">TRACTORA</span></p>
+                    <p><strong>Precio acordado:</strong> <span style="font-style: italic;">(vacío)</span></p>
+                </div>
+                <div class="col-6">
+                    <p><strong>Identificación Transportista:</strong> <span class="campo">TRANSPORTISTA_NIF</span></p>
+                    <p><strong>Población:</strong> <span class="campo">TRANSPORTISTA_POBLACION</span></p>
+                    <p><strong>Identificación Conductor:</strong> <span class="campo">CONDUCTOR_NIF</span></p>
+                    <p><strong>Plataforma:</strong> <span class="campo">PLATAFORMA</span></p>
+                    <p><strong>Tipo Plataforma:</strong> <span class="campo">PLATAFORMA_TIPO</span></p>
+                </div>
+            </div>
+            <div style="padding-top: 20px;"></div>
+        </header>
+
+        <!-- CONTENIDO - ITERACIÓN DE VIAJES -->
+        <div id="contenido" style="margin-top: 40px;">
+            
+            <div style="background: #e8f5e9; border: 2px solid #4caf50; padding: 15px; margin-bottom: 20px;">
+                <p style="margin: 0; font-weight: bold; color: #2e7d32;">🔄 ITERACIÓN: foreach ($datosViajesBD as $viaje)</p>
+                <p style="margin: 5px 0 0 0; font-size: 13px; color: #2e7d32;">
+                    Cada bloque se repite según el array $datosViajesBD. Se alternan bloques CARGA y DESCARGA.
+                </p>
+            </div>
+
+            <!-- EJEMPLO BLOQUE CARGA -->
+            <div class="row bloqueOrden">
+                <label class="bold col-12 tx-center" style="background: #f1f8e9; padding: 10px; font-size: 18px;">
+                    LUGARES DE CARGA 📥
+                    <br><small style="font-weight: normal; font-size: 12px;">if ($viaje['tipoViaje'] == 'CARGA')</small>
+                </label>
+            </div>
+            
+            <div class="row mt-4 text-left tx-16 lineaInferiorDash bloqueOrden" style="line-height: 8px">
+                <div class="col-12 row">
+                    <div class="col-6">
+                        <p><strong>Empresa:</strong> <span class="campo">$viaje['LUGAR_NOMBRE']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Población:</strong> <span class="campo">$viaje['LUGAR_POBLACION']</span></p>
+                    </div>
+                    <div class="col-12">
+                        <p><strong>Dirección:</strong> <span class="campo">$viaje['LUGAR_DIRECCION']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Teléfono:</strong> <span class="campo">$viaje['LUGAR_TELEFONO']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>CP:</strong> <span class="campo">$viaje['LUGAR_CP']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Fecha:</strong> <span class="campo">$viaje['TTE_FECHA_CARGA']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Hora:</strong> <span class="campo">$viaje['TTE_HORA_CARGA']</span></p>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <p><strong>Mercancia:</strong> <span class="campo">$jsonDatos['MERCANCIA']</span></p>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <p><strong>Ref. carga:</strong> <span class="campo">$viaje['LUGAR_REF_CARGA']</span></p>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <p><strong>Bultos:</strong> <span class="campo">$jsonDatos['BULTOS']</span></p>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <p><strong>Metros:</strong> <span style="font-style: italic;">(comentado en código)</span></p>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <p><strong>Kilos:</strong> <span class="campo">$jsonDatos['PESO_MERCANCIA']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Observaciones:</strong> <span class="campo">$viaje['LUGAR_OBSERVACIONES_CARGA']</span></p>
+                    </div>
+                    
+                    <!-- FIRMAS CONDICIONALES EN CARGA -->
+                    <div class="col-12" style="background: #fff3cd; border: 2px dashed #ffc107; padding: 15px; margin-top: 15px;">
+                        <p style="margin: 0 0 10px 0; font-weight: bold; color: #856404;">⚠️ FIRMAS CONDICIONALES (solo si !empty()):</p>
+                        
+                        <div class="row">
+                            <div class="col-6" style="border: 1px solid #ddd; padding: 10px; margin: 5px;">
+                                <p style="margin: 0;"><strong>Firma Cliente:</strong></p>
+                                <div style="border: 2px dashed #999; width: 120px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 10px; margin: 5px 0;">
+                                    <span class="campo">$viaje["FirmaViajeReceptor"]</span>
+                                </div>
+                                <small>Condición: !empty($viaje["FirmaViajeReceptor"])</small>
+                            </div>
+                            
+                            <div class="col-6" style="border: 1px solid #ddd; padding: 10px; margin: 5px;">
+                                <p style="margin: 0;"><strong>Identificación Cliente:</strong></p>
+                                <p style="font-size: 12px;"><span class="campo">$viaje["nombreViajeReceptor"]</span>, <span class="campo">$viaje["dniViajeReceptor"]</span></p>
+                                <small>Condición: !empty($viaje["nombreViajeReceptor"]) && !empty($viaje["dniViajeReceptor"])</small>
+                            </div>
+                            
+                            <div class="col-6" style="border: 1px solid #ddd; padding: 10px; margin: 5px;">
+                                <p style="margin: 0;"><strong>Firma Transportista:</strong></p>
+                                <div style="border: 2px dashed #999; width: 120px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 10px; margin: 5px 0;">
+                                    <span class="campo">$viaje["FirmaViajeConductor"]</span>
+                                </div>
+                                <small>Condición: !empty($viaje["FirmaViajeConductor"])</small>
+                            </div>
+                            
+                            <div class="col-6" style="border: 1px solid #ddd; padding: 10px; margin: 5px;">
+                                <p style="margin: 0;"><strong>Identificación Transportista:</strong></p>
+                                <p style="font-size: 12px;"><span class="campo">$viaje["nombreViajeConductor"]</span>, <span class="campo">$viaje["dniViajeConductor"]</span></p>
+                                <small>Condición: !empty($viaje["nombreViajeConductor"]) && !empty($viaje["dniViajeConductor"])</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EJEMPLO BLOQUE DESCARGA -->
+            <div class="row bloqueOrden" style="margin-top: 40px;">
+                <label class="bold col-12 tx-center" style="background: #fce4ec; padding: 10px; font-size: 18px;">
+                    LUGARES DE DESCARGA 📤
+                    <br><small style="font-weight: normal; font-size: 12px;">else (cuando tipoViaje != 'CARGA')</small>
+                </label>
+            </div>
+            
+            <div class="row mt-4 text-left tx-16 lineaInferiorDash bloqueOrden" style="line-height: 8px">
+                <div class="col-12 row">
+                    <div class="col-6">
+                        <p><strong>Empresa:</strong> <span class="campo">$viaje['LUGAR_NOMBRE']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Población:</strong> <span class="campo">$viaje['LUGAR_POBLACION']</span></p>
+                    </div>
+                    <div class="col-12">
+                        <p><strong>Dirección:</strong> <span class="campo">$viaje['LUGAR_DIRECCION']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Teléfono:</strong> <span class="campo">$viaje['LUGAR_TELEFONO']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>CP:</strong> <span class="campo">$viaje['LUGAR_CP']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Fecha:</strong> <span style="font-style: italic;">(comentado - vacío)</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Hora:</strong> <span style="font-style: italic;">(comentado - vacío)</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Mercancia:</strong> <span class="campo">$jsonDatos['MERCANCIA']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Ref. carga:</strong> <span class="campo">$viaje['LUGAR_REF_DESCARGA']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Bultos:</strong> <span class="campo">$jsonDatos['BULTOS']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Metros:</strong> <span style="font-style: italic;">(comentado - vacío)</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Kilos:</strong> <span class="campo">$jsonDatos['PESO_MERCANCIA']</span></p>
+                    </div>
+                    <div class="col-6">
+                        <p><strong>Observaciones:</strong> <span class="campo">$viaje['LUGAR_OBSERVACIONES_DESCARGA']</span></p>
+                    </div>
+                    
+                    <!-- FIRMAS CONDICIONALES EN DESCARGA (MISMA ESTRUCTURA QUE CARGA) -->
+                    <div class="col-12" style="background: #fff3cd; border: 2px dashed #ffc107; padding: 15px; margin-top: 15px;">
+                        <p style="margin: 0 0 10px 0; font-weight: bold; color: #856404;">⚠️ FIRMAS CONDICIONALES (solo si !empty()):</p>
+                        
+                        <div class="row">
+                            <div class="col-6" style="border: 1px solid #ddd; padding: 10px; margin: 5px;">
+                                <p style="margin: 0;"><strong>Firma Cliente:</strong></p>
+                                <div style="border: 2px dashed #999; width: 120px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 10px; margin: 5px 0;">
+                                    <span class="campo">$viaje["FirmaViajeReceptor"]</span>
+                                </div>
+                                <small>Condición: !empty($viaje["FirmaViajeReceptor"])</small>
+                            </div>
+                            
+                            <div class="col-6" style="border: 1px solid #ddd; padding: 10px; margin: 5px;">
+                                <p style="margin: 0;"><strong>Identificación Cliente:</strong></p>
+                                <p style="font-size: 12px;"><span class="campo">$viaje["nombreViajeReceptor"]</span>, <span class="campo">$viaje["dniViajeReceptor"]</span></p>
+                                <small>Condición: !empty($viaje["nombreViajeReceptor"]) && !empty($viaje["dniViajeReceptor"])</small>
+                            </div>
+                            
+                            <div class="col-6" style="border: 1px solid #ddd; padding: 10px; margin: 5px;">
+                                <p style="margin: 0;"><strong>Firma Transportista:</strong></p>
+                                <div style="border: 2px dashed #999; width: 120px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 10px; margin: 5px 0;">
+                                    <span class="campo">$viaje["FirmaViajeConductor"]</span>
+                                </div>
+                                <small>Condición: !empty($viaje["FirmaViajeConductor"])</small>
+                            </div>
+                            
+                            <div class="col-6" style="border: 1px solid #ddd; padding: 10px; margin: 5px;">
+                                <p style="margin: 0;"><strong>Identificación Transportista:</strong></p>
+                                <p style="font-size: 12px;"><span class="campo">$viaje["nombreViajeConductor"]</span>, <span class="campo">$viaje["dniViajeConductor"]</span></p>
+                                <small>Condición: !empty($viaje["nombreViajeConductor"]) && !empty($viaje["dniViajeConductor"])</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="background: #e3f2fd; border: 2px solid #2196f3; padding: 15px; margin-top: 30px;">
+                <p style="margin: 0; font-weight: bold; color: #0d47a1;">📌 IMPORTANTE - Saltos de Página:</p>
+                <p style="margin: 5px 0 0 0; font-size: 13px; color: #0d47a1;">
+                    Cada 3 bloques (contador == 2), se inserta un page-break y se repite el header. El contador se reinicia a 0.
+                </p>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer style="margin-top: 40px; padding-top: 20px; border-top: 3px solid #000;">
+            
+            <!-- SECCIÓN FIRMAS FINALES - SOLO PARA FORMATO ENTRÉGUESE -->
+            <div style="background: #f8d7da; border: 2px solid #f5c6cb; padding: 15px; margin-bottom: 20px;">
+                <p style="margin: 0; font-weight: bold; color: #721c24;">⚠️ FIRMAS FINALES - SOLO SI tipoDocumento == "E" (Entréguese)</p>
+                <p style="margin: 5px 0 0 0; font-size: 13px; color: #721c24;">
+                    En formato ADMÍTASE (A) esta sección NO se muestra.
+                </p>
+                <div class="row" style="margin-top: 15px; opacity: 0.5;">
+                    <div class="col-4 bd" style="height: 110px; position: relative; border: 2px solid #000; padding: 10px;">
+                        <label class="tx-bold">FIRMA Y SELLO CLIENTE</label><br>
+                        <div style="border: 2px dashed #999; width: 100px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 10px; margin: 5px 0;">
+                            <span class="campo">$datosOrden['firmaCliente']</span>
+                        </div>
+                        <label class="tx-bold mg-t-10" style="position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center; font-size: 11px;">
+                            <span class="campo">$datosOrden['nombreCliente']</span>, <span class="campo">$datosOrden['dniCliente']</span>
+                        </label>
+                    </div>
+                    <div class="col-4"><label class="tx-bold"></label></div>
+                    <div class="col-4 bd" style="height: 110px; position: relative; border: 2px solid #000; padding: 10px;">
+                        <label class="tx-bold">FIRMA Y SELLO TRANSPORTISTA</label><br>
+                        <div style="border: 2px dashed #999; width: 100px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 10px; margin: 5px 0;">
+                            <span class="campo">$datosOrden['FirmaViajeConductor']</span>
+                        </div>
+                        <label class="tx-bold mg-t-10" style="position: absolute; bottom: 10px; left: 0; width: 100%; text-align: center; font-size: 11px;">
+                            <span class="campo">$datosOrden['nombreViajeConductor']</span>, <span class="campo">$datosOrden['dniViajeConductor']</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INFORMACIÓN LEGAL -->
+            <div class="mg-t-20" style="text-align: center; font-size: 10px; line-height: 1;">
+                <span class="campo">AGENCIA_NOMBRE</span> <span class="campo">AGENCIA_DIRECCION</span>, <span class="campo">AGENCIA_CP</span>, <span class="campo">AGENCIA_POBLACION</span>, <span class="campo">AGENCIA_PROVINCIA</span><br>
+                Tel.: <span class="campo">AGENCIA_TELEFONO</span> Email: <span class="campo">AGENCIA_EMAIL</span><br>
+                <strong>Registro Mercantil de Valencia Tomo 2986 General 302 de la Secc. General del Libro de Sociedades Folio 58. Hoja nº V-4381. N.I.F.: B46828158</strong><br><br>
+                <b style="font-size: 7px;">
+                    Los datos recogidos en esta Orden de Transporte son totalmente confidenciales y su único propósito es su uso autorizado. En cumplimiento de la normativa de Protección de Datos Personales, informamos que estos datos son
+                    tratados por LEADER TRANSPORT S.L. para cumplir con los servicios solicitados y con las obligaciones que hubiera demandado. Puede ejercer los derechos reconocidos en dicha normativa, enviando solicitud a nuestra
+                    dirección arriba indicada o mediante correo a e-patricia@congimbar.com adjuntando copia de su documento de identidad. Puede solicitar más información, sobre cómo tratamos sus datos, dirigiéndose a la dirección de
+                    correo arriba mencionada.
+                </b>
+            </div>
+        </footer>
+
+        <!-- RESUMEN DE CAMPOS -->
+        <div style="background: #e8f5e9; border: 3px solid #4caf50; padding: 20px; margin-top: 40px;">
+            <h4 style="color: #2e7d32; margin: 0 0 15px 0;">📊 RESUMEN DE CAMPOS - TIPO TERRESTRE (T)</h4>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                    <h5 style="color: #2e7d32;">Header (se repite en cada página):</h5>
+                    <ul style="font-size: 13px; color: #2e7d32;">
+                        <li>TTE_ORDEN</li>
+                        <li>AGENCIA_DIRECCION, AGENCIA_CP, AGENCIA_POBLACION, AGENCIA_PROVINCIA</li>
+                        <li>AGENCIA_TELEFONO, AGENCIA_EMAIL, AGENCIA_CIF</li>
+                        <li>TRANSPORTISTA_NOMBRE, TRANSPORTISTA_DIRECCION, TRANSPORTISTA_NIF, TRANSPORTISTA_POBLACION</li>
+                        <li>CONDUCTOR_NOMBRE, CONDUCTOR_NIF</li>
+                        <li>TRACTORA, PLATAFORMA, PLATAFORMA_TIPO</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 style="color: #2e7d32;">Campos por Viaje (iteración $datosViajesBD):</h5>
+                    <ul style="font-size: 13px; color: #2e7d32;">
+                        <li>$viaje['LUGAR_NOMBRE']</li>
+                        <li>$viaje['LUGAR_POBLACION'], $viaje['LUGAR_DIRECCION']</li>
+                        <li>$viaje['LUGAR_TELEFONO'], $viaje['LUGAR_CP']</li>
+                        <li>$viaje['TTE_FECHA_CARGA'], $viaje['TTE_HORA_CARGA'] (solo CARGA)</li>
+                        <li>$viaje['LUGAR_REF_CARGA'] (CARGA) / $viaje['LUGAR_REF_DESCARGA'] (DESCARGA)</li>
+                        <li>$viaje['LUGAR_OBSERVACIONES_CARGA'] / $viaje['LUGAR_OBSERVACIONES_DESCARGA']</li>
+                        <li>$jsonDatos['MERCANCIA'], $jsonDatos['BULTOS'], $jsonDatos['PESO_MERCANCIA']</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 style="color: #2e7d32;">Firmas Condicionales (por viaje):</h5>
+                    <ul style="font-size: 13px; color: #2e7d32;">
+                        <li>$viaje["FirmaViajeReceptor"] (imagen)</li>
+                        <li>$viaje["nombreViajeReceptor"], $viaje["dniViajeReceptor"]</li>
+                        <li>$viaje["FirmaViajeConductor"] (imagen)</li>
+                        <li>$viaje["nombreViajeConductor"], $viaje["dniViajeConductor"]</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 style="color: #2e7d32;">Footer (solo Entréguese):</h5>
+                    <ul style="font-size: 13px; color: #2e7d32;">
+                        <li>$datosOrden['firmaCliente'] (imagen)</li>
+                        <li>$datosOrden['nombreCliente'], $datosOrden['dniCliente']</li>
+                        <li>$datosOrden['FirmaViajeConductor'] (imagen)</li>
+                        <li>$datosOrden['nombreViajeConductor'], $datosOrden['dniViajeConductor']</li>
+                        <li><strong>⚠️ NO se muestra en ADMÍTASE</strong></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #4caf50;">
+                <p style="margin: 0; font-weight: bold; color: #2e7d32;">🔄 Características Especiales:</p>
+                <ul style="font-size: 13px; color: #2e7d32; margin-top: 5px;">
+                    <li><strong>Iteración dinámica:</strong> El contenido se genera iterando el array $datosViajesBD</li>
+                    <li><strong>Alternancia CARGA/DESCARGA:</strong> Cada bloque puede ser de carga o descarga según $viaje['tipoViaje']</li>
+                    <li><strong>Saltos de página:</strong> Cada 3 bloques se inserta un page-break y se repite el header</li>
+                    <li><strong>Firmas condicionales:</strong> Todas las firmas tienen validación !empty() antes de mostrarse</li>
+                    <li><strong>Footer diferenciado:</strong> Las firmas finales SOLO aparecen si $tipoDocumento == "E" (Entréguese)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="../public/js/jquery.min.js"></script>
+    <script src="../public/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

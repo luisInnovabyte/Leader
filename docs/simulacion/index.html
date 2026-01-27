@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapas de Campos - Órdenes de Transporte</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            padding: 25px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+
+        .card:hover .card-header::before {
+            top: -100%;
+            right: 100%;
+        }
+
+        .card-contenedor .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-terrestre .card-header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .card-cmr .card-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .card-subtitle {
+            font-size: 0.9em;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .card-body {
+            padding: 25px;
+            color: #333;
+        }
+
+        .card-description {
+            margin-bottom: 20px;
+            line-height: 1.6;
+            font-size: 0.95em;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .card-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9em;
+        }
+
+        .card-features li:last-child {
+            border-bottom: none;
+        }
+
+        .card-features li::before {
+            content: '✓';
+            color: #4caf50;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .card-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .card-contenedor .card-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-terrestre .card-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .card-cmr .card-button {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .card-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .info-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .info-section p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+        }
+
+        .legend-color.campo {
+            background: #e3f2fd;
+            border-color: #90caf9;
+        }
+
+        .legend-color.condicional {
+            background: #fff3cd;
+            border-color: #ffc107;
+        }
+
+        .legend-color.vacio {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .card-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Mapas de Campos JSON</h1>
+            <p>Documentación de Órdenes de Transporte - Leader Transport</p>
+        </header>
+
+        <div class="info-section">
+            <h2>🎯 Objetivo de esta Documentación</h2>
+            <p>
+                Esta documentación muestra el <strong>mapeo exacto de los campos JSON</strong> a los formatos impresos de las órdenes de transporte.
+                Cada documento replica el diseño real del formato impreso, identificando con claridad qué campo del JSON aparece en cada posición.
+            </p>
+            <p style="margin-top: 15px;">
+                Los campos del JSON se muestran con <strong>fondo azul</strong> para facilitar su identificación.
+                Las secciones condicionales están marcadas con <strong>advertencias visuales</strong>.
+            </p>
+
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color campo"></div>
+                    <span><strong>Azul:</strong> Campo del JSON</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color condicional"></div>
+                    <span><strong>Amarillo:</strong> Sección condicional</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color vacio"></div>
+                    <span><strong>Rojo:</strong> Campo no mapeado</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="cards-grid">
+            <!-- Card 1: Contenedor Cliente -->
+            <div class="card card-contenedor">
+                <div class="card-header">
+                    <span class="card-icon">📦</span>
+                    <div class="card-title">Tipo Contenedor</div>
+                    <div class="card-subtitle">Formato Cliente / Admítase</div>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">
+                        Documento para transporte de contenedores. Incluye datos de agencia, transportista, 
+                        contenedor, precinto, mercancía y lugares de carga/descarga.
+                    </p>
+                    <ul class="card-features">
+                        <li><strong>Tipo:</strong> C (Contenedor)</li>
+                        <li><strong>Formato:</strong> Admítase (A)</li>
+                        <li><strong>Campos:</strong> ~45 campos mapeados</li>
+                        <li><strong>Firmas:</strong> Condicionales (!empty)</li>
+                    </ul>
+                    <a href="contenedor_cliente.html" class="card-button" target="_blank">
+                        Ver Mapa de Campos →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 2: Terrestre Admítase -->
+            <div class="card card-terrestre">
+                <div class="card-header">
+                    <span class="card-icon">🚚</span>
+                    <div class="card-title">Tipo Terrestre</div>
+                    <div class="card-subtitle">Formato Admítase</div>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">
+                        Orden de carga para transporte terrestre. Itera dinámicamente los viajes (CARGA/DESCARGA) 
+                        del array $datosViajesBD.
+                    </p>
+                    <ul class="card-features">
+                        <li><strong>Tipo:</strong> T (Terrestre)</li>
+                        <li><strong>Formato:</strong> Admítase (A)</li>
+                        <li><strong>Iteración:</strong> Array de viajes</li>
+                        <li><strong>Page breaks:</strong> Cada 3 bloques</li>
+                        <li><strong>Header:</strong> Se repite en cada página</li>
+                    </ul>
+                    <a href="terrestre_admitase.html" class="card-button" target="_blank">
+                        Ver Mapa de Campos →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 3: Terrestre CMR -->
+            <div class="card card-cmr">
+                <div class="card-header">
+                    <span class="card-icon">🌍</span>
+                    <div class="card-title">Tipo Terrestre</div>
+                    <div class="card-subtitle">Formato CMR</div>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">
+                        Carta de Porte Internacional (CMR). Formato trilingüe (ES/FR/EN) con 24 campos numerados 
+                        según normativa internacional.
+                    </p>
+                    <ul class="card-features">
+                        <li><strong>Tipo:</strong> T (Terrestre)</li>
+                        <li><strong>Formato:</strong> CMR (Internacional)</li>
+                        <li><strong>Idiomas:</strong> Español, Francés, Inglés</li>
+                        <li><strong>Campos:</strong> 24 campos estándar</li>
+                        <li><strong>Mapeados:</strong> Solo ~10 campos</li>
+                    </ul>
+                    <a href="terrestre_cmr.html" class="card-button" target="_blank">
+                        Ver Mapa de Campos →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h2>📚 Información Adicional</h2>
+            <p>
+                <strong>Archivo fuente:</strong> <code>view/Transportes/orden.php</code>
+            </p>
+            <p>
+                <strong>Tipos de orden disponibles:</strong>
+            </p>
+            <ul style="margin-left: 30px; margin-top: 10px; line-height: 1.8; color: #555;">
+                <li><strong>C:</strong> Contenedor (marítimo)</li>
+                <li><strong>T:</strong> Terrestre (carretera)</li>
+                <li><strong>M:</strong> Multimodal (combinado)</li>
+            </ul>
+            <p style="margin-top: 15px;">
+                <strong>Formatos de documento disponibles:</strong>
+            </p>
+            <ul style="margin-left: 30px; margin-top: 10px; line-height: 1.8; color: #555;">
+                <li><strong>A:</strong> Admítase (formato estándar)</li>
+                <li><strong>E:</strong> Entréguese (con firmas adicionales)</li>
+                <li><strong>CMR:</strong> Carta de Porte Internacional</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p><strong>Leader Transport S.L.</strong></p>
+            <p style="margin-top: 5px; font-size: 0.9em; opacity: 0.8;">
+                Documentación generada el 27 de enero de 2026
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Añadir efecto de click a las cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'A') {
+                    const link = this.querySelector('.card-button');
+                    if (link) {
+                        window.open(link.href, '_blank');
+                    }
+                }
+            });
+        });
+
+        // Animación de entrada
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+        });
+    </script>
+</body>
+</html>

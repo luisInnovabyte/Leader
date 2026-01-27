@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Campos - Terrestre CMR</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <style>
+        body { background: #f5f5f5; padding: 20px; }
+        .info-banner {
+            background: #fff3cd;
+            border: 3px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .campo {
+            background: #e3f2fd;
+            color: #0d47a1;
+            padding: 3px 7px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #90caf9;
+            display: inline-block;
+        }
+        .cmr-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            font-size: 11px; 
+            border: 2px solid #000;
+        }
+        .cmr-table td { 
+            border: 1px solid #000; 
+            padding: 5px; 
+            vertical-align: top; 
+        }
+        .cmr-num { 
+            background: #ffe082;
+            font-weight: bold; 
+            font-size: 16px; 
+            width: 25px; 
+            height: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+        .cmr-label { 
+            color: #006400; 
+            font-size: 9px; 
+            line-height: 1.3; 
+            margin: 3px 0;
+        }
+        .cmr-data { 
+            font-size: 12px; 
+            padding-top: 5px; 
+        }
+        .printableArea {
+            background: white;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        @media print {
+            .info-banner { display: none; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body>
+    <div class="info-banner">
+        <h4 style="margin: 0 0 10px 0;">📋 MAPA DE CAMPOS - Tipo Terrestre (T) / Formato CMR</h4>
+        <p style="margin: 0;">Los campos en <span class="campo">azul</span> indican los nombres de las claves del JSON. Este documento replica el diseño exacto del formato CMR impreso (Carta de Porte Internacional).</p>
+    </div>
+
+    <div class="printableArea">
+        <!-- HEADER -->
+        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 2px solid #000; padding-bottom: 10px;">
+            <div style="font-size: 11px;">
+                <strong>Ejemplar para el transportista - Exemplaire pour le transporteur<br>Copy for the carrier</strong>
+            </div>
+            <div style="text-align: right;">
+                <strong style="font-size: 18px;">Nº <span class="campo">$idOrden</span></strong>
+            </div>
+        </div>
+
+        <div style="background: #e8f5e9; border: 2px solid #4caf50; padding: 10px; margin-bottom: 15px;">
+            <p style="margin: 0; font-weight: bold; color: #2e7d32;">🌍 Estructura CMR:</p>
+            <p style="margin: 5px 0 0 0; font-size: 12px; color: #2e7d32;">
+                Los datos se obtienen del array <span class="campo">$jsonDatos['CMR'][0]</span><br>
+                Campos LUGAR_CARGA y LUGAR_DESCARGA son objetos con múltiples propiedades
+            </p>
+        </div>
+
+        <!-- TABLA CMR -->
+        <table class="cmr-table">
+            <!-- Fila 1: Remitente + Título CMR -->
+            <tr>
+                <td style="width: 45%; height: 100px;">
+                    <span class="cmr-num">1</span>
+                    <div class="cmr-label">Remitente (nombre, dirección, país)<br>Expéditeur (nom, adresse, pays)<br>Sender (name, address, country)</div>
+                    <div class="cmr-data">
+                        <em style="color: #999;">(Campo no mapeado en código actual)</em>
+                    </div>
+                </td>
+                <td rowspan="2" style="width: 55%; text-align: center; vertical-align: middle;">
+                    <div style="font-weight: bold; font-size: 14px; margin-bottom: 10px;">
+                        CARTA DE PORTE INTERNACIONAL<br>
+                        LETTRE DE VOITURE INTERNATIONALE<br>
+                        INTERNATIONAL CONSIGNMENT NOTE
+                    </div>
+                    <table style="width: 100%; font-size: 8px; margin-top: 10px;">
+                        <tr>
+                            <td style="border: none; padding: 3px; text-align: left;">
+                                Este Transporte queda sometido, no obstante toda cláusula contraria, al Convenio sobre el Contrato de Transporte Internacional de Mercancías por Carretera (CMR).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none; padding: 3px; text-align: left;">
+                                Ce transport est soumis, nonobstant toute clause contraire, à la Convention relative au contrat de transport international de marchandises par route (CMR).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: none; padding: 3px; text-align: left;">
+                                This carriage is subject, notwithstanding any clause to the contrary, to the Convention on the Contract for the International Carriage of Goods by Road (CMR).
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Fila 2: Consignatario -->
+            <tr>
+                <td style="height: 100px;">
+                    <span class="cmr-num">2</span>
+                    <div class="cmr-label">Consignatario (nombre, dirección, país)<br>Destinataire (nom, adresse, pays)<br>Consignee (name, address, country)</div>
+                    <div class="cmr-data">
+                        <em style="color: #999;">(Campo no mapeado en código actual)</em>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Fila 3: Lugar de entrega + Transportista -->
+            <tr>
+                <td style="height: 120px;">
+                    <span class="cmr-num">3</span>
+                    <div class="cmr-label">Lugar de entrega de la mercancía (lugar, país)<br>Lieu prévu pour la livraison de la marchandise (lieu, pays)<br>Place of delivery of the goods (place, country)</div>
+                    <div class="cmr-data">
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_COD']</span> - 
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_NOMBRE']</span><br>
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_DIRECCION']</span><br>
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_CP']</span> - 
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_POBLACION']</span> 
+                        (<span class="campo">$jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_PROVINCIA']</span>)<br>
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_PAIS']</span>
+                    </div>
+                </td>
+                <td rowspan="3" style="vertical-align: top;">
+                    <span class="cmr-num">16</span>
+                    <div class="cmr-label">Transportista (nombre, dirección, país)<br>Transporteur (nom, adresse, pays)<br>Carrier (name, address, country)</div>
+                    <div class="cmr-data">
+                        <em style="color: #999;">(Campo no mapeado en código actual)</em>
+                    </div>
+                    <hr style="margin: 10px 0; border-top: 1px dashed #999;">
+                    <span class="cmr-num">17</span>
+                    <div class="cmr-label">Transportistas sucesivos (nombre, dirección, país)<br>Transporteurs successifs (nom, adresse, pays)<br>Successive carriers (name, address, country)</div>
+                    <div class="cmr-data">
+                        <span class="campo">$jsonDatos['CMR'][0]['TRACTORA']</span> - 
+                        <span class="campo">$jsonDatos['CMR'][0]['PLATAFORMA']</span>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Fila 4: Lugar de carga -->
+            <tr>
+                <td style="height: 120px;">
+                    <span class="cmr-num">4</span>
+                    <div class="cmr-label">Lugar y fecha de carga de la mercancía (lugar, país, fecha)<br>Lieu et date de la prise en charge de la marchandise (lieu, pays, date)<br>Place and date of taking over the goods (place, country, date)</div>
+                    <div class="cmr-data">
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_COD']</span> - 
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_NOMBRE']</span><br>
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_DIRECCION']</span><br>
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_CP']</span> - 
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_POBLACION']</span> 
+                        (<span class="campo">$jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_PROVINCIA']</span>)<br>
+                        <span class="campo">$jsonDatos['CMR'][0]['LUGAR_CARGA']['LUGAR_PAIS']</span>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Fila 5: Documentos anexos -->
+            <tr>
+                <td style="height: 60px;">
+                    <span class="cmr-num">5</span>
+                    <div class="cmr-label">Documentos anexos<br>Documents annexés<br>Documents attached</div>
+                    <div class="cmr-data">
+                        <em style="color: #999;">(Campo vacío)</em>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Fila 6: Tabla de descripción de mercancía -->
+            <tr>
+                <td colspan="2" style="padding: 0;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 10px;">
+                        <tr>
+                            <td style="width: 10%; border-right: 1px solid #000; padding: 5px; vertical-align: top;">
+                                <span class="cmr-num">6</span>
+                                <div class="cmr-label">Marcas y números<br>Marques et numéros<br>Marks and Nos.</div>
+                                <div class="cmr-data">
+                                    <em style="color: #999;">(Vacío)</em>
+                                </div>
+                            </td>
+                            <td style="width: 12%; border-right: 1px solid #000; padding: 5px; vertical-align: top;">
+                                <span class="cmr-num">7</span>
+                                <div class="cmr-label">Número de bultos<br>Nombre de colis<br>Number of packages</div>
+                                <div class="cmr-data">
+                                    <span class="campo">$jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_BULTOS_DESCARGA']</span>
+                                </div>
+                            </td>
+                            <td style="width: 12%; border-right: 1px solid #000; padding: 5px; vertical-align: top;">
+                                <span class="cmr-num">8</span>
+                                <div class="cmr-label">Clase de embalaje<br>Mode d'emballage<br>Method of packing</div>
+                                <div class="cmr-data">
+                                    <em style="color: #999;">(Vacío)</em>
+                                </div>
+                            </td>
+                            <td style="width: 26%; border-right: 1px solid #000; padding: 5px; vertical-align: top;">
+                                <span class="cmr-num">9</span>
+                                <div class="cmr-label">Naturaleza de la mercancía<br>Nature de la marchandise<br>Nature of the goods</div>
+                                <div class="cmr-data">
+                                    <span class="campo">$jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_MERCANCIA_DESCARGA']</span>
+                                </div>
+                            </td>
+                            <td style="width: 10%; border-right: 1px solid #000; padding: 5px; vertical-align: top;">
+                                <span class="cmr-num">10</span>
+                                <div class="cmr-label">Nº estadístico<br>No. statistique<br>Statistical No.</div>
+                                <div class="cmr-data">
+                                    <em style="color: #999;">(Vacío)</em>
+                                </div>
+                            </td>
+                            <td style="width: 15%; border-right: 1px solid #000; padding: 5px; vertical-align: top;">
+                                <span class="cmr-num">11</span>
+                                <div class="cmr-label">Peso bruto, kg<br>Poids brut, kg<br>Gross weight, kg</div>
+                                <div class="cmr-data">
+                                    <span class="campo">$jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_KILOS_DESCARGA']</span>
+                                </div>
+                            </td>
+                            <td style="width: 15%; padding: 5px; vertical-align: top;">
+                                <span class="cmr-num">12</span>
+                                <div class="cmr-label">Volumen m³<br>Cubage m³<br>Volume m³</div>
+                                <div class="cmr-data">
+                                    <em style="color: #999;">(Vacío)</em>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- Fila 7: Instrucciones + Estipulaciones particulares (tabla de pagos) -->
+            <tr>
+                <td style="height: 150px;">
+                    <span class="cmr-num">13</span>
+                    <div class="cmr-label">Instrucciones del remitente<br>Instructions de l'expéditeur<br>Sender's instructions</div>
+                    <div class="cmr-data">
+                        <em style="color: #999;">(Vacío)</em>
+                    </div>
+                </td>
+                <td rowspan="4" style="vertical-align: top;">
+                    <span class="cmr-num">19</span>
+                    <div class="cmr-label">Estipulaciones particulares<br>Conventions particulières<br>Special agreements</div>
+                    <div class="cmr-data">
+                        <em style="color: #999;">(Vacío)</em>
+                    </div>
+                    
+                    <!-- TABLA DE PAGOS -->
+                    <table style="width: 100%; margin-top: 10px; border-collapse: collapse; font-size: 9px;">
+                        <tr style="background: #f0f0f0;">
+                            <td style="border: 1px solid #000; padding: 3px; font-weight: bold;">
+                                <span class="cmr-num" style="font-size: 12px;">20</span> A pagar por / To be paid by
+                            </td>
+                            <td style="border: 1px solid #000; padding: 3px; text-align: center;">Remitente<br>Sender</td>
+                            <td style="border: 1px solid #000; padding: 3px; text-align: center;">Moneda<br>Currency</td>
+                            <td style="border: 1px solid #000; padding: 3px; text-align: center;">Consignatario<br>Consignee</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 3px;">Precio del transporte / Carriage charges</td>
+                            <td style="border: 1px solid #000; height: 30px;"></td>
+                            <td style="border: 1px solid #000;"></td>
+                            <td style="border: 1px solid #000;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 3px;">Suplementos / Supplements</td>
+                            <td style="border: 1px solid #000; height: 30px;"></td>
+                            <td style="border: 1px solid #000;"></td>
+                            <td style="border: 1px solid #000;"></td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #000; padding: 3px;">Gastos accesorios / Other charges</td>
+                            <td style="border: 1px solid #000; height: 30px;"></td>
+                            <td style="border: 1px solid #000;"></td>
+                            <td style="border: 1px solid #000;"></td>
+                        </tr>
+                        <tr style="background: #f0f0f0; font-weight: bold;">
+                            <td style="border: 1px solid #000; padding: 3px;">Total</td>
+                            <td style="border: 1px solid #000; height: 25px;"></td>
+                            <td style="border: 1px solid #000;"></td>
+                            <td style="border: 1px solid #000;"></td>
+                        </tr>
+                    </table>
+                    
+                    <div style="margin-top: 10px; padding: 5px; background: #fff3cd; border: 1px dashed #ffc107; font-size: 10px;">
+                        <strong>⚠️ Nota:</strong> Los campos de la tabla de pagos están vacíos en el código
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Fila 8: Forma de pago -->
+            <tr>
+                <td style="height: 80px;">
+                    <span class="cmr-num">14</span>
+                    <div class="cmr-label">Forma de pago<br>Prescriptions d'affranchissement<br>Instructions as to payment for carriage</div>
+                    <div style="margin-top: 8px;">
+                        <label style="font-size: 10px;">☐ Porte pagado / Franco / Carriage paid</label><br>
+                        <label style="font-size: 10px;">☐ Porte debido / Non franco / Carriage forward</label>
+                    </div>
+                    <div style="margin-top: 5px; padding: 5px; background: #fff3cd; border: 1px dashed #ffc107; font-size: 9px;">
+                        <strong>⚠️</strong> Campos estáticos - no mapeados
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Fila 9: Reembolso -->
+            <tr>
+                <td style="height: 60px;">
+                    <span class="cmr-num">15</span>
+                    <div class="cmr-label">Reembolso<br>Remboursement<br>Cash on delivery</div>
+                    <div class="cmr-data">
+                        <em style="color: #999;">(Vacío)</em>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Fila 10: Lugar y fecha de formalización -->
+            <tr>
+                <td style="height: 50px;">
+                    <span class="cmr-num">21</span>
+                    <div class="cmr-label">Formalizado en _________________ a ______________<br>Établi à _________________ le ______________<br>Established in _________________ on ______________</div>
+                    <div style="margin-top: 5px; padding: 5px; background: #fff3cd; border: 1px dashed #ffc107; font-size: 9px;">
+                        <strong>⚠️</strong> Campos de texto libre - no mapeados
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Fila 11: Firmas del remitente y transportista -->
+            <tr>
+                <td style="height: 100px;">
+                    <span class="cmr-num">22</span>
+                    <div class="cmr-label">Firma y sello del remitente<br>Signature et timbre de l'expéditeur<br>Signature and stamp of the sender</div>
+                    <div style="margin-top: 40px; text-align: center; color: #999;">
+                        <em>(Espacio para firma manual - no mapeado)</em>
+                    </div>
+                </td>
+                <td style="height: 100px;">
+                    <span class="cmr-num">23</span>
+                    <div class="cmr-label">Firma y sello del transportista<br>Signature et timbre du transporteur<br>Signature and stamp of the carrier</div>
+                    <div style="margin-top: 40px; text-align: center; color: #999;">
+                        <em>(Espacio para firma manual - no mapeado)</em>
+                    </div>
+                </td>
+            </tr>
+
+            <!-- Fila 12: Observaciones del transportista + Recibo del consignatario -->
+            <tr>
+                <td colspan="2" style="padding: 0;">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="width: 66%; border-right: 1px solid #000; height: 100px; padding: 5px; vertical-align: top;">
+                                <span class="cmr-num">18</span>
+                                <div class="cmr-label">Reservas y observaciones del transportista<br>Réserves et observations du transporteur<br>Carrier's reservations and observations</div>
+                                <div class="cmr-data" style="margin-top: 10px;">
+                                    <em style="color: #999;">(Espacio libre - no mapeado)</em>
+                                </div>
+                            </td>
+                            <td style="width: 34%; height: 100px; padding: 5px; vertical-align: top;">
+                                <span class="cmr-num">24</span>
+                                <div class="cmr-label">Recibo de la mercancía<br>Marchandises reçues<br>Goods received</div>
+                                <div style="margin-top: 10px; font-size: 9px;">
+                                    Lugar _________________ a ______________<br><br>
+                                    <em>Signature et timbre du destinataire<br>
+                                    Signature and stamp of the consignee</em>
+                                </div>
+                                <div style="margin-top: 20px; text-align: center; color: #999;">
+                                    <em>(Firma manual - no mapeado)</em>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <!-- RESUMEN DE CAMPOS -->
+        <div style="background: #e8f5e9; border: 3px solid #4caf50; padding: 20px; margin-top: 40px;">
+            <h4 style="color: #2e7d32; margin: 0 0 15px 0;">📊 RESUMEN DE CAMPOS - FORMATO CMR</h4>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div>
+                    <h5 style="color: #2e7d32;">Header:</h5>
+                    <ul style="font-size: 13px; color: #2e7d32;">
+                        <li><span class="campo">$idOrden</span> - Número de orden</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 style="color: #2e7d32;">Estructura de datos:</h5>
+                    <ul style="font-size: 13px; color: #2e7d32;">
+                        <li>Array: <span class="campo">$jsonDatos['CMR'][0]</span></li>
+                        <li>Función auxiliar: <span class="campo">cleanNull($value)</span></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 style="color: #2e7d32;">Lugar de Descarga (campo 3):</h5>
+                    <ul style="font-size: 12px; color: #2e7d32;">
+                        <li>LUGAR_COD</li>
+                        <li>LUGAR_NOMBRE</li>
+                        <li>LUGAR_DIRECCION</li>
+                        <li>LUGAR_CP</li>
+                        <li>LUGAR_POBLACION</li>
+                        <li>LUGAR_PROVINCIA</li>
+                        <li>LUGAR_PAIS</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 style="color: #2e7d32;">Lugar de Carga (campo 4):</h5>
+                    <ul style="font-size: 12px; color: #2e7d32;">
+                        <li>LUGAR_COD</li>
+                        <li>LUGAR_NOMBRE</li>
+                        <li>LUGAR_DIRECCION</li>
+                        <li>LUGAR_CP</li>
+                        <li>LUGAR_POBLACION</li>
+                        <li>LUGAR_PROVINCIA</li>
+                        <li>LUGAR_PAIS</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 style="color: #2e7d32;">Descripción Mercancía (campos 6-12):</h5>
+                    <ul style="font-size: 12px; color: #2e7d32;">
+                        <li><strong>Campo 7:</strong> LUGAR_BULTOS_DESCARGA</li>
+                        <li><strong>Campo 9:</strong> LUGAR_MERCANCIA_DESCARGA</li>
+                        <li><strong>Campo 11:</strong> LUGAR_KILOS_DESCARGA</li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 style="color: #2e7d32;">Transportista (campo 17):</h5>
+                    <ul style="font-size: 12px; color: #2e7d32;">
+                        <li>TRACTORA</li>
+                        <li>PLATAFORMA</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #4caf50;">
+                <p style="margin: 0; font-weight: bold; color: #2e7d32;">⚠️ CAMPOS NO MAPEADOS:</p>
+                <ul style="font-size: 12px; color: #721c24; background: #f8d7da; padding: 10px 30px; margin-top: 5px; border-radius: 3px;">
+                    <li><strong>Campo 1:</strong> Remitente (nombre, dirección, país)</li>
+                    <li><strong>Campo 2:</strong> Consignatario (nombre, dirección, país)</li>
+                    <li><strong>Campo 5:</strong> Documentos anexos</li>
+                    <li><strong>Campo 6:</strong> Marcas y números</li>
+                    <li><strong>Campo 8:</strong> Clase de embalaje</li>
+                    <li><strong>Campo 10:</strong> Nº estadístico</li>
+                    <li><strong>Campo 12:</strong> Volumen m³</li>
+                    <li><strong>Campo 13:</strong> Instrucciones del remitente</li>
+                    <li><strong>Campo 14:</strong> Forma de pago (checkboxes estáticos)</li>
+                    <li><strong>Campo 15:</strong> Reembolso</li>
+                    <li><strong>Campo 16:</strong> Transportista (nombre, dirección, país)</li>
+                    <li><strong>Campo 19:</strong> Estipulaciones particulares</li>
+                    <li><strong>Campo 20:</strong> Tabla de pagos (todas las filas vacías)</li>
+                    <li><strong>Campo 21:</strong> Lugar y fecha de formalización</li>
+                    <li><strong>Campo 22:</strong> Firma del remitente</li>
+                    <li><strong>Campo 23:</strong> Firma del transportista</li>
+                    <li><strong>Campo 18:</strong> Reservas y observaciones</li>
+                    <li><strong>Campo 24:</strong> Recibo del consignatario</li>
+                </ul>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #fff3cd; border: 2px solid #ffc107; border-radius: 5px;">
+                <p style="margin: 0; font-weight: bold; color: #856404;">🔍 CARACTERÍSTICAS ESPECIALES DEL CMR:</p>
+                <ul style="font-size: 12px; color: #856404; margin: 5px 0 0 0;">
+                    <li><strong>Formato Internacional:</strong> Cada campo tiene etiquetas en 3 idiomas (Español/Francés/Inglés)</li>
+                    <li><strong>Estructura fija:</strong> 24 campos numerados según normativa CMR internacional</li>
+                    <li><strong>Datos limitados:</strong> Solo se mapean ~10 campos del JSON, el resto son campos libres</li>
+                    <li><strong>Función cleanNull():</strong> Limpia valores null antes de mostrar</li>
+                    <li><strong>Array CMR:</strong> Los datos se obtienen de <span class="campo">$jsonDatos['CMR'][0]</span></li>
+                    <li><strong>Sin iteración:</strong> A diferencia de Admítase, CMR no itera viajes (documento único)</li>
+                    <li><strong>Page break:</strong> Usa <code>page-break-after: always</code> después del documento</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="../public/js/jquery.min.js"></script>
+    <script src="../public/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

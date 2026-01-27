@@ -678,23 +678,27 @@
             <div class="printableArea">
                 <?php
                 if ($tipoDocumento == "CMR") {
+                    // Función auxiliar para limpiar valores null
+                    function cleanNull($value) {
+                        return ($value === null || $value === 'null' || $value === '') ? '' : $value;
+                    }
                 ?>
                     <style>
-                        .cmr-table { width: 100%; border-collapse: collapse; font-size: 9px; }
+                        .cmr-table { width: 100%; border-collapse: collapse; font-size: 11px; }
                         .cmr-table td { border: 1px solid #000; padding: 3px; vertical-align: top; }
-                        .cmr-num { font-weight: bold; font-size: 11px; width: 20px; }
-                        .cmr-label { color: #006400; font-size: 7px; line-height: 1.2; }
-                        .cmr-data { font-size: 10px; padding-top: 2px; }
+                        .cmr-num { font-weight: bold; font-size: 14px; width: 20px; }
+                        .cmr-label { color: #006400; font-size: 9px; line-height: 1.2; }
+                        .cmr-data { font-size: 12px; padding-top: 2px; }
                     </style>
 
-                    <div style="padding: 10mm; page-break-after: always;">
+                    <div style="padding: 5mm; page-break-after: always;">
                         <!-- Header -->
                         <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                            <div style="font-size: 8px;">
-                                <strong>Ejemplar para el porteador - Exemplaire pour le transporteur<br>Copy for the carrier</strong>
+                            <div style="font-size: 10px;">
+                                <strong>Ejemplar para el transportista - Exemplaire pour le transporteur<br>Copy for the carrier</strong>
                             </div>
                             <div style="text-align: right;">
-                                <strong style="font-size: 14px;"><?php echo $idOrden; ?></strong>
+                                <strong style="font-size: 16px;"><?php echo $idOrden; ?></strong>
                             </div>
                         </div>
 
@@ -706,12 +710,12 @@
                                     <div class="cmr-label">Remitente (nombre, dirección, país)<br>Expéditeur (nom, adresse, pays)<br>Sender (name, address, country)</div>
                                 </td>
                                 <td rowspan="2" style="width: 55%; text-align: center;">
-                                    <div style="font-weight: bold; font-size: 10px; margin-bottom: 5px;">
+                                    <div style="font-weight: bold; font-size: 12px; margin-bottom: 5px;">
                                         CARTA DE PORTE INTERNACIONAL<br>
                                         LETTRE DE VOITURE INTERNATIONALE<br>
                                         INTERNATIONAL CONSIGNMENT NOTE
                                     </div>
-                                    <table style="width: 100%; font-size: 7px;">
+                                    <table style="width: 100%; font-size: 9px;">
                                         <tr>
                                             <td style="border: none; padding: 2px;">Este Transporte queda sometido, no obstante toda cláusula contraria, al Convenio sobre el Contrato de Transporte Internacional de Mercancías por Carretera (CMR).</td>
                                         </tr>
@@ -741,21 +745,34 @@
                                     <div class="cmr-data">
                                         <?php 
                                         $lugar_desc = $jsonDatos['CMR'][0]['LUGAR_DESCARGA'];
-                                        echo $lugar_desc['LUGAR_COD'] . ' - ' . $lugar_desc['LUGAR_NOMBRE'] . '<br>';
-                                        echo $lugar_desc['LUGAR_DIRECCION'] . '<br>';
-                                        echo $lugar_desc['LUGAR_CP'] . ' - ' . $lugar_desc['LUGAR_POBLACION'] . ' (' . $lugar_desc['LUGAR_PROVINCIA'] . ')<br>';
-                                        echo $lugar_desc['LUGAR_PAIS'];
+                                        $cod = $lugar_desc['LUGAR_COD'] ?? '';
+                                        $nombre = $lugar_desc['LUGAR_NOMBRE'] ?? '';
+                                        if ($cod || $nombre) {
+                                            echo trim($cod . ($cod && $nombre ? ' - ' : '') . $nombre) . '<br>';
+                                        }
+                                        if ($lugar_desc['LUGAR_DIRECCION'] ?? '') echo ($lugar_desc['LUGAR_DIRECCION'] ?? '') . '<br>';
+                                        $cp = $lugar_desc['LUGAR_CP'] ?? '';
+                                        $pob = $lugar_desc['LUGAR_POBLACION'] ?? '';
+                                        $prov = $lugar_desc['LUGAR_PROVINCIA'] ?? '';
+                                        if ($cp || $pob || $prov) {
+                                            echo trim($cp . ($cp && $pob ? ' - ' : '') . $pob . ($prov ? ' (' . $prov . ')' : '')) . '<br>';
+                                        }
+                                        if ($lugar_desc['LUGAR_PAIS'] ?? '') echo ($lugar_desc['LUGAR_PAIS'] ?? '');
                                         ?>
                                     </div>
                                 </td>
                                 <td rowspan="3">
                                     <span class="cmr-num">16</span>
-                                    <div class="cmr-label">Porteador (nombre, dirección, país)<br>Transporteur (nom, adresse, pays)<br>Carrier (name, address, country)</div>
+                                    <div class="cmr-label">Transportista (nombre, dirección, país)<br>Transporteur (nom, adresse, pays)<br>Carrier (name, address, country)</div>
                                     <hr style="margin: 5px 0;">
                                     <span class="cmr-num">17</span>
-                                    <div class="cmr-label">Porteadores sucesivos (nombre, dirección, país)<br>Transporteurs successifs (nom, adresse, pays)<br>Successive carriers (name, address, country)</div>
+                                    <div class="cmr-label">Transportistas sucesivos (nombre, dirección, país)<br>Transporteurs successifs (nom, adresse, pays)<br>Successive carriers (name, address, country)</div>
                                     <div class="cmr-data">
-                                        <?php echo $jsonDatos['CMR'][0]['TRACTORA'] . ' - ' . $jsonDatos['CMR'][0]['PLATAFORMA']; ?>
+                                        <?php 
+                                        $tractora = $jsonDatos['CMR'][0]['TRACTORA'] ?? '';
+                                        $plataforma = $jsonDatos['CMR'][0]['PLATAFORMA'] ?? '';
+                                        echo trim($tractora . ($tractora && $plataforma ? ' - ' : '') . $plataforma);
+                                        ?>
                                     </div>
                                 </td>
                             </tr>
@@ -768,10 +785,19 @@
                                     <div class="cmr-data">
                                         <?php 
                                         $lugar_carga = $jsonDatos['CMR'][0]['LUGAR_CARGA'];
-                                        echo $lugar_carga['LUGAR_COD'] . ' - ' . $lugar_carga['LUGAR_NOMBRE'] . '<br>';
-                                        echo $lugar_carga['LUGAR_DIRECCION'] . '<br>';
-                                        echo $lugar_carga['LUGAR_CP'] . ' - ' . $lugar_carga['LUGAR_POBLACION'] . ' (' . $lugar_carga['LUGAR_PROVINCIA'] . ')<br>';
-                                        echo $lugar_carga['LUGAR_PAIS'];
+                                        $cod = $lugar_carga['LUGAR_COD'] ?? '';
+                                        $nombre = $lugar_carga['LUGAR_NOMBRE'] ?? '';
+                                        if ($cod || $nombre) {
+                                            echo trim($cod . ($cod && $nombre ? ' - ' : '') . $nombre) . '<br>';
+                                        }
+                                        if ($lugar_carga['LUGAR_DIRECCION'] ?? '') echo ($lugar_carga['LUGAR_DIRECCION'] ?? '') . '<br>';
+                                        $cp = $lugar_carga['LUGAR_CP'] ?? '';
+                                        $pob = $lugar_carga['LUGAR_POBLACION'] ?? '';
+                                        $prov = $lugar_carga['LUGAR_PROVINCIA'] ?? '';
+                                        if ($cp || $pob || $prov) {
+                                            echo trim($cp . ($cp && $pob ? ' - ' : '') . $pob . ($prov ? ' (' . $prov . ')' : '')) . '<br>';
+                                        }
+                                        if ($lugar_carga['LUGAR_PAIS'] ?? '') echo ($lugar_carga['LUGAR_PAIS'] ?? '');
                                         ?>
                                     </div>
                                 </td>
@@ -797,7 +823,7 @@
                                             <td style="width: 12%; border-right: 1px solid #000; border-bottom: none;">
                                                 <span class="cmr-num">7</span>
                                                 <div class="cmr-label">Número de bultos<br>Nombre de colis<br>Number of packages</div>
-                                                <div class="cmr-data"><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_BULTOS_DESCARGA']; ?></div>
+                                                <div class="cmr-data"><?php echo cleanNull($jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_BULTOS_DESCARGA'] ?? ''); ?></div>
                                             </td>
                                             <td style="width: 12%; border-right: 1px solid #000; border-bottom: none;">
                                                 <span class="cmr-num">8</span>
@@ -806,7 +832,7 @@
                                             <td style="width: 26%; border-right: 1px solid #000; border-bottom: none;">
                                                 <span class="cmr-num">9</span>
                                                 <div class="cmr-label">Naturaleza de la mercancía<br>Nature de la marchandise<br>Nature of the goods</div>
-                                                <div class="cmr-data"><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_MERCANCIA_DESCARGA']; ?></div>
+                                                <div class="cmr-data"><?php echo cleanNull($jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_MERCANCIA_DESCARGA'] ?? ''); ?></div>
                                             </td>
                                             <td style="width: 10%; border-right: 1px solid #000; border-bottom: none;">
                                                 <span class="cmr-num">10</span>
@@ -815,7 +841,7 @@
                                             <td style="width: 15%; border-right: 1px solid #000; border-bottom: none;">
                                                 <span class="cmr-num">11</span>
                                                 <div class="cmr-label">Peso bruto, kg<br>Poids brut, kg<br>Gross weight, kg</div>
-                                                <div class="cmr-data"><?php echo $jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_KILOS_DESCARGA']; ?></div>
+                                                <div class="cmr-data"><?php echo cleanNull($jsonDatos['CMR'][0]['LUGAR_DESCARGA']['LUGAR_KILOS_DESCARGA'] ?? ''); ?></div>
                                             </td>
                                             <td style="width: 15%; border-bottom: none;">
                                                 <span class="cmr-num">12</span>
@@ -835,7 +861,7 @@
                                 <td rowspan="4" style="vertical-align: top;">
                                     <span class="cmr-num">19</span>
                                     <div class="cmr-label">Estipulaciones particulares<br>Conventions particulières<br>Special agreements</div>
-                                    <table style="width: 100%; margin-top: 5px; border-collapse: collapse; font-size: 7px;">
+                                    <table style="width: 100%; margin-top: 5px; border-collapse: collapse; font-size: 9px;">
                                         <tr>
                                             <td style="border: 1px solid #000; padding: 2px;"><span class="cmr-num">20</span> A pagar por / To be paid by</td>
                                             <td style="border: 1px solid #000; padding: 2px;">Remitente<br>Sender</td>
@@ -876,8 +902,8 @@
                                     <span class="cmr-num">14</span>
                                     <div class="cmr-label">Forma de pago<br>Prescriptions d'affranchissement<br>Instructions as to payment for carriage</div>
                                     <div style="margin-top: 5px;">
-                                        <label style="font-size: 8px;">☐ Porte pagado / Franco / Carriage paid</label><br>
-                                        <label style="font-size: 8px;">☐ Porte debido / Non franco / Carriage forward</label>
+                                        <label style="font-size: 10px;">☐ Porte pagado / Franco / Carriage paid</label><br>
+                                        <label style="font-size: 10px;">☐ Porte debido / Non franco / Carriage forward</label>
                                     </div>
                                 </td>
                             </tr>
@@ -917,7 +943,7 @@
                                         <tr>
                                             <td style="width: 66%; border-right: 1px solid #000; height: 60px;">
                                                 <span class="cmr-num">18</span>
-                                                <div class="cmr-label">Reservas y observaciones del porteador<br>Réserves et observations du transporteur<br>Carrier's reservations and observations</div>
+                                                <div class="cmr-label">Reservas y observaciones del transportista<br>Réserves et observations du transporteur<br>Carrier's reservations and observations</div>
                                             </td>
                                             <td style="width: 34%; height: 60px;">
                                                 <span class="cmr-num">24</span>
@@ -948,9 +974,9 @@
                         <!-- CONTENIDO ORDEN DE TRANSPORTE -->
                         <!-- ============================================================== -->
                         <div class="form-layout form-layout-2">
-                            <div class="row no-gutters bd d-flex" data-select2-id="31">
+                            <div class="row no-gutters bd d-flex" data-select2-id="31" style="margin-top: 20px;">
                                 <div class="col-5">
-                                    <div class="form-group border-right-none">
+                                    <div class="form-group border-right-none" style="border: none;">
                                         <h2 class="form-control-label tx-bold mg-10 tipo-letra print-27">ORDEN DE TRANSPORTE</h2>
                                         <br>
                                         <div class="tx-center">
@@ -960,7 +986,7 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <div class="form-group border-left-none border-right-none">
+                                    <div class="form-group border-left-none border-right-none" style="border: none;">
                                         <label class="form-control-label tx-bold"><?php echo $jsonDatos['AGENCIA_NOMBRE']; ?></label><br>
                                         <label class="form-control-label"><?php echo $jsonDatos['AGENCIA_DIRECCION']; ?></label><br>
                                         <label class="form-control-label">Tel: <?php echo $jsonDatos['AGENCIA_TELEFONO']; ?> Fax: 963674717</label><br>
@@ -1655,7 +1681,7 @@
                         function insertHeader($jsonDatos)
                         {
                             echo '
-                                <header>
+                                <header style="margin-top: 40px;">
                                     <div class="row d-flex align-items-center">
                                         <div class="col-6 text-center tx-20">
                                             <img src="../../public/assets/images/leadertransport.png" width="50%" height="50%" alt="Leader Transport s.l." class="img-fluid">
@@ -1694,6 +1720,7 @@
                                             <p>Tipo Plataforma: <span style="font-weight: normal">' . $jsonDatos['PLATAFORMA_TIPO'] . '</span></p>
                                         </div>
                                     </div>
+                                    <div style="padding-top: 20px;"></div>
                                 </header>';
                         }
 
@@ -1701,7 +1728,7 @@
                         ?>
 
 
-                        <div id="contenido">
+                        <div id="contenido" style="margin-top: 40px;">
                             <?php
 
 
@@ -1767,18 +1794,26 @@
                                             <div class="col-6">
                                                 <p>Observaciones: <span style="font-weight: normal"><?php echo $viaje['LUGAR_OBSERVACIONES_CARGA']; ?></span></p>
                                             </div>
+                                            <?php if (!empty($viaje["FirmaViajeReceptor"])) { ?>
                                             <div class="col-6">
                                                 <p>Firma Cliente: <img src="<?php echo $viaje["FirmaViajeReceptor"]; ?>" style="max-height: 50px" alt=""></p>
                                             </div>
+                                            <?php } ?>
+                                            <?php if (!empty($viaje["nombreViajeReceptor"]) && !empty($viaje["dniViajeReceptor"])) { ?>
                                             <div class="col-6">
                                                 <p>Identificación Cliente: <br><br><label><?php echo $viaje["nombreViajeReceptor"] . ", " . $viaje["dniViajeReceptor"]; ?></label></p>
                                             </div>
+                                            <?php } ?>
+                                            <?php if (!empty($viaje["FirmaViajeConductor"])) { ?>
                                             <div class="col-6">
                                                 <p>Firma Transportista: <img src="<?php echo $viaje["FirmaViajeConductor"]; ?>" style="max-height: 50px" alt=""></p>
                                             </div>
+                                            <?php } ?>
+                                            <?php if (!empty($viaje["nombreViajeConductor"]) && !empty($viaje["dniViajeConductor"])) { ?>
                                             <div class="col-6">
                                                 <p>Identificación Transportista: <br><br><label><?php echo $viaje["nombreViajeConductor"] . ", " . $viaje["dniViajeConductor"]; ?></label></p>
                                             </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
 
@@ -1838,18 +1873,26 @@
                                             <div class="col-6">
                                                 <p>Observaciones: <span style="font-weight: normal"><?php echo $viaje['LUGAR_OBSERVACIONES_DESCARGA']; ?></span></p>
                                             </div>
+                                            <?php if (!empty($viaje["FirmaViajeReceptor"])) { ?>
                                             <div class="col-6">
                                                 <p>Firma Cliente: <img src="<?php echo $viaje["FirmaViajeReceptor"]; ?>" style="max-height: 50px" alt=""></p>
                                             </div>
+                                            <?php } ?>
+                                            <?php if (!empty($viaje["nombreViajeReceptor"]) && !empty($viaje["dniViajeReceptor"])) { ?>
                                             <div class="col-6">
                                                 <p>Identificación Cliente: <br><br><label><?php echo $viaje["nombreViajeReceptor"] . ", " . $viaje["dniViajeReceptor"]; ?></label></p>
                                             </div>
+                                            <?php } ?>
+                                            <?php if (!empty($viaje["FirmaViajeConductor"])) { ?>
                                             <div class="col-6">
                                                 <p>Firma Transportista: <img src="<?php echo $viaje["FirmaViajeConductor"]; ?>" style="max-height: 50px" alt=""></p>
                                             </div>
+                                            <?php } ?>
+                                            <?php if (!empty($viaje["nombreViajeConductor"]) && !empty($viaje["dniViajeConductor"])) { ?>
                                             <div class="col-6">
                                                 <p>Identificación Transportista: <br><br><label><?php echo $viaje["nombreViajeConductor"] . ", " . $viaje["dniViajeConductor"]; ?></label></p>
                                             </div>
+                                            <?php } ?>
                                         </div>
                                     </div>
 
@@ -1965,7 +2008,7 @@
 
                         <div id="contenido">
 
-                            <div class="col-12">
+                            <div class="col-12" style="padding-top: 20px;">
                                 <p>LA PLATAFORMA SE RECOGE EN: <span style="font-weight: normal"><?php echo $jsonDatos['LUGAR_COMIENZO_NOMBRE']; ?></span></p>
                             </div>
                             <hr style="line-height: 8px">
@@ -2026,18 +2069,27 @@
                                             <div class="col-6">
                                                 <p>Ref. carga: <span style="font-weight: normal"><?php echo $jsonDatos['CARGADOR_REF_CARGA']; ?></span></p>
                                             </div>
-                                            <div class="col-6">
-                                                <p>Firma Cliente: <img src="<?php echo $viaje["FirmaViajeReceptor"]; ?>" style="max-height: 50px" alt=""></p>
-                                            </div>
-                                            <div class="col-6">
-                                                <p>Identificación Cliente: <br><br><label><?php echo $viaje["nombreViajeReceptor"] . ", " . $viaje["dniViajeReceptor"]; ?></label></p>
-                                            </div>
-                                            <div class="col-6">
-                                                <p>Firma Transportista: <img src="<?php echo $viaje["FirmaViajeConductor"]; ?>" style="max-height: 50px" alt=""></p>
-                                            </div>
-                                            <div class="col-6">
-                                                <p>Identificación Transportista: <br><br><label><?php echo $viaje["nombreViajeConductor"] . ", " . $viaje["dniViajeConductor"]; ?></label></p>
-                                            </div>
+                            <div class="col-12" style="margin-top: 20px;"></div>
+                            <?php if (!empty($viaje["FirmaViajeReceptor"])) { ?>
+                            <div class="col-6">
+                                <p>Firma Cliente: <br><img src="<?php echo $viaje["FirmaViajeReceptor"]; ?>" style="max-height: 50px" alt=""></p>
+                            </div>
+                            <?php } ?>
+                            <?php if (!empty($viaje["nombreViajeReceptor"]) && !empty($viaje["dniViajeReceptor"])) { ?>
+                            <div class="col-6">
+                                <p>Identificación Cliente: <br><br><label><?php echo $viaje["nombreViajeReceptor"] . ", " . $viaje["dniViajeReceptor"]; ?></label></p>
+                            </div>
+                            <?php } ?>
+                            <?php if (!empty($viaje["FirmaViajeConductor"])) { ?>
+                            <div class="col-6">
+                                <p>Firma Transportista: <br><img src="<?php echo $viaje["FirmaViajeConductor"]; ?>" style="max-height: 50px" alt=""></p>
+                            </div>
+                            <?php } ?>
+                            <?php if (!empty($viaje["nombreViajeConductor"]) && !empty($viaje["dniViajeConductor"])) { ?>
+                            <div class="col-6">
+                                <p>Identificación Transportista: <br><br><label><?php echo $viaje["nombreViajeConductor"] . ", " . $viaje["dniViajeConductor"]; ?></label></p>
+                            </div>
+                            <?php } ?>
 
                                         </div>
                                     </div>
@@ -2081,18 +2133,27 @@
                                                 <p>Ref. carga: <span style="font-weight: normal"><?php echo $jsonDatos['CARGADOR_REF_CARGA']; ?></span></p>
 
                                             </div>
-                                            <div class="col-6">
-                                                <p>Firma Cliente: <img src="<?php echo $viaje["FirmaViajeReceptor"]; ?>" style="max-height: 50px" alt=""></p>
-                                            </div>
-                                            <div class="col-6">
-                                                <p>Identificación Cliente: <br><br><label><?php echo $viaje["nombreViajeReceptor"] . ", " . $viaje["dniViajeReceptor"]; ?></label></p>
-                                            </div>
-                                            <div class="col-6">
-                                                <p>Firma Transportista: <img src="<?php echo $viaje["FirmaViajeConductor"]; ?>" style="max-height: 50px" alt=""></p>
-                                            </div>
-                                            <div class="col-6">
-                                                <p>Identificación Transportista: <br><br><label><?php echo $viaje["nombreViajeConductor"] . ", " . $viaje["dniViajeConductor"]; ?></label></p>
-                                            </div>
+                            <div class="col-12" style="margin-top: 20px;"></div>
+                            <?php if (!empty($viaje["FirmaViajeReceptor"])) { ?>
+                            <div class="col-6">
+                                <p>Firma Cliente: <br><img src="<?php echo $viaje["FirmaViajeReceptor"]; ?>" style="max-height: 50px" alt=""></p>
+                            </div>
+                            <?php } ?>
+                            <?php if (!empty($viaje["nombreViajeReceptor"]) && !empty($viaje["dniViajeReceptor"])) { ?>
+                            <div class="col-6">
+                                <p>Identificación Cliente: <br><br><label><?php echo $viaje["nombreViajeReceptor"] . ", " . $viaje["dniViajeReceptor"]; ?></label></p>
+                            </div>
+                            <?php } ?>
+                            <?php if (!empty($viaje["FirmaViajeConductor"])) { ?>
+                            <div class="col-6">
+                                <p>Firma Transportista: <br><img src="<?php echo $viaje["FirmaViajeConductor"]; ?>" style="max-height: 50px" alt=""></p>
+                            </div>
+                            <?php } ?>
+                            <?php if (!empty($viaje["nombreViajeConductor"]) && !empty($viaje["dniViajeConductor"])) { ?>
+                            <div class="col-6">
+                                <p>Identificación Transportista: <br><br><label><?php echo $viaje["nombreViajeConductor"] . ", " . $viaje["dniViajeConductor"]; ?></label></p>
+                            </div>
+                            <?php } ?>
 
                                         </div>
                                     </div>

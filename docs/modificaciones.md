@@ -12,6 +12,7 @@
 
 1. [Mejoras en Sistema de Firmas y QR](#modificación-1-mejoras-en-sistema-de-firmas-y-qr)
 2. [Optimización de Canvas de Firma](#modificación-2-optimización-de-canvas-de-firma)
+3. [Corrección de Carga de Situaciones en Modal de Incidencias](#modificación-4-corrección-de-carga-de-situaciones-en-modal-de-incidencias)
 
 ---
 
@@ -579,13 +580,159 @@ debug_smtp_simple.php                   (TEMPORAL - Modificación #3)
 
 ---
 
+## Modificación #4: Corrección de Carga de Situaciones en Modal de Incidencias
+
+**Fecha:** 27 de enero de 2026  
+**Pantalla afectada:** `view/Transportes/incidencias.php`  
+**Tipo:** Corrección de Bug - Carga Dinámica
+
+### Descripción del Problema
+- El select de "Situación" aparecía vacío al abrir el modal de Nueva Incidencia
+- Los datos no se cargaban porque el evento `$(document).ready()` se ejecutaba antes de que el modal estuviera en el DOM
+- La tabla `situaciones-Transporte` en el servidor estaba vacía
+
+### Cambios Realizados
+
+#### 1. Cambio del Evento de Carga
+**Archivos modificados:**
+- `view/Transportes/index.js`
+
+**Cambio principal:**
+- Cambiado de `$(document).ready()` a evento `shown.bs.modal` del modal
+- Esto garantiza que el select se carga cuando el modal está completamente visible
+
+**Código anterior:**
+```javascript
+$(document).ready(function () {
+  $.post("../../controller/transportes.php?op=selectSituacion", ...);
+});
+```
+
+**Código nuevo:**
+```javascript
+$("#modalAgregarIncidencia").on("shown.bs.modal", function () {
+  console.log("Modal abierto, cargando situaciones...");
+  $.post("../../controller/transportes.php?op=selectSituacion", ...);
+});
+```
+
+#### 2. Mejoras en el Manejo de Datos
+**Mejoras implementadas:**
+- Añadido manejo de errores con `.fail()` para capturar errores AJAX
+- Mensajes informativos cuando no hay datos: "No hay situaciones disponibles"
+- Mensajes de error cuando falla la petición: "Error al cargar situaciones"
+- Logs de depuración extensivos en consola del navegador
+- Validación con `try-catch` para errores de parseo JSON
+
+**Código añadido:**
+```javascript
+try {
+  var dataParsed = JSON.parse(data);
+  console.log("Datos parseados:", dataParsed);
+  // ... procesamiento
+} catch (e) {
+  console.error("Error al parsear JSON:", e);
+  $("#selectSituacion").append("<option value=''>Error al procesar datos</option>");
+}
+```
+
+#### 3. Scripts de Diagnóstico
+**Archivos creados:**
+- `debug_situaciones.php` - Script de diagnóstico
+- `insertar_situaciones.php` - Script de inserción de datos
+
+**Funcionalidad de `debug_situaciones.php`:**
+- Verifica existencia de la tabla `situaciones-Transporte`
+- Cuenta registros totales y activos
+- Muestra todos los registros con formato de tabla
+- Detecta si la tabla está vacía y muestra el script SQL necesario
+- Muestra información de la base de datos actual
+
+**Funcionalidad de `insertar_situaciones.php`:**
+- Inserta las 5 situaciones predeterminadas en la base de datos
+- Verifica registros existentes antes de insertar
+- Maneja errores de duplicados
+- Muestra tabla con registros insertados correctamente
+
+#### 4. Datos Insertados en la Base de Datos
+**Script SQL ejecutado:**
+```sql
+INSERT INTO `situaciones-Transporte` 
+(`nombreSituacion`, `estSituacion`, `fecAltaSituacion`, `fecModiSituacion`, `fecBajaSituacion`) 
+VALUES 
+('En Recogida', 1, CURDATE(), NULL, NULL),
+('En Entrega', 1, CURDATE(), NULL, NULL),
+('En Tránsito', 1, CURDATE(), NULL, NULL),
+('Avería', 1, CURDATE(), NULL, NULL),
+('Retraso', 1, CURDATE(), NULL, NULL);
+```
+
+**Situaciones disponibles:**
+1. En Recogida
+2. En Entrega
+3. En Tránsito
+4. Avería
+5. Retraso
+
+### Flujo de Carga del Select
+
+```mermaid
+graph TD
+    A[Usuario hace clic en 'Nueva Incidencia'] --> B[Modal se abre]
+    B --> C[Evento shown.bs.modal se dispara]
+    C --> D[Ajax POST a transportes.php?op=selectSituacion]
+    D --> E[Modelo: listarSituacion]
+    E --> F[Query: SELECT * FROM situaciones-Transporte WHERE estSituacion=1]
+    F --> G[Controlador devuelve JSON]
+    G --> H[JavaScript parsea datos]
+    H --> I{¿Hay datos?}
+    I -->|Sí| J[Llena select con opciones]
+    I -->|No| K[Muestra mensaje: No hay situaciones]
+    J --> L[Select listo para usar]
+```
+
+### Archivos Afectados
+
+**Modificados:**
+- `view/Transportes/index.js` - Lógica de carga del select
+
+**Creados:**
+- `debug_situaciones.php` - Diagnóstico
+- `insertar_situaciones.php` - Inserción de datos
+
+**Sin cambios (pero validados):**
+- `controller/transportes.php` - Case "selectSituacion"
+- `models/Transportes.php` - Método listarSituacion()
+- `view/Transportes/modalAgregarIncidencia.php` - HTML del modal
+- `view/Transportes/incidencias.php` - Página principal
+
+### Validación
+
+**Logs de consola esperados al abrir el modal:**
+```
+Modal abierto, cargando situaciones...
+Respuesta cruda del servidor: [{"idSituacion":"4","nombreSituacion":"En Recogida"...}]
+Datos parseados: Array(5)
+Cantidad de situaciones: 5
+Select cargado correctamente con 5 opciones
+```
+
+### Resultado
+✅ El select de "Situación" ahora carga correctamente las 5 opciones  
+✅ Los datos se cargan dinámicamente cada vez que se abre el modal  
+✅ Manejo robusto de errores con mensajes informativos  
+✅ Logs de depuración para facilitar futuras correcciones
+
+---
+
 ## Historial de Actualizaciones del Documento
 
 | Fecha | Modificación | Descripción |
 |-------|-------------|-------------|
 | 27/01/2026 | Creación del documento | Registro de modificaciones 1 y 2 |
 | 27/01/2026 | Modificación #3 | Sistema de envío de correos electrónicos - Configuración SMTP |
+| 28/01/2026 | Modificación #4 | Corrección de carga de situaciones en modal de incidencias |
 
 ---
 
-*Documento actualizado automáticamente - Última modificación: 27 de enero de 2026*
+*Documento actualizado automáticamente - Última modificación: 28 de enero de 2026*

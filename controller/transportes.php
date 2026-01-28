@@ -368,7 +368,7 @@ switch ($op) {
                 // Código para otros dominios
                  // Reconstruimos la parte necesaria del path
                 $required_path = '';
-                for ($i = 0; $i < 1; $i++) { // Tomamos solo los primeros 2 segmentos
+                for ($i = 0; $i < 2; $i++) { // Tomamos los primeros 2 segmentos (incluye /logistica/)
                     if (isset($path_segments[$i])) {
                         $required_path .= $path_segments[$i] . '/';
                     }
@@ -390,11 +390,19 @@ switch ($op) {
             $nombreSoftware = 'Leader Transport';
 
             try {
+                // Definir configuración SMTP directamente
+                $smtp_host = 'smtp.office365.com';
+                $smtp_auth = 1;
+                $smtp_username = 'noreply@leader-transport.com';
+                $smtp_pass = 'T.403700629546op';
+                $smtp_port = 587;
+                $smtp_receptor = 'noreply@leader-transport.com';
+                
                 // Archivo de configuración Mail
                 include 'configMail.php';
                
                 // Configurar el remitente del correo
-                $mail->setFrom('software@efeuno.com.es', 'Efeuno');
+                $mail->setFrom('noreply@leader-transport.com', 'Leader Transport');
                 $mail->addAddress($correo, ''); // Añadir destinatario
 
                 $mail->CharSet = 'UTF-8'; // Establecer la codificación del correo

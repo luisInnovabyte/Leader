@@ -1604,6 +1604,8 @@
 
                                             <div class="row">
                                                 <input id="primerCodigo" type="hidden" value="<?php echo $jsonDatos['OA_PCS_LOCATOR']; ?>">
+                                                <input id="conductorNombreData" type="hidden" value="<?php echo isset($jsonDatos['CONDUCTOR_NOMBRE']) ? $jsonDatos['CONDUCTOR_NOMBRE'] : ''; ?>">
+                                                <input id="conductorNifData" type="hidden" value="<?php echo isset($jsonDatos['CONDUCTOR_NIF']) ? $jsonDatos['CONDUCTOR_NIF'] : ''; ?>">
                                                 <div class="col-sm-6 insertarDatosViaje d-none col-12 mg-t-10 mg-b-30">
                                                     <button type="button" onclick="" data-bs-toggle="modal" data-bs-target="#firma_modal" class="btn waves-effect  wd-100p tx-bold waves-light btn-block btn-info">Firmar Documento</button>
                                                 </div>

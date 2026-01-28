@@ -49,9 +49,12 @@
                                             <div class="col-12">
                                                 <p class="tx-bold mg-b-20 tx-center">Firma Digital Conductor</p>
                                             </div>
+                                            <div id="mensajeInfoConductor" class="col-12 alert alert-info text-center mg-b-20" role="alert">
+                                                <i class="bx bx-info-circle"></i> Complete nombre y documento para activar el área de firma
+                                            </div>
                                             <div id="fsignatureContainerConductor" class="col-12 d-none d-flex justify-content-center">
                                                 <form id="formSignatureConductor" class="formSignatureConductor" method="POST">
-                                                    <canvas id="signaturePadConductor" class="signaturePad" width="400" height="300" style="border: 1px solid #000;"></canvas>
+                                                    <canvas id="signaturePadConductor" class="signaturePad" width="600" height="300" style="border: 1px solid #000;"></canvas>
                                                     <div class="d-flex justify-content-center mt-3">
                                                         <input class="btn mt-2 text-center tx-center mr-2" id="borrarFirmaConductor" style="background-color: #ff5353; color: white;" type="reset" value="Borrar Firma" />
                                                     </div>
@@ -61,11 +64,11 @@
                                         <div class="row">
                                             <div class="col-12 col-lg-12">
                                                 <label for="nombreInputConductor" class="form-label">Nombre responsable de firma</label>
-                                                <input type="text" class="form-control inputsfirma" id="nombreInputConductor" placeholder="Nombre" data-type="0" data-min="3" data-max="60" data-new-input="1" data-descripcion="1" data-required="1">
+                                                <input type="text" class="form-control inputsfirma" id="nombreInputConductor" placeholder="Nombre" autocomplete="name" inputmode="text" data-type="0" data-min="3" data-max="60" data-new-input="1" data-descripcion="1" data-required="1">
                                             </div>
                                             <div class="col-12 col-lg-12 mg-b-20 mg-t-20">
                                                 <label for="DNIinputConductor" class="form-label">Documento identidad</label>
-                                                <input type="text" class="form-control inputsfirma" id="DNIinputConductor" placeholder="12345678X" style="text-transform: uppercase;" data-min="6" data-max="25" data-new-input="1" data-descripcion="0" data-required="1">
+                                                <input type="text" class="form-control inputsfirma" id="DNIinputConductor" placeholder="12345678X" style="text-transform: uppercase;" autocomplete="off" inputmode="text" data-min="6" data-max="25" data-new-input="1" data-descripcion="0" data-required="1">
                                             </div>
                                             
                                             <div class="col-12 mg-b-20 d-flex justify-content-center">
@@ -80,9 +83,12 @@
                                             <div class="col-12">
                                                 <p class="tx-bold mg-b-20 tx-center">Firma Digital Receptor</p>
                                             </div>
+                                            <div id="mensajeInfoReceptor" class="col-12 alert alert-info text-center mg-b-20" role="alert">
+                                                <i class="bx bx-info-circle"></i> Complete nombre y documento para activar el área de firma
+                                            </div>
                                             <div id="fsignatureContainerReceptor" class="col-12 d-none d-flex justify-content-center">
                                                 <form id="formSignatureReceptor" class="formSignature" method="POST">
-                                                    <canvas id="signaturePadReceptor" class="signaturePad" width="400" height="300" style="border: 1px solid #000;"></canvas>
+                                                    <canvas id="signaturePadReceptor" class="signaturePad" width="600" height="300" style="border: 1px solid #000;"></canvas>
                                                     <div class="d-flex justify-content-center mt-3">
                                                         <input class="btn mt-2 text-center tx-center mr-2" id="borrarFirmaReceptor" style="background-color: #ff5353; color: white;" type="reset" value="Borrar Firma" />
                                                     </div>
@@ -92,16 +98,16 @@
                                         <div class="row">
                                             <div class="col-12 col-lg-12">
                                                 <label for="nombreInputReceptor" class="form-label">Nombre responsable de firma</label>
-                                                <input type="text" class="form-control inputsfirma" id="nombreInputReceptor" placeholder="Nombre" data-type="0" data-min="3" data-max="60" data-new-input="1" data-descripcion="1" data-required="1">
+                                                <input type="text" class="form-control inputsfirma" id="nombreInputReceptor" placeholder="Nombre" autocomplete="name" inputmode="text" data-type="0" data-min="3" data-max="60" data-new-input="1" data-descripcion="1" data-required="1">
                                             </div>
                                             <div class="col-12 col-lg-12 mg-b-20 mg-t-20">
                                                 <label for="DNIinputReceptor" class="form-label">Documento identidad</label>
-                                                <input type="text" class="form-control inputsfirma" id="DNIinputReceptor" placeholder="12345678X" style="text-transform: uppercase;"  data-min="6" data-max="25" data-new-input="1" data-descripcion="0" data-required="1">
+                                                <input type="text" class="form-control inputsfirma" id="DNIinputReceptor" placeholder="12345678X" style="text-transform: uppercase;" autocomplete="off" inputmode="text" data-min="6" data-max="25" data-new-input="1" data-descripcion="0" data-required="1">
                                             </div>
                                             <div class="col-12 col-lg-12 mg-t-20 mg-b-10">
                                                 <label for="correoInputReceptor" class="form-label">Correo</label>
                                                 <div class="row d-flex justify-content-center">
-                                                    <input type="text" class="form-control mg-r-10 col-9 inputsfirma" id="correoInputReceptor" placeholder="ejemplo@ejemplo.es" data-type="1" data-min="10" data-max="120" data-new-input="1" data-descripcion="0" data-required="0">
+                                                    <input type="email" class="form-control mg-r-10 col-9 inputsfirma" id="correoInputReceptor" placeholder="ejemplo@ejemplo.es" autocomplete="email" inputmode="email" data-type="1" data-min="10" data-max="120" data-new-input="1" data-descripcion="0" data-required="0">
                                                     <button type="button" class="btn col-2 btn-outline-danger" onclick="enviarCorreoDatos('receptor')" id="botonEnviarOrdenReceptor" title="Enviar correo orden">
                                                         <svg class="svg-inline--fa fa-envelope" aria-hidden="true" focusable="false" data-prefix="far" data-icon="envelope" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                                             <path fill="currentColor" d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"></path>
@@ -122,9 +128,12 @@
                                             <div class="col-12">
                                                 <p class="tx-bold mg-b-20 tx-center">Firma Digital Cliente</p>
                                             </div>
+                                            <div id="mensajeInfoCliente" class="col-12 alert alert-info text-center mg-b-20" role="alert">
+                                                <i class="bx bx-info-circle"></i> Complete nombre y documento para activar el área de firma
+                                            </div>
                                             <div id="fsignatureContainerCliente" class="d-none col-12 d-flex justify-content-center">
                                                 <form id="formSignatureCliente" class="formSignature" method="POST">
-                                                    <canvas id="signaturePadCliente" class="signaturePad" width="400" height="300" style="border: 1px solid #000;"></canvas>
+                                                    <canvas id="signaturePadCliente" class="signaturePad" width="600" height="300" style="border: 1px solid #000;"></canvas>
                                                     <div class="d-flex justify-content-center mt-3">
                                                         <input class="btn mt-2 text-center tx-center mr-2" id="borrarFirmaCliente" style="background-color: #ff5353; color: white;" type="reset" value="Borrar Firma" />
                                                     </div>

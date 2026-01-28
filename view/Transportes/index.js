@@ -176,26 +176,39 @@ function cancelarDocumentoCliente() {
 }
 
 // GENERAR QR //
+// Variable global para el QR
+var qrCodeInstance = null;
+
 $(document).ready(function () {
-  var qrCode = new QRCodeStyling({
-    width: 200,
-    height: 200,
-    dotsOptions: {
-      color: "#01612A",
-      type: "rounded",
-    },
-    backgroundOptions: {
-      color: "#e9ebee",
-    },
-    imageOptions: {
-      crossOrigin: "anonymous", // Asegúrate de que la imagen esté configurada correctamente para CORS
-      margin: 5, // Reduce este valor para hacer el ícono más grande
-    },
-  });
+  // Inicializar el código QR solo si la librería está disponible
+  if (typeof QRCodeStyling !== 'undefined') {
+    try {
+      qrCodeInstance = new QRCodeStyling({
+        width: 200,
+        height: 200,
+        dotsOptions: {
+          color: "#01612A",
+          type: "rounded",
+        },
+        backgroundOptions: {
+          color: "#e9ebee",
+        },
+        imageOptions: {
+          crossOrigin: "anonymous",
+          margin: 5,
+        },
+      });
+      console.log("QRCodeStyling inicializado correctamente");
+    } catch (error) {
+      console.error("Error al inicializar QRCodeStyling:", error);
+    }
+  } else {
+    console.error("La librería QRCodeStyling no está disponible. Verifica que el CDN esté cargando correctamente.");
+  }
 
   $("#generateQR").click(function () {
     var inputText = $("#primerCodigo").val(); // Recoger el valor del input
-    console.log(inputText);
+    console.log("Generando QR para:", inputText);
     $("#qrcode").empty(); // Limpiar cualquier código QR existente
 
     // Validar que el texto no esté vacío
@@ -204,18 +217,44 @@ $(document).ready(function () {
       $("#qrcode").html(
         '<p class="tx-danger">El QR no está disponible en esta orden, en caso de necesitarlo, contacte con soporte.</p>'
       );
-
       return;
     }
 
-    // Actualizar el texto del código QR
-    qrCode.update({
-      data: inputText,
-      image: "ojo.png", // Asegúrate de que esta URL sea accesible
-    });
+    // Verificar que la librería y la instancia estén disponibles
+    if (typeof QRCodeStyling === 'undefined') {
+      console.error("QRCodeStyling no está definido. La librería no se cargó correctamente.");
+      toastr.error("Error: La librería de QR no está disponible.");
+      $("#qrcode").html(
+        '<p class="tx-danger">Error: La librería de generación de códigos QR no se cargó correctamente. Verifique su conexión a Internet.</p>'
+      );
+      return;
+    }
 
-    // Adjuntar el código QR al div
-    qrCode.append(document.getElementById("qrcode"));
+    if (!qrCodeInstance) {
+      console.error("La instancia de QRCodeStyling no está inicializada.");
+      toastr.error("Error al generar el QR.");
+      $("#qrcode").html(
+        '<p class="tx-danger">Error al inicializar el generador de QR.</p>'
+      );
+      return;
+    }
+
+    try {
+      // Actualizar el texto del código QR (sin imagen para evitar problemas de ruta)
+      qrCodeInstance.update({
+        data: inputText
+      });
+
+      // Adjuntar el código QR al div
+      qrCodeInstance.append(document.getElementById("qrcode"));
+      console.log("QR generado exitosamente");
+    } catch (error) {
+      console.error("Error al generar el QR:", error);
+      toastr.error("Error al generar el código QR.");
+      $("#qrcode").html(
+        '<p class="tx-danger">Error al generar el código QR: ' + error.message + '</p>'
+      );
+    }
   });
 });
 
@@ -227,42 +266,94 @@ $(document).ready(function () {
 /* COMPROBAR SI EL NOMBRE Y DNI ESTAN METIDOS PARA MOSTRAR FIRMA */
 
 $(document).ready(function () {
+  // Función para pre-rellenar datos del conductor
+  function preRellenarConductor() {
+    var conductorNombre = $("#conductorNombreData").val();
+    var conductorNif = $("#conductorNifData").val();
+    
+    console.log("Pre-rellenando conductor:", conductorNombre, conductorNif);
+    
+    if (conductorNombre && conductorNombre.trim() !== '') {
+      $("#nombreInputConductor").val(conductorNombre);
+    }
+    
+    if (conductorNif && conductorNif.trim() !== '') {
+      $("#DNIinputConductor").val(conductorNif);
+    }
+    
+    // Verificar campos después de pre-rellenar
+    verificarCamposConductor();
+  }
+  
+  // Ejecutar cuando se abre el modal de firma
+  $('#firma_modal').on('shown.bs.modal', function () {
+    preRellenarConductor();
+  });
+  
+  // También ejecutar al cargar la página por si acaso
+  preRellenarConductor();
+  
+  // Verificar inicial si ya hay datos para mostrar canvas
+  verificarCamposReceptor();
+  verificarCamposCliente();
+
+
   $("#nombreInputConductor, #DNIinputConductor").on(
     "keyup change",
     function () {
-      if (
-        $("#nombreInputConductor").val() == "" ||
-        $("#DNIinputConductor").val() == ""
-      ) {
-        $("#fsignatureContainerConductor").addClass("d-none");
-      } else {
-        $("#fsignatureContainerConductor").removeClass("d-none");
-      }
+      verificarCamposConductor();
     }
   );
 
   $("#nombreInputReceptor, #DNIinputReceptor").on("keyup change", function () {
-    if (
-      $("#nombreInputReceptor").val() == "" ||
-      $("#DNIinputReceptor").val() == ""
-    ) {
-      $("#fsignatureContainerReceptor").addClass("d-none");
-    } else {
-      $("#fsignatureContainerReceptor").removeClass("d-none");
-    }
+    verificarCamposReceptor();
   });
 
   $("#nombreInputCliente, #DNIinputCliente").on("keyup change", function () {
-    if (
-      $("#nombreInputCliente").val() == "" ||
-      $("#DNIinputCliente").val() == ""
-    ) {
-      $("#fsignatureContainerCliente").addClass("d-none");
-    } else {
-      $("#fsignatureContainerCliente").removeClass("d-none");
-    }
+    verificarCamposCliente();
   });
 });
+
+// Funciones para verificar campos y mostrar/ocultar canvas y mensajes
+function verificarCamposConductor() {
+  if (
+    $("#nombreInputConductor").val() == "" ||
+    $("#DNIinputConductor").val() == ""
+  ) {
+    $("#fsignatureContainerConductor").addClass("d-none");
+    $("#mensajeInfoConductor").removeClass("d-none");
+  } else {
+    $("#fsignatureContainerConductor").removeClass("d-none");
+    $("#mensajeInfoConductor").addClass("d-none");
+  }
+}
+
+function verificarCamposReceptor() {
+  if (
+    $("#nombreInputReceptor").val() == "" ||
+    $("#DNIinputReceptor").val() == ""
+  ) {
+    $("#fsignatureContainerReceptor").addClass("d-none");
+    $("#mensajeInfoReceptor").removeClass("d-none");
+  } else {
+    $("#fsignatureContainerReceptor").removeClass("d-none");
+    $("#mensajeInfoReceptor").addClass("d-none");
+  }
+}
+
+function verificarCamposCliente() {
+  if (
+    $("#nombreInputCliente").val() == "" ||
+    $("#DNIinputCliente").val() == ""
+  ) {
+    $("#fsignatureContainerCliente").addClass("d-none");
+    $("#mensajeInfoCliente").removeClass("d-none");
+  } else {
+    $("#fsignatureContainerCliente").removeClass("d-none");
+    $("#mensajeInfoCliente").addClass("d-none");
+  }
+}
+
 //* RECOJO EL VIAJE */
 
 $("#selectViajes").change(function () {
@@ -310,7 +401,7 @@ function cargarViaje(idViaje) {
   const onResize = () => {
     $("#signaturePadConductor").attr({
       height: 200,
-      width: 200, // Puedes ajustar el ancho si lo prefieres
+      width: 600, // Aumentado para mejor experiencia en móvil
     });
   };
 
@@ -359,7 +450,7 @@ function cargarViaje(idViaje) {
   const onResizeCliente = () => {
     $("#signaturePadCliente").attr({
       height: 200,
-      width: 200, // Puedes ajustar el ancho si lo prefieres
+      width: 600, // Aumentado para mejor experiencia en móvil
     });
   };
 
@@ -407,7 +498,7 @@ function cargarViaje(idViaje) {
   const onResizeReceptor = () => {
     $("#signaturePadReceptor").attr({
       height: 200,
-      width: 200, // Puedes ajustar el ancho si lo prefieres
+      width: 600, // Aumentado para mejor experiencia en móvil
     });
   };
 
@@ -464,32 +555,12 @@ function cargarViaje(idViaje) {
         $(".tabCliente").addClass("d-none");
       }
       console.log($("#nombreInputConductor").val());
-      if (
-        $("#nombreInputConductor").val() == "" ||
-        $("#DNIinputConductor").val() == ""
-      ) {
-        $("#fsignatureContainerConductor").addClass("d-none");
-      } else {
-        $("#fsignatureContainerConductor").removeClass("d-none");
-      }
-
-      if (
-        $("#nombreInputReceptor").val() == "" ||
-        $("#DNIinputReceptor").val() == ""
-      ) {
-        $("#fsignatureContainerReceptor").addClass("d-none");
-      } else {
-        $("#fsignatureContainerReceptor").removeClass("d-none");
-      }
-
-      if (
-        $("#nombreInputCliente").val() == "" ||
-        $("#DNIinputCliente").val() == ""
-      ) {
-        $("#fsignatureContainerCliente").addClass("d-none");
-      } else {
-        $("#fsignatureContainerCliente").removeClass("d-none");
-      }
+      
+      // Usar las funciones de verificación en lugar de código duplicado
+      verificarCamposConductor();
+      verificarCamposReceptor();
+      verificarCamposCliente();
+      
       $.post("../../controller/transportes.php?op=recogerFirmaPerfil",{},function (data) {
         data = JSON.parse(data);
         console.log("🚀 ~ data:", data)
@@ -512,15 +583,7 @@ function cargarViaje(idViaje) {
           };
           $("#nombreInputConductor").val(data[0]["nombreTransportista"]);
           $("#DNIinputConductor").val(data[0]["nifTransportista"]);
-          if (
-            $("#nombreInputConductor").val() == "" ||
-            $("#DNIinputConductor").val() == ""
-          ) {
-            $("#fsignatureContainerConductor").addClass("d-none");
-          } else {
-            $("#fsignatureContainerConductor").removeClass("d-none");
-          }
-
+          verificarCamposConductor();
         }
       })
 
@@ -990,29 +1053,52 @@ var myDropzone = new Dropzone("#dropzoneGesdoc", {
 
 //=/=/=/=/=/=/=/=/=/=/=/=/=<FIN DROPZONE>=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/
 
-$(document).ready(function () {
+// Cargar situaciones cuando se abre el modal
+$("#modalAgregarIncidencia").on("shown.bs.modal", function () {
+  console.log("Modal abierto, cargando situaciones...");
   $.post(
     "../../controller/transportes.php?op=selectSituacion",
     function (data) {
-      var data = JSON.parse(data);
-      if (data.length > 0) {
-        $("#selectSituacion").empty();
+      console.log("Respuesta cruda del servidor:", data);
+      try {
+        var dataParsed = JSON.parse(data);
+        console.log("Datos parseados:", dataParsed);
+        console.log("Cantidad de situaciones:", dataParsed.length);
+        
+        if (dataParsed.length > 0) {
+          $("#selectSituacion").empty();
 
-        for (var i = 0; i < data.length; i++) {
-          var row = data[i];
-          $("#selectSituacion").append(
-            "<option value=" +
-              data[i].idSituacion +
-              " >" +
-              data[i].nombreSituacion +
-              "</option>"
-          );
+          for (var i = 0; i < dataParsed.length; i++) {
+            console.log("Agregando situación:", dataParsed[i]);
+            $("#selectSituacion").append(
+              "<option value='" +
+                dataParsed[i].idSituacion +
+                "'>" +
+                dataParsed[i].nombreSituacion +
+                "</option>"
+            );
+          }
+          console.log("Select cargado correctamente con " + dataParsed.length + " opciones");
+        } else {
+          console.warn("No se recibieron situaciones del servidor");
+          $("#selectSituacion").empty();
+          $("#selectSituacion").append("<option value=''>No hay situaciones disponibles</option>");
         }
-      } else {
+      } catch (e) {
+        console.error("Error al parsear JSON:", e);
+        console.error("Datos recibidos:", data);
         $("#selectSituacion").empty();
+        $("#selectSituacion").append("<option value=''>Error al procesar datos</option>");
       }
     }
-  );
+  ).fail(function(jqXHR, textStatus, errorThrown) {
+    console.error("Error en la petición AJAX:");
+    console.error("Status:", textStatus);
+    console.error("Error:", errorThrown);
+    console.error("Response:", jqXHR.responseText);
+    $("#selectSituacion").empty();
+    $("#selectSituacion").append("<option value=''>Error al cargar situaciones</option>");
+  });
 });
 // Función para contar los archivos
 

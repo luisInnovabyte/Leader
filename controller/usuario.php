@@ -242,12 +242,20 @@ file_put_contents($file, $json_string);
             $nombreSoftware = 'EFEUNO DEV';
             try {
 
+                // Definir configuración SMTP directamente
+                $smtp_host = 'smtp.office365.com';
+                $smtp_auth = 1;
+                $smtp_username = 'noreply@leader-transport.com';
+                $smtp_pass = 'T.403700629546op';
+                $smtp_port = 587;
+                $smtp_receptor = 'noreply@leader-transport.com';
+                
                 // Archivo de configuración Mail //
                 include 'configMail.php';
 
 
                 //¿Quien envia el correo?
-                $mail->setFrom('software@efeuno.com.es', 'NOMBRE');
+                $mail->setFrom('noreply@leader-transport.com', 'Leader Transport');
 
                 $mail->addAddress($correoUsu, '');     //Add a recipient
 
@@ -263,12 +271,13 @@ file_put_contents($file, $json_string);
                 $mail->Body    = $cuerpo;
                 $mail->AltBody = "Bienvenid@";
 
-                $mail->send();
-
-                echo '1';
+                if($mail->send()) {
+                    echo '1';
+                } else {
+                    echo 'Error al enviar: ' . $mail->ErrorInfo;
+                }
             } catch (Exception $e) {
-
-                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+                echo 'Excepción: ' . $e->getMessage() . ' | ErrorInfo: ' . $mail->ErrorInfo;
             }
         }
 
@@ -312,12 +321,20 @@ file_put_contents($file, $json_string);
 
         try {
 
+            // Definir configuración SMTP directamente
+            $smtp_host = 'smtp.office365.com';
+            $smtp_auth = 1;
+            $smtp_username = 'noreply@leader-transport.com';
+            $smtp_pass = 'T.403700629546op';
+            $smtp_port = 587;
+            $smtp_receptor = 'noreply@leader-transport.com';
+            
             // Archivo de configuración Mail //
             include 'configMail.php';
 
 
             //¿Quien envia el correo?
-            $mail->setFrom('software@efeuno.com.es', 'Efeuno Dev');
+            $mail->setFrom('noreply@leader-transport.com', 'Leader Transport');
 
             $mail->addAddress($correo, '');     //Add a recipient
 
@@ -336,13 +353,13 @@ file_put_contents($file, $json_string);
             $mail->Body    = $cuerpo;
             $mail->AltBody = "Validar correo";
 
-            $mail->send();
-
-            echo 1;
+            if($mail->send()) {
+                echo '1';
+            } else {
+                echo 'Error al enviar: ' . $mail->ErrorInfo;
+            }
         } catch (Exception $e) {
-
-
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            echo 'Excepción: ' . $e->getMessage() . ' | ErrorInfo: ' . $mail->ErrorInfo;
         }
 
         break;
@@ -361,12 +378,20 @@ file_put_contents($file, $json_string);
 
         try {
 
+            // Definir configuración SMTP directamente
+            $smtp_host = 'smtp.office365.com';
+            $smtp_auth = 1;
+            $smtp_username = 'noreply@leader-transport.com';
+            $smtp_pass = 'T.403700629546op';
+            $smtp_port = 587;
+            $smtp_receptor = 'noreply@leader-transport.com';
+            
             // Archivo de configuración Mail //
             include 'configMail.php';
 
 
             //¿Quien envia el correo?
-            $mail->setFrom('software@efeuno.com.es', 'Efeuno Dev');
+            $mail->setFrom('noreply@leader-transport.com', 'Leader Transport');
 
             $mail->addAddress($correo, '');     //Add a recipient
 
@@ -385,13 +410,13 @@ file_put_contents($file, $json_string);
             $mail->Body    = $cuerpo;
             $mail->AltBody = "Validar correo";
 
-            $mail->send();
-
-            echo 1;
+            if($mail->send()) {
+                echo '1';
+            } else {
+                echo 'Error al enviar: ' . $mail->ErrorInfo;
+            }
         } catch (Exception $e) {
-
-
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            echo 'Excepción: ' . $e->getMessage() . ' | ErrorInfo: ' . $mail->ErrorInfo;
         }
 
         break;
@@ -1158,15 +1183,15 @@ file_put_contents($file, $json_string);
 
             //Server settings
             $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.ionos.es';                     //Set the SMTP server to send through
+            $mail->Host       = 'smtp.office365.com';                     //Set the SMTP server to send through
             $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'software@efeuno.com.es';                     //SMTP username
-            $mail->Password   = 'M4r10.efeuno';                               //SMTP password
+            $mail->Username   = 'noreply@leader-transport.com';                     //SMTP username
+            $mail->Password   = 'T.403700629546op';                               //SMTP password
             $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
 
             //Recipients
-            $mail->setFrom('software@efeuno.com.es', 'Administracion');
+            $mail->setFrom('noreply@leader-transport.com', 'Leader Transport - Administraci\u00f3n');
             $mail->addAddress($correo, '');     //Add a recipient
             /* $mail->addAddress('ellen@example.com'); */               //Name is optional
             /* $mail->addReplyTo('info@example.com', 'Information'); */
@@ -1229,15 +1254,15 @@ file_put_contents($file, $json_string);
     
                 //Server settings
                 $mail->isSMTP();                                            //Send using SMTP
-                $mail->Host       = 'smtp.ionos.es';                     //Set the SMTP server to send through
+                $mail->Host       = 'smtp.office365.com';                     //Set the SMTP server to send through
                 $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-                $mail->Username   = 'software@efeuno.com.es';                     //SMTP username
-                $mail->Password   = 'M4r10.efeuno';                               //SMTP password
+                $mail->Username   = 'noreply@leader-transport.com';                     //SMTP username
+                $mail->Password   = 'T.403700629546op';                               //SMTP password
                 $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
     
                 //Recipients
-                $mail->setFrom('software@efeuno.com.es', 'Administracion');
+                $mail->setFrom('noreply@leader-transport.com', 'Leader Transport - Administración');
                 $mail->addAddress($correo, '');     //Add a recipient
                 /* $mail->addAddress('ellen@example.com'); */               //Name is optional
                 /* $mail->addReplyTo('info@example.com', 'Information'); */
@@ -1414,15 +1439,15 @@ file_put_contents($file, $json_string);
     
               //Server settings
               $mail->isSMTP();                                            //Send using SMTP
-              $mail->Host       = 'smtp.ionos.es';                     //Set the SMTP server to send through
+              $mail->Host       = 'smtp.office365.com';                     //Set the SMTP server to send through
               $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-              $mail->Username   = 'software@efeuno.com.es';                     //SMTP username
-              $mail->Password   = 'M4r10.efeuno';                               //SMTP password
+              $mail->Username   = 'noreply@leader-transport.com';                     //SMTP username
+              $mail->Password   = 'T.403700629546op';                               //SMTP password
               $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
   
   
               //Recipients
-              $mail->setFrom('software@efeuno.com.es', 'Administracion');
+              $mail->setFrom('noreply@leader-transport.com', 'Leader Transport - Administración');
               $mail->addAddress($correo, '');     //Add a recipient
               $mail->CharSet = 'UTF-8'; // Establecer la codificación del correo
   

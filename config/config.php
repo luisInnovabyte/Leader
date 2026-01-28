@@ -64,14 +64,21 @@ $avisos_m = $datosSuscripcion[0]['avisos_m'];
 $educacion_m = $datosSuscripcion[0]['educacion_m'];
 
 //SMTP
+// Configuración temporal Office365 (actualizar también en BD tabla tm_config)
+$smtp_host = 'smtp.office365.com';
+$smtp_auth = 1;
+$smtp_username = 'noreply@leader-transport.com';
+$smtp_pass = 'T.403700629546op';
+$smtp_port = 587;
+$smtp_receptor = 'noreply@leader-transport.com';
 
-
-$smtp_host = $datosEmpresa[0]['smtp_host']; //12
-$smtp_auth = $datosEmpresa[0]['snto_auth']; //12
-$smtp_username = $datosEmpresa[0]['smtp_username']; //12
-$smtp_pass = $datosEmpresa[0]['smtp_pass']; //12
-$smtp_port = $datosEmpresa[0]['smtp_port']; //12
-$smtp_receptor = $datosEmpresa[0]['smtp_receptor']; //12
+// Valores desde BD (comentados temporalmente)
+// $smtp_host = $datosEmpresa[0]['smtp_host']; //12
+// $smtp_auth = $datosEmpresa[0]['snto_auth']; //12
+// $smtp_username = $datosEmpresa[0]['smtp_username']; //12
+// $smtp_pass = $datosEmpresa[0]['smtp_pass']; //12
+// $smtp_port = $datosEmpresa[0]['smtp_port']; //12
+// $smtp_receptor = $datosEmpresa[0]['smtp_receptor']; //12
 
 
 //=============================================================================//

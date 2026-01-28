@@ -12,7 +12,15 @@
 
 1. [Mejoras en Sistema de Firmas y QR](#modificación-1-mejoras-en-sistema-de-firmas-y-qr)
 2. [Optimización de Canvas de Firma](#modificación-2-optimización-de-canvas-de-firma)
-3. [Corrección de Carga de Situaciones en Modal de Incidencias](#modificación-4-corrección-de-carga-de-situaciones-en-modal-de-incidencias)
+3. [Corrección Configuración SMTP para Envío de Correos](#modificación-3-corrección-configuración-smtp-para-envío-de-correos)
+4. [Corrección de Carga de Situaciones en Modal de Incidencias](#modificación-4-corrección-de-carga-de-situaciones-en-modal-de-incidencias)
+5. [Configuración SMTP Temporal Hardcodeada](#modificación-5-configuración-smtp-temporal-hardcodeada) ⚠️
+6. [Mejora en Manejo de Errores de PHPMailer](#modificación-6-mejora-en-manejo-de-errores-de-phpmailer)
+7. [Corrección de Path para Enlaces de Email](#modificación-7-corrección-de-path-para-enlaces-de-email)
+8. [Actualización de .gitignore](#modificación-8-actualización-de-gitignore)
+9. [Documentación de Formatos de Impresión](#modificación-9-documentación-de-formatos-de-impresión)
+10. [Sistema de Monitor de Sesión Automático](#modificación-10-sistema-de-monitor-de-sesión-automático)
+11. [Reorganización de Documentación](#modificación-11-reorganización-de-documentación)
 
 ---
 
@@ -540,6 +548,619 @@ WHERE idConfig = 1;
 
 ---
 
+## Modificación #5: Configuración SMTP Temporal Hardcodeada
+
+**Fecha:** 28 de enero de 2026  
+**Archivos afectados:** `config/config.php`, `controller/transportes.php`, `controller/usuario.php`  
+**Tipo:** Configuración Temporal - Solución de Emergencia
+
+### Descripción del Cambio
+Para resolver urgentemente los problemas de envío de correos, se hardcodearon temporalmente las credenciales SMTP de Office365 directamente en el código, comentando la lectura desde la base de datos.
+
+### Archivos Modificados
+
+#### 1. config/config.php
+**Cambio realizado:**
+```php
+// Configuración temporal Office365 (actualizar también en BD tabla tm_config)
+$smtp_host = 'smtp.office365.com';
+$smtp_auth = 1;
+$smtp_username = 'noreply@leader-transport.com';
+$smtp_pass = 'T.403700629546op';
+$smtp_port = 587;
+$smtp_receptor = 'noreply@leader-transport.com';
+
+// Valores desde BD (comentados temporalmente)
+// $smtp_host = $datosEmpresa[0]['smtp_host'];
+// $smtp_auth = $datosEmpresa[0]['snto_auth'];
+// ...
+```
+
+#### 2. controller/transportes.php (línea ~393)
+**Cambio realizado:**
+```php
+// Definir configuración SMTP directamente
+$smtp_host = 'smtp.office365.com';
+$smtp_auth = 1;
+$smtp_username = 'noreply@leader-transport.com';
+$smtp_pass = 'T.403700629546op';
+$smtp_port = 587;
+$smtp_receptor = 'noreply@leader-transport.com';
+
+// Archivo de configuración Mail
+include 'configMail.php';
+
+// Configurar el remitente del correo
+$mail->setFrom('noreply@leader-transport.com', 'Leader Transport');
+```
+
+#### 3. controller/usuario.php
+**Cambios realizados:** 3 ubicaciones diferentes donde se envían correos:
+- Línea ~245: Registro de nuevos usuarios
+- Línea ~324: Validación de correo
+- Línea ~381: Recuperación de contraseña
+
+**Patrón aplicado en todas:**
+```php
+// Definir configuración SMTP directamente
+$smtp_host = 'smtp.office365.com';
+$smtp_auth = 1;
+$smtp_username = 'noreply@leader-transport.com';
+$smtp_pass = 'T.403700629546op';
+$smtp_port = 587;
+$smtp_receptor = 'noreply@leader-transport.com';
+
+// Archivo de configuración Mail
+include 'configMail.php';
+```
+
+### ⚠️ IMPORTANTE - ACCIÓN REQUERIDA
+
+**Este es un cambio TEMPORAL y debe revertirse:**
+
+1. ✓ Las credenciales están ahora hardcodeadas en el código
+2. ✓ Esto es una **SOLUCIÓN DE EMERGENCIA**
+3. ❌ **NO DEBE QUEDAR ASÍ EN PRODUCCIÓN**
+
+**Pasos para revertir:**
+1. Verificar que las credenciales en BD (`tm_config`) son correctas
+2. Descomentar las líneas que leen desde `$datosEmpresa[0]`
+3. Eliminar las líneas hardcodeadas
+4. Probar envío de correos
+5. Si funciona, hacer commit de la reversión
+
+### Razón del Cambio Temporal
+- El envío de correos estaba fallando
+- Se necesitaba una solución inmediata
+- Permite probar si el problema era de credenciales o de configuración
+- Facilita debugging al tener valores conocidos
+
+### Riesgos de Mantener Este Cambio
+- **Seguridad:** Credenciales visibles en código fuente
+- **Mantenimiento:** Cambios requieren modificar múltiples archivos
+- **Control de versiones:** Credenciales expuestas en Git
+- **Escalabilidad:** No funciona para múltiples clientes/dominios
+
+### Archivos con Credenciales Hardcodeadas
+```
+⚠️ config/config.php
+⚠️ controller/transportes.php (1 ubicación)
+⚠️ controller/usuario.php (3 ubicaciones)
+```
+
+---
+
+## Modificación #6: Mejora en Manejo de Errores de PHPMailer
+
+**Fecha:** 28 de enero de 2026  
+**Archivo afectado:** `controller/usuario.php`  
+**Tipo:** Mejora - Error Handling
+
+### Descripción del Cambio
+Se mejoró el manejo de errores al enviar correos con PHPMailer para obtener mensajes más descriptivos y facilitar el debugging.
+
+### Cambios Realizados
+
+**Antes (código antiguo):**
+```php
+$mail->send();
+echo '1';
+```
+
+**Después (código mejorado):**
+```php
+if($mail->send()) {
+    echo '1';
+} else {
+    echo 'Error al enviar: ' . $mail->ErrorInfo;
+}
+```
+
+**En catch (antes):**
+```php
+catch (Exception $e) {
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+}
+```
+
+**En catch (después):**
+```php
+catch (Exception $e) {
+    echo 'Excepción: ' . $e->getMessage() . ' | ErrorInfo: ' . $mail->ErrorInfo;
+}
+```
+
+### Ubicaciones Modificadas
+- Línea ~274: Registro de usuarios
+- Línea ~356: Validación de correo
+- Línea ~413: Recuperación de contraseña
+
+### Beneficios
+- Mensajes de error más descriptivos
+- Mejor diferenciación entre errores de envío y excepciones
+- Facilita debugging en producción
+- Mantiene compatibilidad con código existente
+
+---
+
+## Modificación #7: Corrección de Path para Enlaces de Email
+
+**Fecha:** 28 de enero de 2026  
+**Archivo afectado:** `controller/transportes.php`  
+**Tipo:** Corrección de Bug
+
+### Descripción del Problema
+Los enlaces generados en los correos electrónicos no incluían el segmento `/logistica/` en la ruta, causando que los links estuvieran rotos.
+
+### Cambio Realizado
+
+**Línea 371 - Antes:**
+```php
+for ($i = 0; $i < 1; $i++) { // Tomamos solo los primeros 2 segmentos
+```
+
+**Línea 371 - Después:**
+```php
+for ($i = 0; $i < 2; $i++) { // Tomamos los primeros 2 segmentos (incluye /logistica/)
+```
+
+### Contexto del Código
+```php
+// Reconstruimos la parte necesaria del path
+$required_path = '';
+for ($i = 0; $i < 2; $i++) { // Tomamos los primeros 2 segmentos (incluye /logistica/)
+    if (isset($path_segments[$i])) {
+        $required_path .= $path_segments[$i] . '/';
+    }
+}
+```
+
+### Impacto
+- ✓ Enlaces de correos ahora funcionan correctamente
+- ✓ URLs generadas incluyen la ruta completa
+- ✓ Afecta al botón "Imprimir esta orden" en emails
+
+### Ejemplo de URL Generada
+**Antes:** `https://leader-transport.com/view/Transportes/ordenTransporte.php?orden=XXX`  
+**Después:** `https://leader-transport.com/logistica/view/Transportes/ordenTransporte.php?orden=XXX`
+
+---
+
+## Modificación #8: Actualización de .gitignore
+
+**Fecha:** 28 de enero de 2026  
+**Archivo afectado:** `.gitignore`  
+**Tipo:** Configuración - Control de Versiones
+
+### Descripción del Cambio
+Se expandió el archivo `.gitignore` para excluir más tipos de archivos y directorios comunes que no deben estar en el repositorio.
+
+### Nuevas Exclusiones Añadidas
+
+```gitignore
+node_modules/
+.DS_Store   
+.env
+.vscode/
+.idea/
+dist/
+coverage/
+*.sqlite
+*.sqlite3
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.bak
+*.swp   
+thumbs.db
+*.class
+*.jar
+```
+
+### Categorías de Exclusiones
+
+**Dependencias:**
+- `node_modules/` - Módulos de Node.js
+
+**IDEs y Editores:**
+- `.vscode/` - Configuración de VS Code
+- `.idea/` - Configuración de IntelliJ/PHPStorm
+- `.DS_Store` - Archivos de macOS
+- `*.swp` - Archivos temporales de Vim
+
+**Builds y Tests:**
+- `dist/` - Archivos de distribución
+- `coverage/` - Reportes de cobertura de tests
+
+**Bases de Datos:**
+- `*.sqlite`, `*.sqlite3` - Bases de datos SQLite
+
+**Logs:**
+- `npm-debug.log*`
+- `yarn-debug.log*`
+- `yarn-error.log*`
+- `.pnpm-debug.log*`
+
+**Respaldos y Temporales:**
+- `*.bak` - Archivos de respaldo
+- `thumbs.db` - Cache de miniaturas de Windows
+
+**Java (por si se usa):**
+- `*.class`
+- `*.jar`
+
+**Ambiente:**
+- `.env` - Variables de entorno
+
+### Archivos Ya Excluidos (anteriores)
+```gitignore
+view/Ordenes/responsesEfeuno/*.json
+view/Ordenes/_uploadsOld/*.*
+view/Ordenes/envios/*.json
+*.tmp
+*.zip
+```
+
+---
+
+## Modificación #9: Documentación de Formatos de Impresión
+
+**Fecha:** 27 de enero de 2026  
+**Archivos creados:** `docs/simulacion/` (4 archivos HTML)  
+**Tipo:** Documentación Técnica
+
+### Descripción
+Se creó documentación visual interactiva que mapea los campos JSON a los formatos impresos de las órdenes de transporte.
+
+### Archivos Creados
+
+#### 1. docs/simulacion/index.html
+**Descripción:** Página índice con navegación a los 3 formatos  
+**Características:**
+- Cards interactivas para cada formato
+- Diseño responsivo con gradientes
+- Leyenda de colores para tipos de campos
+- Animaciones CSS
+
+#### 2. docs/simulacion/contenedor_cliente.html
+**Descripción:** Mapa de campos para Tipo Contenedor (C) / Formato Admítase (A)  
+**Campos mapeados:** ~45 campos del JSON  
+**Secciones:**
+- Header con datos de agencia
+- Información del transportista y conductor
+- Lugares de retirada y entrega
+- Datos del contenedor (tipo, precinto)
+- Mercancía, bultos, peso
+- Temperaturas (máx, mín, conectar)
+- Dimensiones extras
+- Datos IMO (mercancía peligrosa)
+- Información naviera (línea, buque, viaje)
+- Puertos (origen, destino, descarga)
+- Firmas condicionales
+
+#### 3. docs/simulacion/terrestre_admitase.html
+**Descripción:** Mapa de campos para Tipo Terrestre (T) / Formato Admítase (A)  
+**Características especiales:**
+- Iteración dinámica de array `$datosViajesBD`
+- Alternancia CARGA/DESCARGA
+- Saltos de página cada 3 bloques
+- Header repetido en cada página
+- Firmas condicionales por viaje
+- Firmas finales solo en formato "Entréguese"
+
+**Campos por viaje:**
+- Empresa, dirección, población
+- Teléfono, CP
+- Fecha y hora (solo en CARGA)
+- Mercancía, bultos, kilos
+- Referencias de carga/descarga
+- Observaciones
+- Firmas del receptor y conductor
+
+#### 4. docs/simulacion/terrestre_cmr.html
+**Descripción:** Mapa de campos para Tipo Terrestre (T) / Formato CMR (Internacional)  
+**Características:**
+- 24 campos numerados según normativa CMR
+- Etiquetas trilingües (ES/FR/EN)
+- Tabla de descripción de mercancía
+- Tabla de pagos
+- Campos de firmas oficiales
+
+**Campos mapeados:** Solo ~10 de 24  
+**Datos desde:** `$jsonDatos['CMR'][0]`
+
+**Campos mapeados:**
+- Lugar de entrega (campo 3)
+- Lugar y fecha de carga (campo 4)
+- Número de bultos (campo 7)
+- Naturaleza de mercancía (campo 9)
+- Peso bruto (campo 11)
+- Transportistas sucesivos (campo 17)
+
+**Campos NO mapeados:**
+- Remitente (1)
+- Consignatario (2)
+- Documentos anexos (5)
+- Marcas y números (6)
+- Clase de embalaje (8)
+- Y otros 13 campos más...
+
+### Estilos Visuales Comunes
+
+**Código de colores:**
+- 🔵 Azul (`campo`): Campos del JSON mapeados
+- 🟡 Amarillo: Secciones condicionales
+- 🔴 Rojo: Campos no mapeados/vacíos
+- 🟢 Verde: Información de iteración/estructura
+
+### Propósito
+- Facilitar el mantenimiento del código
+- Documentar el mapeo JSON → HTML
+- Identificar campos no utilizados
+- Guía para desarrolladores
+
+### Ubicación
+```
+docs/simulacion/
+├── index.html                    (índice interactivo)
+├── contenedor_cliente.html       (tipo C)
+├── terrestre_admitase.html       (tipo T - admítase)
+└── terrestre_cmr.html            (tipo T - CMR)
+```
+
+---
+
+## Modificación #10: Sistema de Monitor de Sesión Automático
+
+**Fecha:** 27 de enero de 2026  
+**Archivos creados:** 3 archivos nuevos  
+**Tipo:** Feature - Seguridad / UX
+
+### Descripción General
+Se implementó un sistema automático que detecta cuando la sesión del usuario expira y redirige al login con un modal informativo, mejorando la experiencia de usuario.
+
+### Archivos Creados
+
+#### 1. public/js/session_monitor.js
+**Función principal:** Monitoreo automático de sesión activa  
+**Características:**
+- Verificación cada 60 segundos
+- Modal Bootstrap con cuenta regresiva de 5 segundos
+- Protección contra múltiples cargas del script
+- Detección automática de ruta al login
+- No interfiere con logout normal
+- Se desactiva automáticamente en páginas de login
+
+**Funcionalidad:**
+```javascript
+// Verificación periódica
+setInterval(verificarSesion, 60000); // Cada 60 segundos
+
+// Al detectar sesión expirada:
+1. Detiene verificaciones
+2. Muestra modal informativo
+3. Cuenta regresiva 5 segundos
+4. Redirige a login
+```
+
+**Endpoint verificado:**
+- `config/check_session.php` (ya existente)
+
+**Estados detectados:**
+- HTTP 401: Sesión expirada
+- Respuesta con "session_expired": Sesión inválida
+
+**API pública expuesta:**
+```javascript
+window.SessionMonitor = {
+    iniciar: iniciarMonitorSesion,
+    detener: detenerMonitorSesion,
+    verificarAhora: verificarSesion
+};
+```
+
+#### 2. test_session_expired.php
+**Propósito:** Script de prueba para simular sesión expirada  
+**Uso:**
+```
+1. Subir a raíz del proyecto
+2. Abrir cualquier página
+3. Ejecutar: SessionMonitor.verificarAhora();
+4. El modal aparecerá automáticamente
+5. ELIMINAR después de probar
+```
+
+**Código:**
+```php
+header('HTTP/1.1 401 Unauthorized');
+header('Content-Type: text/plain');
+echo 'session_expired';
+exit;
+```
+
+#### 3. docs/session_monitor_setup.md
+**Propósito:** Guía de implementación completa  
+**Contenido:**
+- Instrucciones de implementación
+- Opciones de configuración
+- Personalización del modal
+- Protocolo de pruebas
+- Troubleshooting
+- Checklist de implementación
+
+### Cómo Implementar
+
+**Opción 1 - Plantilla Global (Recomendado):**
+```php
+<!-- En config/templates/mainFooter.php o similar -->
+<script src="../../public/js/session_monitor.js"></script>
+```
+
+**Opción 2 - Por Página:**
+```php
+<!-- Al final de cada view -->
+<script src="../../public/js/session_monitor.js"></script>
+</body>
+</html>
+```
+
+### Configuración
+
+**Tiempo de verificación (línea 157):**
+```javascript
+intervaloVerificacionSesion = setInterval(verificarSesion, 60000); // 60 seg
+```
+
+**Tiempo de cuenta regresiva (línea 96):**
+```javascript
+let segundos = 5; // Cambiar a 3, 5, 10, etc.
+```
+
+### Modal de Sesión Expirada
+
+**Características:**
+- Backdrop estático (no se puede cerrar)
+- Icono de advertencia
+- Mensaje informativo
+- Cuenta regresiva visible
+- Botón "Ir al Login Ahora"
+- Auto-redirección tras 5 segundos
+
+**Contenido del modal:**
+```
+🕒 Sesión Expirada
+
+Su sesión ha finalizado
+
+Por motivos de seguridad, su sesión ha expirado 
+debido a inactividad.
+
+Será redirigido automáticamente al inicio de sesión 
+en 5 segundos.
+
+[Ir al Login Ahora]
+```
+
+### Páginas Excluidas
+El monitor se desactiva automáticamente en:
+- `/Login/`
+- `/login/`
+
+### Dependencias Requeridas
+- ✓ Bootstrap 5 (para el modal)
+- ✓ Boxicons (para iconos)
+- ✓ `config/check_session.php` (ya existe)
+
+### Seguridad
+- ✅ No requiere credenciales
+- ✅ No expone información sensible
+- ✅ Usa fetch con credentials
+- ✅ No intercepta logout normal
+
+### Testing
+
+**Checklist de pruebas:**
+- [ ] Script se carga sin errores
+- [ ] Verificación ocurre cada 60 segundos
+- [ ] Modal aparece al expirar sesión
+- [ ] Cuenta regresiva funciona correctamente
+- [ ] Redirección al login exitosa
+- [ ] No interfiere con logout normal
+- [ ] No se ejecuta en páginas de login
+- [ ] Múltiples ventanas manejadas correctamente
+
+### Próximas Mejoras Opcionales
+- [ ] Guardar estado antes de redirigir
+- [ ] Advertencia previa 1 minuto antes
+- [ ] Botón "Extender sesión"
+- [ ] Registro de eventos en log
+- [ ] Sonido de notificación
+
+### Estado Actual
+- ✅ Código creado y listo
+- ⏸️ Pendiente de implementación en producción
+- ⏸️ Requiere incluir script en plantillas
+
+---
+
+## Modificación #11: Reorganización de Documentación
+
+**Fecha:** 28 de enero de 2026  
+**Archivos afectados:** Movimientos y eliminaciones en `docs/`  
+**Tipo:** Mantenimiento - Organización
+
+### Descripción
+Se reorganizó la estructura de documentación para mejorar la claridad y eliminar archivos obsoletos.
+
+### Archivos Eliminados
+
+**Eliminados de docs/:**
+- ❌ `ejemplo_c.txt` - Ejemplo antiguo de datos contenedor
+- ❌ `ejemplo_c_completo_concambios.txt` - Documentación obsoleta de cambios
+
+**Razón:** Información ya incluida en los nuevos mapas HTML de simulación
+
+### Archivos Movidos
+
+**De docs/ a docs/simulacion/:**
+- 📁 `CMR.html` → `docs/simulacion/CMR.html`
+- 📁 `docs/Pruebas/simulacion_orden_34447400_ant.html` → `docs/simulacion/simulacion_orden_34447400_ant.html`
+
+### Nueva Estructura de docs/
+
+```
+docs/
+├── modificaciones.md              (este archivo)
+├── firma-transporte.md
+├── general.md
+├── impresion.md
+├── ordenTransporte.md
+├── session_monitor_setup.md       (nuevo)
+├── subir_ordenes.md
+├── TipoC_oficina.md
+├── BotonDescargar.md
+├── flujodescargaOrdenes.md
+├── MAPEO_CAMPOS_JSON_A_IMPRESION.md
+├── cambios_20251221/
+├── Pruebas/
+└── simulacion/                     (nuevo directorio)
+    ├── index.html                  (nuevo)
+    ├── contenedor_cliente.html     (nuevo)
+    ├── terrestre_admitase.html     (nuevo)
+    ├── terrestre_cmr.html          (nuevo)
+    ├── CMR.html                    (movido)
+    └── simulacion_orden_34447400_ant.html (movido)
+```
+
+### Beneficios
+- ✓ Documentación de simulación agrupada
+- ✓ Eliminados archivos obsoletos
+- ✓ Estructura más clara y mantenible
+- ✓ Separación por tipo de contenido
+
+---
+
 ## Modificaciones Pendientes
 
 _(Esta sección se actualizará con las próximas modificaciones solicitadas)_
@@ -732,6 +1353,13 @@ Select cargado correctamente con 5 opciones
 | 27/01/2026 | Creación del documento | Registro de modificaciones 1 y 2 |
 | 27/01/2026 | Modificación #3 | Sistema de envío de correos electrónicos - Configuración SMTP |
 | 28/01/2026 | Modificación #4 | Corrección de carga de situaciones en modal de incidencias |
+| 28/01/2026 | Modificación #5 | Configuración SMTP temporal hardcodeada (REVERTIR) |
+| 28/01/2026 | Modificación #6 | Mejora en manejo de errores de PHPMailer |
+| 28/01/2026 | Modificación #7 | Corrección de path para enlaces de email |
+| 28/01/2026 | Modificación #8 | Actualización de .gitignore |
+| 27/01/2026 | Modificación #9 | Documentación HTML de formatos de impresión |
+| 27/01/2026 | Modificación #10 | Sistema de monitor de sesión automático |
+| 28/01/2026 | Modificación #11 | Reorganización de documentación |
 
 ---
 

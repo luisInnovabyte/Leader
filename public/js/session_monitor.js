@@ -4,8 +4,8 @@
  * Si expira, muestra un modal y redirige al login
  * 
  * @file session_monitor.js
- * @version 1.0.0
- * @date 27/01/2026
+ * @version 2.0.0 - Mejorado con protecciones adicionales
+ * @date 28/01/2026
  */
 
 // PROTECCIÓN: Evitar múltiples cargas del script
@@ -20,6 +20,9 @@ if (window.SessionMonitorCargado) {
     let intervaloVerificacionSesion = null;
     let modalSesionCreado = false;
     let sesionExpiradaProcesada = false; // Bandera para evitar múltiples llamadas
+    let verificandoSesion = false; // Evitar verificaciones simultáneas
+    let contadorErrores = 0; // Contador de errores consecutivos
+    const MAX_ERRORES = 3; // Máximo de errores antes de detener
     
     /**
      * Crea el modal de sesión expirada (solo una vez)
@@ -155,23 +158,45 @@ if (window.SessionMonitorCargado) {
     function verificarSesion() {
         // NO VERIFICAR SI YA SE PROCESÓ EXPIRACIÓN
         if (sesionExpiradaProcesada) {
+            console.log('Monitor: Sesión ya procesada, deteniendo verificación');
+            detenerMonitorSesion();
             return;
         }
         
-        // Determinar ruta al check_session.php
-        const rutaActual = window.location.pathname;
-        let rutaCheckSession = '../../config/check_session.php';
-        
-        // MODO PRUEBA: Descomentar esta línea para usar el script de prueba
-        // rutaCheckSession = '../../test_session_expired.php';
-        
-        // Ajustar según la profundidad
-        const niveles = (rutaActual.match(/\//g) || []).length;
-        if (niveles > 3) {
-            rutaCheckSession = '../../../config/check_session.php';
-        } else if (niveles === 3) {
-            rutaCheckSession = '../../config/check_session.php';
+        // NO VERIFICAR SI YA HAY UNA VERIFICACIÓN EN CURSO
+        if (verificandoSesion) {
+            console.log('Monitor: Verificación ya en curso, omitiendo');
+            return;
         }
+        
+        // DETENER SI HAY DEMASIADOS ERRORES CONSECUTIVOS
+        if (contadorErrores >= MAX_ERRORES) {
+            console.error('Monitor: Demasiados errores consecutivos, deteniendo');
+            detenerMonitorSesion();
+            return;
+        }
+        
+        verificandoSesion = true;
+        
+        // Usar ruta absoluta desde la raíz del proyecto
+        const baseUrl = window.location.origin;
+        const pathParts = window.location.pathname.split('/').filter(p => p);
+        
+        // Buscar el índice de 'logistica' en la ruta
+        const logisticaIndex = pathParts.indexOf('logistica');
+        
+        let rutaCheckSession;
+        if (logisticaIndex !== -1) {
+            // Construir ruta absoluta
+            const basePath = '/' + pathParts.slice(0, logisticaIndex + 1).join('/');
+            rutaCheckSession = baseUrl + basePath + '/config/check_session.php';
+        } else {
+            // Fallback: intentar ruta relativa genérica
+            console.warn('Monitor: No se encontró "logistica" en la ruta, usando fallback');
+            rutaCheckSession = baseUrl + '/logistica/config/check_session.php';
+        }
+        
+        console.log('Monitor: Verificando sesión en:', rutaCheckSession);
         
         fetch(rutaCheckSession, {
             method: 'GET',
@@ -179,6 +204,8 @@ if (window.SessionMonitorCargado) {
             credentials: 'same-origin'
         })
         .then(response => {
+            verificandoSesion = false;
+            
             // Si ya se procesó, no continuar
             if (sesionExpiradaProcesada) {
                 return null;
@@ -186,10 +213,14 @@ if (window.SessionMonitorCargado) {
             
             if (response.status === 401 || !response.ok) {
                 // Sesión expirada - mostrar modal
-                console.warn('Sesión expirada detectada por status code');
+                console.warn('Monitor: Sesión expirada detectada por status code:', response.status);
+                contadorErrores = 0; // Resetear contador de errores
                 mostrarModalYRedirigir();
                 return null;
             }
+            
+            // Respuesta OK - resetear contador de errores
+            contadorErrores = 0;
             return response.text();
         })
         .then(data => {
@@ -200,16 +231,27 @@ if (window.SessionMonitorCargado) {
             
             if (data && data.includes('session_expired')) {
                 // Sesión expirada - mostrar modal
-                console.warn('Sesión expirada detectada por respuesta');
+                console.warn('Monitor: Sesión expirada detectada por respuesta');
                 mostrarModalYRedirigir();
+            } else if (data && data.includes('session_active')) {
+                console.log('Monitor: Sesión activa ✓');
             }
         })
         .catch(error => {
+            verificandoSesion = false;
+            
             // Si ya se procesó, no mostrar errores
             if (!sesionExpiradaProcesada) {
-                console.error('Error al verificar sesión:', error);
+                contadorErrores++;
+                console.error('Monitor: Error al verificar sesión (' + contadorErrores + '/' + MAX_ERRORES + '):', error.message);
+                
+                // Si hay muchos errores, detener el monitor
+                if (contadorErrores >= MAX_ERRORES) {
+                    console.error('Monitor: Demasiados errores, deteniendo monitor');
+                    detenerMonitorSesion();
+                }
             }
-            // No mostrar modal por error de red, solo registrar
+            // No mostrar modal por error de red
         });
     }
     
@@ -223,17 +265,23 @@ if (window.SessionMonitorCargado) {
             return;
         }
         
+        // No iniciar si ya está activo
+        if (intervaloVerificacionSesion) {
+            console.log('Monitor de sesión: Ya está activo');
+            return;
+        }
+        
         // Solo iniciar si no estamos en la página de login
-        const rutaActual = window.location.pathname;
-        if (rutaActual.includes('/Login/') || rutaActual.includes('/login/')) {
+        const rutaActual = window.location.pathname.toLowerCase();
+        if (rutaActual.includes('/login/')) {
             console.log('Monitor de sesión: No iniciado (página de login)');
             return;
         }
         
-        console.log('Monitor de sesión: Iniciado - verificación cada 60 segundos');
+        console.log('Monitor de sesión: ✓ Iniciado - verificación cada 60 segundos');
         
-        // Verificar inmediatamente al cargar
-        verificarSesion();
+        // Verificar inmediatamente al cargar (después de 2 segundos para dar tiempo a la carga)
+        setTimeout(verificarSesion, 2000);
         
         // Verificar cada 60 segundos (1 minuto)
         intervaloVerificacionSesion = setInterval(verificarSesion, 60000);
